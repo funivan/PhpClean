@@ -13,7 +13,7 @@
                 groupPath="PHP"
                 shortName="VariableTypeUsageInspection"
                 displayName="Variable type usage inspection"
-                groupName="Funivan"
+                groupName="PhpTypes"
                 enabledByDefault="true"
                 level="ERROR"
                 language="PHP"
