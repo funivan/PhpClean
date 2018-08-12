@@ -1,18 +1,12 @@
 <idea-plugin>
     <id>com.funivan.idea.phpTypes</id>
-    <name>Plugin display name here</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <name>PhpTypes</name>
+    <version>0.0.1</version>
+    <vendor email="alotofall@gmail.com" url="https://github.com/funivan/PhpTypes/">Ivan Shcherbak</vendor>
 
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    PhpTypes - inspections and refactoring plugin
     ]]></description>
-
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
 
     <extensions defaultExtensionNs="com.intellij">
         <localInspection
