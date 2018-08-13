@@ -14,10 +14,7 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
                 """
                     <?php
                     class A {
-                        /**
-                         * @var string
-                         */
-                        private <warning descr="Property is not annotated correctly">${'$'}second</warning>;
+                        private <warning descr="Property is not annotated correctly">${'$'}first</warning>;
                     }
                 """
         )
