@@ -4,6 +4,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.inspections.PhpInspection
 import com.jetbrains.php.lang.psi.elements.PhpClass
+import com.jetbrains.php.lang.psi.resolve.types.PhpType
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
@@ -17,11 +18,18 @@ class PropertyAnnotationInspection : PhpInspection() {
                     for (property in properties) {
                         val nameNode = property.nameNode
                         if (nameNode != null && property.children.size === 0) {
+                            var type = PhpType.MIXED
                             val comment = property.docComment
-                            if (comment == null) {
+                            if (comment != null) {
+                                val varTag = comment.varTag
+                                if (varTag !== null) {
+                                    type = varTag.type
+                                }
+                            }
+                            if (!type.types.contains("\\null")) {
                                 holder.registerProblem(
-                                        nameNode.psi,
-                                        "Property is not annotated correctly"
+                                    nameNode.psi,
+                                    "Property is not annotated correctly. Add null type"
                                 )
                             }
                         }

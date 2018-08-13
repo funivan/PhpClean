@@ -14,7 +14,27 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
                 """
                     <?php
                     class A {
-                        private <warning descr="Property is not annotated correctly">${'$'}first</warning>;
+                        private <warning descr="Property is not annotated correctly. Add null type">${'$'}first</warning>;
+                    }
+                """
+        )
+    }
+
+    fun testPrivatePropertyNotInitializedInTheConstructor() {
+        assert(
+                PropertyAnnotationInspection(),
+                """
+                    <?php
+                    class A {
+                        /**
+                         * @var string
+                         */
+                        private <warning descr="Property is not annotated correctly. Add null type">${'$'}first</warning>;
+
+                        /**
+                         * @var string|null
+                         */
+                        private ${'$'}second;
                     }
                 """
         )
