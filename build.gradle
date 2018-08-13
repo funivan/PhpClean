@@ -21,6 +21,7 @@ intellij {
     updateSinceUntilBuild = false
     plugins = [
             "com.jetbrains.php:${phpPluginVersion}",
+            'CSS',
             'java-i18n',
             'PsiViewer:3.28.93',
             'properties'

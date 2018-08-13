@@ -7,17 +7,19 @@
     <description><![CDATA[
     PhpTypes - inspections and refactoring plugin
     ]]></description>
-
+    <depends>com.jetbrains.php</depends>
+    <depends>com.intellij.modules.platform</depends>
+    <idea-version since-build="145.0"/>
     <extensions defaultExtensionNs="com.intellij">
         <localInspection
                 groupPath="PHP"
-                shortName="VariableTypeUsageInspection"
-                displayName="Variable type usage inspection"
+                shortName="PropertyAnnotationInspection"
+                displayName="Property annotation"
                 groupName="PhpTypes"
                 enabledByDefault="true"
-                level="ERROR"
+                level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpTypes.typeInspection.VariableTypeUsageInspection"
+                implementationClass="com.funivan.idea.phpTypes.PropertyAnnotationInspection"
         />
     </extensions>
 
