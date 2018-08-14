@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <plugin-repository>
-    <ff>'${pluginName}'</ff>
+    <ff>'Code Tools'</ff>
     <category name='${pluginName}'>
         <idea-plugin downloads='10' size='${fileSize}' date='${buildDate}000' url=''>
             <name>${pluginName}</name>
