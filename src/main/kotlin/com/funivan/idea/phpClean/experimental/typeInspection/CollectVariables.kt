@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.typeInspection
+package com.funivan.idea.phpClean.experimental.typeInspection
 
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 

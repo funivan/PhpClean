@@ -1,7 +1,7 @@
-package com.funivan.idea.phpClean.typeInspection
+package com.funivan.idea.phpClean.experimental.typeInspection
 
-import com.funivan.idea.phpClean.typeInspection.instruction.Instruction
-import com.funivan.idea.phpClean.typeInspection.instruction.InstructionInterface
+import com.funivan.idea.phpClean.experimental.typeInspection.instruction.Instruction
+import com.funivan.idea.phpClean.experimental.typeInspection.instruction.InstructionInterface
 import com.intellij.openapi.util.TextRange
 import com.jetbrains.php.lang.psi.elements.FunctionReference
 import com.jetbrains.php.lang.psi.elements.If
