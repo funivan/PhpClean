@@ -1,3 +1,5 @@
 .idea/
+PhpClean.iml
 .grade/
+out/
 build/
