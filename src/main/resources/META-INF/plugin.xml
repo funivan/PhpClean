@@ -1,7 +1,6 @@
 <idea-plugin>
     <id>com.funivan.idea.phpClean</id>
     <name>PhpClean</name>
-    <version>2018.8.1</version>
     <vendor email="alotofall@gmail.com" url="https://github.com/funivan/PhpClean/">Ivan Shcherbak</vendor>
 
     <description><![CDATA[
