@@ -13,7 +13,7 @@ env:
   - IDEA_VERSION="IU-182.4129.4" PHP_PLUGIN_VERSION="182.3911.19"
 
 script:
-  - ./gradlew check buildPlugin
+  - ./gradlew check buildPlugin createRepositoryXml
 
 after_success:
   - "curl -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/"
