@@ -1,10 +1,10 @@
-package com.funivan.idea.phpClean
+package com.funivan.idea.phpClean.propertyAnnotation
 
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
+import com.intellij.psi.SmartPointerManager
 import com.jetbrains.php.lang.inspections.PhpInspection
 import com.jetbrains.php.lang.psi.elements.PhpClass
-import com.jetbrains.php.lang.psi.resolve.types.PhpType
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
@@ -17,20 +17,23 @@ class PropertyAnnotationInspection : PhpInspection() {
                 if (clazz.constructor === null) {
                     for (property in properties) {
                         val nameNode = property.nameNode
-                        if (nameNode != null && property.children.size == 0) {
-                            var type = PhpType.MIXED
+                        if (nameNode != null && property.children.isEmpty()) {
                             val comment = property.docComment
                             if (comment != null) {
                                 val varTag = comment.varTag
                                 if (varTag !== null) {
-                                    type = varTag.type
+                                    val type = varTag.type
+                                    val qf = AddNullTypeQF(
+                                            SmartPointerManager.getInstance(varTag.project).createSmartPsiElementPointer(varTag)
+                                    )
+                                    if (!type.types.contains("\\null")) {
+                                        holder.registerProblem(
+                                                nameNode.psi,
+                                                "Property is not annotated correctly. Add null type",
+                                                qf
+                                        )
+                                    }
                                 }
-                            }
-                            if (!type.types.contains("\\null")) {
-                                holder.registerProblem(
-                                    nameNode.psi,
-                                    "Property is not annotated correctly. Add null type"
-                                )
                             }
                         }
                     }

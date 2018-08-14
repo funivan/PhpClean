@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean
+package com.funivan.idea.phpClean.propertyAnnotation
 
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
@@ -8,12 +8,49 @@ import com.jetbrains.php.lang.inspections.PhpInspection
 
 class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
-    fun testPrivateProperties() {
+    fun testPropertiesWithoutDocumentation() {
         assert(
                 PropertyAnnotationInspection(),
                 """
                     <?php
                     class A {
+                     private ${'$'}name;
+                     /**
+                      * @deprecated
+                      * some description
+                      */
+                     private ${'$'}id;
+                    }
+                    """
+        )
+    }
+
+    fun testPropertyWithCorrectDocumentation() {
+        assert(
+                PropertyAnnotationInspection(),
+                """
+                    <?php
+                    class A {
+                        /** @var string[]|null */
+                        private ${'$'}first;
+
+                        /**
+                         * @var string|null
+                         */
+                        private ${'$'}second;
+                    }
+                """
+        )
+    }
+
+
+    fun testPrivatePropertiesInClassesWithoutConstructor() {
+        assert(
+                PropertyAnnotationInspection(),
+                """
+                    <?php
+                    class A {
+                        /** @var string */
                         private <warning descr="Property is not annotated correctly. Add null type">${'$'}first</warning>;
                     }
                 """
@@ -30,11 +67,6 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
                          * @var string
                          */
                         private <warning descr="Property is not annotated correctly. Add null type">${'$'}first</warning>;
-
-                        /**
-                         * @var string|null
-                         */
-                        private ${'$'}second;
                     }
                 """
         )

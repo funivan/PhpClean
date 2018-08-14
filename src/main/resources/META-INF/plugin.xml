@@ -19,7 +19,7 @@
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpClean.PropertyAnnotationInspection"
+                implementationClass="com.funivan.idea.phpClean.propertyAnnotation.PropertyAnnotationInspection"
         />
     </extensions>
 
