@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.funivan.idea.phpClean</id>
     <name>PhpClean</name>
-    <version>0.0.1</version>
+    <version>2018.8.1</version>
     <vendor email="alotofall@gmail.com" url="https://github.com/funivan/PhpClean/">Ivan Shcherbak</vendor>
 
     <description><![CDATA[
@@ -12,10 +12,10 @@
     <idea-version since-build="145.0"/>
     <extensions defaultExtensionNs="com.intellij">
         <localInspection
-                groupPath="PHP"
+                groupPath="PHP,PhpClean"
                 shortName="PropertyAnnotationInspection"
                 displayName="Property annotation"
-                groupName="PhpClean"
+                groupName="Types"
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"

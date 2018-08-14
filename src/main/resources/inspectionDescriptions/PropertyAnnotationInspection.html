@@ -1,5 +1,15 @@
 <html>
 <body>
-    Check if property is annotated correctly
+Properties that are not initialized in the constructor should be annotated as nullable.
+<br>
+<pre>
+class User {
+ /** @var string */ //<--- warning will be here.
+ private $name;
+
+ public function getName(){ ... }
+ public function setName(string $name){ ... }
+}
+</pre>
 </body>
 </html>
