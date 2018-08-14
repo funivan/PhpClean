@@ -32,15 +32,15 @@ jar.archiveName = "${name}.jar"
 
 task createRepositoryXml(type: Copy) {
     dependsOn buildPlugin
-    from 'src/ci/updatePlugins.xml'
+    from 'src/ci/PhpClean-nightly.xml'
     into "${buildDir}/libs"
     expand([
             buildDate: '1230011',
             fileSize: '987654321',
-            version: version,
-            pluginName: "${pluginName}",
+            version: project.property("version"),
+            pluginName: project.property("pluginName"),
             fileName: jar.archiveName,
-            group: group
+            group: project.property("group")
     ])
     doFirst {
         ant.defaultexcludes remove: "${buildDir}/libs/*.xml"
