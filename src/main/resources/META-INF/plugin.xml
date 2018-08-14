@@ -1,11 +1,11 @@
 <idea-plugin>
-    <id>com.funivan.idea.phpTypes</id>
-    <name>PhpTypes</name>
+    <id>com.funivan.idea.phpClean</id>
+    <name>PhpClean</name>
     <version>0.0.1</version>
-    <vendor email="alotofall@gmail.com" url="https://github.com/funivan/PhpTypes/">Ivan Shcherbak</vendor>
+    <vendor email="alotofall@gmail.com" url="https://github.com/funivan/PhpClean/">Ivan Shcherbak</vendor>
 
     <description><![CDATA[
-    PhpTypes - inspections and refactoring plugin
+    This plugin introduce some useful inspections
     ]]></description>
     <depends>com.jetbrains.php</depends>
     <depends>com.intellij.modules.platform</depends>
@@ -15,11 +15,11 @@
                 groupPath="PHP"
                 shortName="PropertyAnnotationInspection"
                 displayName="Property annotation"
-                groupName="PhpTypes"
+                groupName="PhpClean"
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpTypes.PropertyAnnotationInspection"
+                implementationClass="com.funivan.idea.phpClean.PropertyAnnotationInspection"
         />
     </extensions>
 

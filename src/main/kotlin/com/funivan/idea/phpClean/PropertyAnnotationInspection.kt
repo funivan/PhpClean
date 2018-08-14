@@ -1,4 +1,4 @@
-package com.funivan.idea.phpTypes
+package com.funivan.idea.phpClean
 
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
@@ -17,7 +17,7 @@ class PropertyAnnotationInspection : PhpInspection() {
                 if (clazz.constructor === null) {
                     for (property in properties) {
                         val nameNode = property.nameNode
-                        if (nameNode != null && property.children.size === 0) {
+                        if (nameNode != null && property.children.size == 0) {
                             var type = PhpType.MIXED
                             val comment = property.docComment
                             if (comment != null) {

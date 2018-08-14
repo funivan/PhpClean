@@ -1,4 +1,4 @@
-package com.funivan.idea.phpTypes
+package com.funivan.idea.phpClean
 
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase

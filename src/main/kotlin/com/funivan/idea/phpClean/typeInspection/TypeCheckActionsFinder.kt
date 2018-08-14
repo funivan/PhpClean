@@ -1,7 +1,7 @@
-package com.funivan.idea.phpTypes.typeInspection
+package com.funivan.idea.phpClean.typeInspection
 
-import com.funivan.idea.phpTypes.typeInspection.instruction.Instruction
-import com.funivan.idea.phpTypes.typeInspection.instruction.InstructionInterface
+import com.funivan.idea.phpClean.typeInspection.instruction.Instruction
+import com.funivan.idea.phpClean.typeInspection.instruction.InstructionInterface
 import com.intellij.openapi.util.TextRange
 import com.jetbrains.php.lang.psi.elements.FunctionReference
 import com.jetbrains.php.lang.psi.elements.If
@@ -19,7 +19,7 @@ class TypeCheckActionsFinder(val ifConditions: MutableCollection<If>) {
             // check if not string
             if (fnCall is FunctionReference && fnCall.fqn == "\\is_string") {
                 //detect if fn call is in range of the if check
-                val inIfScope: TextRange? = ifConditions.map { it.lastChild.textRange }.firstOrNull();
+                val inIfScope: TextRange? = ifConditions.map { it.lastChild.textRange }.firstOrNull()
                 if (inIfScope != null) {
                     result.add(
                             Instruction(

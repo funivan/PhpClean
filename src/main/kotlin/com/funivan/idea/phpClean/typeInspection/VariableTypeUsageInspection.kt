@@ -1,4 +1,4 @@
-package com.funivan.idea.phpTypes.typeInspection
+package com.funivan.idea.phpClean.typeInspection
 
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
