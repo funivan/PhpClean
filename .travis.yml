@@ -16,7 +16,8 @@ script:
   - ./gradlew check buildPlugin
 
 after_success:
-  - "curl -T build/libs/PhpClean-2018.8.1.jar -u $ftp_login:$ftp_password ftp://$ftp_host/"
+  - "curl -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/"
+  - "curl -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/"
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

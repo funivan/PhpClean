@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<plugin-repository>
+    <ff>'${pluginName}'</ff>
+    <category name='${pluginName}'>
+        <idea-plugin downloads='10' size='${fileSize}' date='${buildDate}000' url=''>
+            <name>${pluginName}</name>
+            <id>${group}</id>
+            <description>
+                <![CDATA[  ]]>
+            </description>
+            <version>${version}</version>
+            <vendor email='alotofall@gmail.com' url=''>(funivan)</vendor>
+            <download-url>${fileName}</download-url>
+            <idea-version min='n/a' max='n/a' since-build='162.*' until-build=''/>
+            <change-notes>
+                <![CDATA[ ]]>
+            </change-notes>
+            <rating>0.1</rating>
+        </idea-plugin>
+    </category>
+</plugin-repository>
