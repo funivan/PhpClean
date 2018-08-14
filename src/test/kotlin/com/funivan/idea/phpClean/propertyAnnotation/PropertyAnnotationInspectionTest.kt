@@ -10,8 +10,8 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
     fun testPropertiesWithoutDocumentation() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                      private ${'$'}name;
@@ -27,8 +27,8 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
     fun testPropertyWithCorrectDocumentation() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                         /** @var string[]|null */
@@ -43,11 +43,40 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
         )
     }
 
+    fun testPropertiesInFinalClass() {
+        assert(
+            PropertyAnnotationInspection(),
+            """
+                    <?php
+                    final class A {
+                     /** @var string[]*/
+                     public <warning descr="Property is not annotated correctly. Add null type">${'$'}names</warning>;
+                     /** @var int */
+                     protected <warning descr="Property is not annotated correctly. Add null type">${'$'}id</warning>;
+                    }
+                    """
+        )
+    }
+
+    fun testPropertiesInFinalClassWithExtends() {
+        assert(
+            PropertyAnnotationInspection(),
+            """
+                    <?php
+                    final class B extends C{
+                     /** @var string */
+                     protected ${'$'}id; // can be inited in the parent class
+                     /** @var int */
+                     private <warning descr="Property is not annotated correctly. Add null type">${'$'}age</warning>;
+                    }
+                    """
+        )
+    }
 
     fun testPrivatePropertiesInClassesWithoutConstructor() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                         /** @var string */
@@ -59,8 +88,8 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
     fun testPrivatePropertyNotInitializedInTheConstructor() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                         /**

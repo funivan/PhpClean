@@ -13,7 +13,10 @@ class PropertyAnnotationInspection : PhpInspection() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {
             override fun visitPhpClass(clazz: PhpClass) {
-                val properties = clazz.fields.filter { it.isPhysical && it.modifier.isPrivate }
+                var properties = clazz.fields.filter { it.isPhysical }
+                if (!clazz.isFinal || clazz.extendsList.referenceElements.isNotEmpty()) {
+                    properties = properties.filter { it.modifier.isPrivate }
+                }
                 if (clazz.constructor === null) {
                     for (property in properties) {
                         val nameNode = property.nameNode
@@ -24,13 +27,13 @@ class PropertyAnnotationInspection : PhpInspection() {
                                 if (varTag !== null) {
                                     val type = varTag.type
                                     val qf = AddNullTypeQF(
-                                            SmartPointerManager.getInstance(varTag.project).createSmartPsiElementPointer(varTag)
+                                        SmartPointerManager.getInstance(varTag.project).createSmartPsiElementPointer(varTag)
                                     )
                                     if (!type.types.contains("\\null")) {
                                         holder.registerProblem(
-                                                nameNode.psi,
-                                                "Property is not annotated correctly. Add null type",
-                                                qf
+                                            nameNode.psi,
+                                            "Property is not annotated correctly. Add null type",
+                                            qf
                                         )
                                     }
                                 }
@@ -38,7 +41,6 @@ class PropertyAnnotationInspection : PhpInspection() {
                         }
                     }
                 }
-
                 super.visitPhpClass(clazz)
             }
         }
