@@ -16,7 +16,7 @@ class AddNullTypeQF(private val pointer: SmartPsiElementPointer<PhpDocParamTag>)
         val element = pointer.element
         if (element is PhpDocTag) {
             val newText = element.text.replace(Regex("(@var[ ]+)([^ ]+)( |$)"), "$1$2|null$3")
-            val elementToInsert = PhpPsiElementFactory.createFromText(project, PhpDocTag::class.java, "/** " + newText + " */\\n")
+            val elementToInsert = PhpPsiElementFactory.createFromText(project, PhpDocTag::class.java, "/** $newText */\\n")
             if (elementToInsert !== null) {
                 element.replace(elementToInsert)
             }
