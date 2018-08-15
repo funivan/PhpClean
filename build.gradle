@@ -34,11 +34,10 @@ task createRepositoryXml(type: Copy) {
     dependsOn buildPlugin
     from 'src/ci/PhpClean-nightly.xml'
     into "${buildDir}/libs"
-    def buildDate = (System.currentTimeMillis() / 1000L).toInteger()
     expand([
-            buildDate: buildDate,
+            buildDate: (System.currentTimeMillis() / 1000L).toInteger(),
             fileSize: '18000',
-            version: project.property("version").toString() + "." + buildDate,
+            version: project.property("version").toString(),
             pluginName: project.property("pluginName"),
             fileName: jar.archiveName,
             group: project.property("group")
