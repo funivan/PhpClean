@@ -35,7 +35,7 @@ task createRepositoryXml(type: Copy) {
     from 'src/ci/PhpClean-nightly.xml'
     into "${buildDir}/libs"
     expand([
-            buildDate: '1230011',
+            buildDate: (System.currentTimeMillis() / 1000L).toInteger(),
             fileSize: '987654321',
             version: project.property("version"),
             pluginName: project.property("pluginName"),
