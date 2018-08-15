@@ -101,6 +101,27 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
         )
     }
 
+    fun testWithParentConstructor() {
+        assert(
+            PropertyAnnotationInspection(),
+            """
+                    <?php
+                    class A {
+                     public function __construct(){
+                     }
+                    }
+                    class B extends A {
+                        /**
+                         * @var string
+                         */
+                        private <warning descr="Property is not annotated correctly. Add null type">${'$'}p</warning>;
+                        /** @var string */
+                        protected ${'$'}name;
+                    }
+                """
+        )
+    }
+
     private fun assert(inspection: PhpInspection, code: String) {
         myFixture.configureByText(PhpFileType.INSTANCE, code)
         PsiDocumentManager.getInstance(project).commitAllDocuments()

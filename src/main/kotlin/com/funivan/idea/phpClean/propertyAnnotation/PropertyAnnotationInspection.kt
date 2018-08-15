@@ -17,7 +17,15 @@ class PropertyAnnotationInspection : PhpInspection() {
                 if (!clazz.isFinal || clazz.extendsList.referenceElements.isNotEmpty()) {
                     properties = properties.filter { it.modifier.isPrivate }
                 }
-                if (clazz.constructor === null) {
+                var constructorInClass = false
+                val clazzConstructor = clazz.constructor
+                if (clazzConstructor != null) {
+                    val inClass = clazzConstructor.containingClass
+                    if (inClass != null) {
+                        constructorInClass = inClass.fqn == clazz.fqn
+                    }
+                }
+                if (!constructorInClass) {
                     for (property in properties) {
                         val nameNode = property.nameNode
                         if (nameNode != null && property.children.isEmpty()) {
@@ -27,13 +35,13 @@ class PropertyAnnotationInspection : PhpInspection() {
                                 if (varTag !== null) {
                                     val type = varTag.type
                                     val qf = AddNullTypeQF(
-                                        SmartPointerManager.getInstance(varTag.project).createSmartPsiElementPointer(varTag)
+                                            SmartPointerManager.getInstance(varTag.project).createSmartPsiElementPointer(varTag)
                                     )
                                     if (!type.types.contains("\\null")) {
                                         holder.registerProblem(
-                                            nameNode.psi,
-                                            "Property is not annotated correctly. Add null type",
-                                            qf
+                                                nameNode.psi,
+                                                "Property is not annotated correctly. Add null type",
+                                                qf
                                         )
                                     }
                                 }
