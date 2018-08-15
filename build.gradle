@@ -47,16 +47,6 @@ task createRepositoryXml(type: Copy) {
     }
 }
 
-task deployNightlyBuiild(type: Exec) {
-    dependsOn createRepositoryXml
-    workingDir "$projectDir"
-    def login = "$System.env.ftp_login"
-    def password = "$System.env.ftp_password"
-    def host = "$System.env.ftp_host"
-    commandLine "curl -T build/libs/PhpClean.jar -u ${login}:${password} ftp://${host}/"
-    commandLine "curl -T build/libs/PhpClean-nightly.xml -u ${login}:${password} ftp://${host}/"
-}
-
 apply plugin: "idea"
 apply plugin: "kotlin"
 apply plugin: "org.jetbrains.intellij"

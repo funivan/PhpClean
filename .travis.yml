@@ -16,8 +16,13 @@ env:
 script:
   - ./gradlew check buildPlugin
 
-after_success:
-  - ./gradlew deployNightlyBuiild
+deploy:
+  provider: script
+  script:
+    - "curl -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/"
+    - "curl -T build/libs/PhpClean-nightly.xml -u $ftp_login:$ftp_password ftp://$ftp_host/"
+  on:
+    all_branches: true
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
