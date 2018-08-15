@@ -34,10 +34,11 @@ task createRepositoryXml(type: Copy) {
     dependsOn buildPlugin
     from 'src/ci/PhpClean-nightly.xml'
     into "${buildDir}/libs"
+    def buildDate = (System.currentTimeMillis() / 1000L).toInteger()
     expand([
-            buildDate: (System.currentTimeMillis() / 1000L).toInteger(),
-            fileSize: '987654321',
-            version: project.property("version"),
+            buildDate: buildDate,
+            fileSize: '18000',
+            version: project.property("version").toString() + "." + buildDate,
             pluginName: project.property("pluginName"),
             fileName: jar.archiveName,
             group: project.property("group")
@@ -45,8 +46,18 @@ task createRepositoryXml(type: Copy) {
     doFirst {
         ant.defaultexcludes remove: "${buildDir}/libs/*.xml"
     }
-
 }
+
+task deployNightlyBuiild(type: Exec) {
+    dependsOn createRepositoryXml
+    workingDir "$projectDir"
+    def login = "$System.env.ftp_login"
+    def password = "$System.env.ftp_password"
+    def host = "$System.env.ftp_host"
+    commandLine "curl -T build/libs/PhpClean.jar -u ${login}:${password} ftp://${host}/"
+    commandLine "curl -T build/libs/PhpClean-nightly.xml -u ${login}:${password} ftp://${host}/"
+}
+
 apply plugin: "idea"
 apply plugin: "kotlin"
 apply plugin: "org.jetbrains.intellij"

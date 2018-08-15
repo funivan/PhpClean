@@ -13,11 +13,10 @@ env:
   - IDEA_VERSION="IU-182.4129.4" PHP_PLUGIN_VERSION="182.3911.19"
 
 script:
-  - ./gradlew check buildPlugin createRepositoryXml
+  - ./gradlew check buildPlugin
 
 after_success:
-  - "curl -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/"
-  - "curl -T build/libs/PhpClean-nightly.xml -u $ftp_login:$ftp_password ftp://$ftp_host/"
+  - ./gradlew deployNightlyBuiild
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
