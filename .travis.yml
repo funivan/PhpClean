@@ -17,8 +17,8 @@ script:
   - ./gradlew check buildPlugin patchRepositoryXml
 
 after_success:
-  - if [ "$NIGHTLY" == "yes" ]; then "curl -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/" ; fi
-  - if [ "$NIGHTLY" == "yes" ]; then "curl -T build/libs/PhpClean-nightly.xml -u $ftp_login:$ftp_password ftp://$ftp_host/" ; fi
+  - "curl -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/"
+  - "curl -T build/libs/PhpClean-nightly.xml -u $ftp_login:$ftp_password ftp://$ftp_host/"
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
