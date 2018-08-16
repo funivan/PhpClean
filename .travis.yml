@@ -11,18 +11,14 @@ before_install:
 - "export ORG_GRADLE_PROJECT_version=${VERSION}"
 
 env:
-  - IDEA_VERSION="IU-182.4129.4" PHP_PLUGIN_VERSION="182.3911.19" VERSION=$(date +%Y.%m.%d%H%M%S)
+  - IDEA_VERSION="IU-182.4129.4" PHP_PLUGIN_VERSION="182.3911.19" VERSION=$(date +%Y.%m.%d%H%M%S) NIGHTLY="yes"
 
 script:
-  - ./gradlew check buildPlugin
+  - ./gradlew check buildPlugin patchRepositoryXml
 
-deploy:
-  provider: script
-  script:
-    - "curl -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/"
-    - "curl -T build/libs/PhpClean-nightly.xml -u $ftp_login:$ftp_password ftp://$ftp_host/"
-  on:
-    all_branches: true
+after_success:
+  - if [ "$NIGHTLY" == "yes" ]; then "curl -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/" fi
+  - if [ "$NIGHTLY" == "yes" ]; then "curl -T build/libs/PhpClean-nightly.xml -u $ftp_login:$ftp_password ftp://$ftp_host/" fi
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

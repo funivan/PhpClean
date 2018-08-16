@@ -30,8 +30,7 @@ intellij {
 }
 jar.archiveName = "${name}.jar"
 
-task createRepositoryXml(type: Copy) {
-    dependsOn buildPlugin
+task patchRepositoryXml(type: Copy) {
     from 'src/ci/PhpClean-nightly.xml'
     into "${buildDir}/libs"
     expand([
