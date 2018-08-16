@@ -3,3 +3,4 @@ PhpClean.iml
 .grade/
 out/
 build/
+.gradle/
