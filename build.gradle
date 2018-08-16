@@ -34,7 +34,7 @@ task patchRepositoryXml(type: Copy) {
     from 'src/ci/PhpClean-nightly.xml'
     into "${buildDir}/libs"
     expand([
-            buildDate: (System.currentTimeMillis() / 1000L).toInteger(),
+            buildDate: System.currentTimeMillis(),
             fileSize: '18000',
             version: project.property("version").toString(),
             pluginName: project.property("pluginName"),

@@ -2,7 +2,7 @@
 <plugin-repository>
     <ff>'Code Tools'</ff>
     <category name='${pluginName}'>
-        <idea-plugin downloads='10' size='${fileSize}' date='${buildDate}000' url=''>
+        <idea-plugin downloads='10' size='${fileSize}' date='${buildDate}' url=''>
             <name>${pluginName}</name>
             <id>${group}</id>
             <description>
