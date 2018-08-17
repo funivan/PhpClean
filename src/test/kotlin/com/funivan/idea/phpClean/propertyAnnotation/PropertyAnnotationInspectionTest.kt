@@ -43,6 +43,29 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
         )
     }
 
+    fun testAnnotateOwnFieldsOnly() {
+        assert(
+            PropertyAnnotationInspection(),
+            """
+                    <?php
+                    class A {
+                        /** @var string[] */
+                        private <warning descr="Property is not annotated correctly. Add null type">${'$'}first</warning>;
+                    }
+                    class B extends A {
+                        /**
+                         * @var string
+                         */
+                        private <warning descr="Property is not annotated correctly. Add null type">${'$'}second</warning>;
+
+                        private function getFirst() : array {
+
+                        }
+                    }
+                """
+        )
+    }
+
     fun testPropertiesInFinalClass() {
         assert(
             PropertyAnnotationInspection(),
