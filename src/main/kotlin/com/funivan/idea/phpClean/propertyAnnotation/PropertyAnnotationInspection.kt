@@ -13,7 +13,7 @@ class PropertyAnnotationInspection : PhpInspection() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {
             override fun visitPhpClass(clazz: PhpClass) {
-                var properties = clazz.fields.filter { it.isPhysical }
+                var properties = clazz.ownFields.filter { it.isPhysical }
                 if (!clazz.isFinal || clazz.extendsList.referenceElements.isNotEmpty()) {
                     properties = properties.filter { it.modifier.isPrivate }
                 }
