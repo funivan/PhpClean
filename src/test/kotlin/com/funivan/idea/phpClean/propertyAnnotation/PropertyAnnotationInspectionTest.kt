@@ -1,17 +1,13 @@
 package com.funivan.idea.phpClean.propertyAnnotation
 
-import com.intellij.psi.PsiDocumentManager
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
-import com.jetbrains.php.lang.PhpFileType
-import com.jetbrains.php.lang.inspections.PhpInspection
+import com.funivan.idea.phpClean.BaseInspectionTest
 
 
-class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
-
+class PropertyAnnotationInspectionTest : BaseInspectionTest() {
     fun testPropertiesWithoutDocumentation() {
         assert(
-            PropertyAnnotationInspection(),
-            """
+                PropertyAnnotationInspection(),
+                """
                     <?php
                     class A {
                      private ${'$'}name;
@@ -27,8 +23,8 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
     fun testPropertyWithCorrectDocumentation() {
         assert(
-            PropertyAnnotationInspection(),
-            """
+                PropertyAnnotationInspection(),
+                """
                     <?php
                     class A {
                         /** @var string[]|null */
@@ -45,8 +41,8 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
     fun testAnnotateOwnFieldsOnly() {
         assert(
-            PropertyAnnotationInspection(),
-            """
+                PropertyAnnotationInspection(),
+                """
                     <?php
                     class A {
                         /** @var string[] */
@@ -68,8 +64,8 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
     fun testPropertiesInFinalClass() {
         assert(
-            PropertyAnnotationInspection(),
-            """
+                PropertyAnnotationInspection(),
+                """
                     <?php
                     final class A {
                      /** @var string[]*/
@@ -83,8 +79,8 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
     fun testPropertiesInFinalClassWithExtends() {
         assert(
-            PropertyAnnotationInspection(),
-            """
+                PropertyAnnotationInspection(),
+                """
                     <?php
                     final class B extends C{
                      /** @var string */
@@ -98,8 +94,8 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
     fun testPrivatePropertiesInClassesWithoutConstructor() {
         assert(
-            PropertyAnnotationInspection(),
-            """
+                PropertyAnnotationInspection(),
+                """
                     <?php
                     class A {
                         /** @var string */
@@ -111,8 +107,8 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
     fun testPrivatePropertyNotInitializedInTheConstructor() {
         assert(
-            PropertyAnnotationInspection(),
-            """
+                PropertyAnnotationInspection(),
+                """
                     <?php
                     class A {
                         /**
@@ -126,8 +122,8 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
 
     fun testWithParentConstructor() {
         assert(
-            PropertyAnnotationInspection(),
-            """
+                PropertyAnnotationInspection(),
+                """
                     <?php
                     class A {
                      public function __construct(){
@@ -145,10 +141,4 @@ class PropertyAnnotationInspectionTest : LightCodeInsightFixtureTestCase() {
         )
     }
 
-    private fun assert(inspection: PhpInspection, code: String) {
-        myFixture.configureByText(PhpFileType.INSTANCE, code)
-        PsiDocumentManager.getInstance(project).commitAllDocuments()
-        myFixture.enableInspections(inspection)
-        myFixture.testHighlighting(true, false, true)
-    }
 }

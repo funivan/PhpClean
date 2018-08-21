@@ -20,6 +20,16 @@
                 language="PHP"
                 implementationClass="com.funivan.idea.phpClean.propertyAnnotation.PropertyAnnotationInspection"
         />
+        <localInspection
+                groupPath="PHP,PhpClean"
+                shortName="MethodCanBePrivateInspection"
+                displayName="Method can be private"
+                groupName="Architecture"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.architecture.MethodCanBePrivateInspection"
+        />
     </extensions>
 
     <actions>
