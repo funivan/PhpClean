@@ -1,3 +1,4 @@
+<!--suppress PluginXmlValidity -->
 <idea-plugin>
     <id>com.funivan.idea.phpClean</id>
     <name>PhpClean</name>
@@ -29,6 +30,16 @@
                 level="WARNING"
                 language="PHP"
                 implementationClass="com.funivan.idea.phpClean.inspections.architecture.MethodCanBePrivateInspection"
+        />
+        <localInspection
+                groupPath="PHP,PhpClean"
+                shortName="MissingParameterTypeDeclarationInspection"
+                displayName="Missing parameter type declaration"
+                groupName="Architecture"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.architecture.MissingParameterTypeDeclarationInspection"
         />
     </extensions>
 
