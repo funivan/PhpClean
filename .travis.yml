@@ -6,19 +6,23 @@ install:
   - echo "Override default Travis install step to avoid unnecessary './gradlew assemble'."
 
 before_install:
-- "export ORG_GRADLE_PROJECT_ideaVersion=${IDEA_VERSION}"
-- "export ORG_GRADLE_PROJECT_phpPluginVersion=${PHP_PLUGIN_VERSION}"
-- "export ORG_GRADLE_PROJECT_version=${VERSION}"
+- "export ORG_GRADLE_PROJECT_ideaVersion=${IDEA}"
+- "export ORG_GRADLE_PROJECT_phpPluginVersion=${PHP}"
+- "export ORG_GRADLE_PROJECT_version=$(date +%Y.%-m.%-d%H%M%S)"
 
-env:
-  - IDEA_VERSION="IU-182.4505.22" PHP_PLUGIN_VERSION="182.4129.45" VERSION=$(date +%Y.%-m.%-d%H%M%S) NIGHTLY="yes"
-
-script:
-  - ./gradlew check buildPlugin patchRepositoryXml
-
-after_success:
-  - "curl --max-time 15 -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/"
-  - "curl --max-time 15 -T build/libs/PhpClean-nightly.xml -u $ftp_login:$ftp_password ftp://$ftp_host/"
+matrix:
+  include:
+    - name: "Stable Test"
+      env: IDEA="IU-182.4505.22" PHP="182.4129.45"
+      script:
+        - ./gradlew check buildPlugin patchRepositoryXml
+      after_script:
+        - curl --max-time 15 -T build/libs/PhpClean.jar -u $ftp_login:$ftp_password ftp://$ftp_host/
+        - curl --max-time 15 -T build/libs/PhpClean-nightly.xml -u $ftp_login:$ftp_password ftp://$ftp_host/
+    - name: "EAP Tests"
+      env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="183.3283.10"
+      script:
+        - ./gradlew check buildPlugin
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
