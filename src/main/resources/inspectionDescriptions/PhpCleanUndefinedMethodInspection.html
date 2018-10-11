@@ -1,0 +1,16 @@
+<html>
+<body>
+Detect undefined method. The cally should be a variable with mixed type
+<br>
+<pre>
+class Email {
+ public function send(){ ... }
+}
+
+/** @var mixed|Email $email */
+$email->snd(); <-- error
+$email->send(); <-- ok
+
+</pre>
+</body>
+</html>

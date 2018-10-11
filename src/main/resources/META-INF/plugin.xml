@@ -41,6 +41,16 @@
                 language="PHP"
                 implementationClass="com.funivan.idea.phpClean.inspections.architecture.MissingParameterTypeDeclarationInspection"
         />
+        <localInspection
+                groupPath="PHP,PhpClean"
+                shortName="PhpCleanUndefinedMethodInspection"
+                displayName="Fallback Undefined method"
+                groupName="Fallback"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.fallback.PhpCleanUndefinedMethodInspection"
+        />
     </extensions>
 
     <actions>
