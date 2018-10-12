@@ -10,10 +10,10 @@ import com.jetbrains.php.lang.psi.elements.Variable
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
-class VariableTypeUsageInspection : PhpInspection() {
+class TypeViolationInspection : PhpInspection() {
 
     override fun getShortName(): String {
-        return "VariableTypeUsageInspection"
+        return "TypeViolationInspection"
     }
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {

@@ -51,6 +51,16 @@
                 language="PHP"
                 implementationClass="com.funivan.idea.phpClean.fallback.PhpCleanUndefinedMethodInspection"
         />
+        <localInspection
+                groupPath="PHP,PhpClean"
+                shortName="TypeViolationInspection"
+                displayName="Type violation"
+                groupName="Experimental"
+                enabledByDefault="false"
+                level="WEAK_WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.experimental.typeInspection.TypeViolationInspection"
+        />
     </extensions>
 
     <actions>
