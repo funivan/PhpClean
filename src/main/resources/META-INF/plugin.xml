@@ -57,7 +57,7 @@
                 displayName="Type violation"
                 groupName="Experimental"
                 enabledByDefault="false"
-                level="WEAK_WARNING"
+                level="WARNING"
                 language="PHP"
                 implementationClass="com.funivan.idea.phpClean.experimental.typeInspection.TypeViolationInspection"
         />
