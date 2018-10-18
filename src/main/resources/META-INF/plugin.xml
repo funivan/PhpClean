@@ -43,6 +43,16 @@
         />
         <localInspection
                 groupPath="PHP,PhpClean"
+                shortName="MethodVisibilityInspection"
+                displayName="Method visibility"
+                groupName="Architecture"
+                enabledByDefault="true"
+                level="WEAK WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.architecture.methodVisibility.MethodVisibilityInspection"
+        />
+        <localInspection
+                groupPath="PHP,PhpClean"
                 shortName="PhpCleanUndefinedMethodInspection"
                 displayName="Fallback Undefined method"
                 groupName="Fallback"
