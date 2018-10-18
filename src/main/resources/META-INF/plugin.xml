@@ -32,6 +32,16 @@
                 implementationClass="com.funivan.idea.phpClean.inspections.architecture.MethodCanBePrivateInspection"
         />
         <localInspection
+                groupPath="PHP"
+                shortName="MissingReturnTypeInspection"
+                displayName="Missing return type declaration"
+                groupName="PhpClean"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.architecture.returnType.MissingReturnTypeInspection"
+        />
+        <localInspection
                 groupPath="PHP,PhpClean"
                 shortName="MissingParameterTypeDeclarationInspection"
                 displayName="Missing parameter type declaration"
