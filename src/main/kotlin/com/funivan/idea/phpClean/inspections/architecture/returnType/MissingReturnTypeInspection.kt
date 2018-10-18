@@ -13,7 +13,7 @@ class MissingReturnTypeInspection : PhpInspection() {
         return object : PhpElementVisitor() {
             override fun visitPhpMethod(method: Method) {
                 if (method.returnType == null) {
-                    val name = method.nameNode?.psi;
+                    val name = method.nameNode?.psi
                     if (name != null) {
                         holder.registerProblem(name, "Missing return type")
                     }
