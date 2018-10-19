@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.inspections.architecture
+package com.funivan.idea.phpClean.inspections.methodCanBePrivate
 
 import com.funivan.idea.phpClean.BaseInspectionTest
 

@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.inspections.architecture
+package com.funivan.idea.phpClean.inspections.methodCanBePrivate
 
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemsHolder

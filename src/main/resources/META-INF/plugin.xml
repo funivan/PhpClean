@@ -29,7 +29,7 @@
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpClean.inspections.architecture.MethodCanBePrivateInspection"
+                implementationClass="com.funivan.idea.phpClean.inspections.methodCanBePrivate.MethodCanBePrivateInspection"
         />
         <localInspection
                 groupPath="PHP"
