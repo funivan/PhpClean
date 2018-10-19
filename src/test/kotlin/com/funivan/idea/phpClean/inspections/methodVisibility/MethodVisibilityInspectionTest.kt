@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.inspections.architecture.methodVisibility
+package com.funivan.idea.phpClean.inspections.methodVisibility
 
 import com.funivan.idea.phpClean.BaseInspectionTest
 

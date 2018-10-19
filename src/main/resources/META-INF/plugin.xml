@@ -19,7 +19,7 @@
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpClean.propertyAnnotation.PropertyAnnotationInspection"
+                implementationClass="com.funivan.idea.phpClean.inspections.propertyAnnotation.PropertyAnnotationInspection"
         />
         <localInspection
                 groupPath="PHP,PhpClean"
@@ -49,7 +49,7 @@
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpClean.inspections.architecture.MissingParameterTypeDeclarationInspection"
+                implementationClass="com.funivan.idea.phpClean.inspections.missingParameterType.MissingParameterTypeDeclarationInspection"
         />
         <localInspection
                 groupPath="PHP,PhpClean"
@@ -59,7 +59,7 @@
                 enabledByDefault="true"
                 level="WEAK WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpClean.inspections.architecture.methodVisibility.MethodVisibilityInspection"
+                implementationClass="com.funivan.idea.phpClean.inspections.methodVisibility.MethodVisibilityInspection"
         />
         <localInspection
                 groupPath="PHP,PhpClean"
@@ -69,17 +69,7 @@
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpClean.fallback.PhpCleanUndefinedMethodInspection"
-        />
-        <localInspection
-                groupPath="PHP,PhpClean"
-                shortName="TypeViolationInspection"
-                displayName="Type violation"
-                groupName="Experimental"
-                enabledByDefault="false"
-                level="WARNING"
-                language="PHP"
-                implementationClass="com.funivan.idea.phpClean.experimental.typeInspection.TypeViolationInspection"
+                implementationClass="com.funivan.idea.phpClean.inspections.experimental.phpCleanUndefinedMethod.PhpCleanUndefinedMethodInspection"
         />
     </extensions>
 

@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.propertyAnnotation
+package com.funivan.idea.phpClean.inspections.propertyAnnotation
 
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor

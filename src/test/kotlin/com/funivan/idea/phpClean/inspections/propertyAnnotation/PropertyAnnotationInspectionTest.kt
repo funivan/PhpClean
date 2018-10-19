@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.propertyAnnotation
+package com.funivan.idea.phpClean.inspections.propertyAnnotation
 
 import com.funivan.idea.phpClean.BaseInspectionTest
 

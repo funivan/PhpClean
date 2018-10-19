@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.inspections.architecture
+package com.funivan.idea.phpClean.inspections.missingParameterType
 
 
 import com.funivan.idea.phpClean.constrains.Constrain
@@ -17,7 +17,7 @@ class MissingParameterTypeDeclarationInspection : PhpInspection() {
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return ParameterVisitor(
-                Constrain({ it.declaredType.size() == 0 }),
+                Constrain { it.declaredType.size() == 0 },
                 "Missing parameter type",
                 holder
         )

@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.fallback
+package com.funivan.idea.phpClean.inspections.experimental.phpCleanUndefinedMethod
 
 import com.funivan.idea.phpClean.BaseInspectionTest
 
