@@ -16,7 +16,7 @@ matrix:
       env: IDEA="IU-182.4505.22" PHP="182.4129.45"
       script:
         - ./gradlew check buildPlugin patchRepositoryXml
-        - curl --max-time 15 -T {build/libs/PhpClean.jar,build/libs/PhpClean-nightly.xml} -u $ftp_login:$ftp_password ftp://$ftp_host/
+        - curl --max-time 15 -T "{build/libs/PhpClean.jar,build/libs/PhpClean-nightly.xml}" -u $ftp_login:$ftp_password ftp://$ftp_host/
     - name: "EAP Tests"
       env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="183.3283.10"
       script:
