@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.inspections.architecture.returnType
+package com.funivan.idea.phpClean.inspections.returnType
 
 import com.funivan.idea.phpClean.BaseInspectionTest
 
@@ -14,6 +14,18 @@ class MissingReturnTypeInspectionTest : BaseInspectionTest() {
                   */
                   protected function <warning descr="Missing return type">hide</warning>(){}
                   public function show() : void {}
+                }
+                """
+        )
+    }
+
+    fun testMagicMethods() {
+        assert(
+                MissingReturnTypeInspection(),
+                """<?php
+                class UserName {
+                  protected function __construct(){}
+                  protected function __clone(){}
                 }
                 """
         )

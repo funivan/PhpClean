@@ -39,7 +39,7 @@
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpClean.inspections.architecture.returnType.MissingReturnTypeInspection"
+                implementationClass="com.funivan.idea.phpClean.inspections.returnType.MissingReturnTypeInspection"
         />
         <localInspection
                 groupPath="PHP,PhpClean"
