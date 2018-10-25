@@ -18,7 +18,6 @@ class MissingReturnTypeInspection : PhpInspection() {
                     if (name != null && !skip.contains(name.text)) {
                         holder.registerProblem(name, "Missing return type")
                     }
-
                 }
             }
         }

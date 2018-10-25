@@ -4,7 +4,7 @@ import com.funivan.idea.phpClean.BaseInspectionTest
 
 class MissingReturnTypeInspectionTest : BaseInspectionTest() {
 
-    fun testProtectedMethod() {
+    fun testMethodWithoutReturnType() {
         assert(
                 MissingReturnTypeInspection(),
                 """<?php
@@ -13,7 +13,16 @@ class MissingReturnTypeInspectionTest : BaseInspectionTest() {
                   * @return void
                   */
                   protected function <warning descr="Missing return type">hide</warning>(){}
-                  public function show() : void {}
+                }
+                """
+        )
+    }
+    fun testWithoutReturnType() {
+        assert(
+                MissingReturnTypeInspection(),
+                """<?php
+                class Action {
+                  protected function hide() : void {}
                 }
                 """
         )

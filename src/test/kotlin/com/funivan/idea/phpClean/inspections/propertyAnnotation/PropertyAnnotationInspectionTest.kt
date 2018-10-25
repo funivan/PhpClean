@@ -4,6 +4,19 @@ import com.funivan.idea.phpClean.BaseInspectionTest
 
 
 class PropertyAnnotationInspectionTest : BaseInspectionTest() {
+    fun testProperyIsNotAnnotatedCorrectly() {
+        assert(
+                PropertyAnnotationInspection(),
+                """
+                    <?php
+                    class A {
+                        /** @var string[] */
+                        private <warning descr="Property is not annotated correctly. Add null type">${'$'}first</warning>;
+                    }
+                    """
+        )
+    }
+
     fun testPropertiesWithoutDocumentation() {
         assert(
                 PropertyAnnotationInspection(),
@@ -44,10 +57,6 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
                 PropertyAnnotationInspection(),
                 """
                     <?php
-                    class A {
-                        /** @var string[] */
-                        private <warning descr="Property is not annotated correctly. Add null type">${'$'}first</warning>;
-                    }
                     class B extends A {
                         /**
                          * @var string
