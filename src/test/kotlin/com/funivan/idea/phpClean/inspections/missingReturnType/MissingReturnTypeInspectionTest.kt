@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.inspections.returnType
+package com.funivan.idea.phpClean.inspections.missingReturnType
 
 import com.funivan.idea.phpClean.BaseInspectionTest
 

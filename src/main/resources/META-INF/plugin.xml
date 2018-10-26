@@ -2,30 +2,32 @@
 <idea-plugin>
     <id>com.funivan.idea.phpClean</id>
     <name>PhpClean</name>
-    <vendor email="alotofall@gmail.com" url="https://github.com/funivan/PhpClean/">Ivan Shcherbak</vendor>
+    <vendor email="alotofall@gmail.com" url="https://github.com/funivan/PhpClean/">
+        Ivan Shcherbak
+    </vendor>
 
     <description><![CDATA[
-    This plugin introduce some useful inspections
+    Static Code Analysis for PhpStorm and Intellij Idea.
     ]]></description>
     <depends>com.jetbrains.php</depends>
     <depends>com.intellij.modules.platform</depends>
     <idea-version since-build="145.0"/>
     <extensions defaultExtensionNs="com.intellij">
         <localInspection
-                groupPath="PHP,PhpClean"
+                groupPath="PHP"
                 shortName="PropertyAnnotationInspection"
                 displayName="Property annotation"
-                groupName="Types"
+                groupName="PhpClean"
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
                 implementationClass="com.funivan.idea.phpClean.inspections.propertyAnnotation.PropertyAnnotationInspection"
         />
         <localInspection
-                groupPath="PHP,PhpClean"
+                groupPath="PHP"
                 shortName="MethodCanBePrivateInspection"
                 displayName="Method can be private"
-                groupName="Architecture"
+                groupName="PhpClean"
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
@@ -39,23 +41,23 @@
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpClean.inspections.returnType.MissingReturnTypeInspection"
+                implementationClass="com.funivan.idea.phpClean.inspections.missingReturnType.MissingReturnTypeInspection"
         />
         <localInspection
-                groupPath="PHP,PhpClean"
+                groupPath="PHP"
                 shortName="MissingParameterTypeDeclarationInspection"
                 displayName="Missing parameter type declaration"
-                groupName="Architecture"
+                groupName="PhpClean"
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
                 implementationClass="com.funivan.idea.phpClean.inspections.missingParameterType.MissingParameterTypeDeclarationInspection"
         />
         <localInspection
-                groupPath="PHP,PhpClean"
+                groupPath="PHP"
                 shortName="MethodVisibilityInspection"
                 displayName="Method visibility"
-                groupName="Architecture"
+                groupName="PhpClean"
                 enabledByDefault="true"
                 level="WEAK WARNING"
                 language="PHP"
@@ -64,8 +66,8 @@
         <localInspection
                 groupPath="PHP,PhpClean"
                 shortName="PhpCleanUndefinedMethodInspection"
-                displayName="Fallback Undefined method"
-                groupName="Fallback"
+                displayName="PhpClean undefined method"
+                groupName="Experimental"
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
