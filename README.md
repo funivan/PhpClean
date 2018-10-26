@@ -4,6 +4,10 @@
 
 Code analyzers.
 ## List of inspection:
+
+### MethodShouldBeFinal
+Public methods should be closes (make method or class final)
+
 ### MethodVisibility 
 Method should be `private` or `public`
 

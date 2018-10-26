@@ -71,6 +71,16 @@
                 language="PHP"
                 implementationClass="com.funivan.idea.phpClean.inspections.experimental.phpCleanUndefinedMethod.PhpCleanUndefinedMethodInspection"
         />
+        <localInspection
+                groupPath="PHP"
+                shortName="MethodShouldBeFinalInspection"
+                displayName="Method should be final"
+                groupName="PhpClean"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.methodShouldBeFinal.MethodShouldBeFinalInspection"
+        />
     </extensions>
 
     <actions>
