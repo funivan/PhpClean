@@ -1,8 +1,8 @@
 package com.funivan.idea.phpClean.inspections.propertyAnnotation
 
+import com.funivan.idea.phpClean.spl.Pointer
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
-import com.intellij.psi.SmartPointerManager
 import com.jetbrains.php.lang.inspections.PhpInspection
 import com.jetbrains.php.lang.psi.elements.PhpClass
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
@@ -35,7 +35,7 @@ class PropertyAnnotationInspection : PhpInspection() {
                                 if (varTag !== null) {
                                     val type = varTag.type
                                     val qf = AddNullTypeQF(
-                                            SmartPointerManager.getInstance(varTag.project).createSmartPsiElementPointer(varTag)
+                                            Pointer(varTag).create()
                                     )
                                     if (!type.types.contains("\\null")) {
                                         holder.registerProblem(

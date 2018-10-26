@@ -4,8 +4,8 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.SmartPointerManager
 import com.intellij.psi.SmartPsiElementPointer
 
-class Pointer(private val keyword: PsiElement) {
-    fun create(): SmartPsiElementPointer<PsiElement> {
+class Pointer<T : PsiElement>(private val keyword: T) {
+    fun create(): SmartPsiElementPointer<T> {
         return SmartPointerManager.getInstance(keyword.project).createSmartPsiElementPointer(keyword)
     }
 }

@@ -17,7 +17,6 @@ Method should be `private` or `public`
 ### MissingParameterTypeDeclaration 
 Always specify parameter type
 
-
 ### PropertyAnnotation
 Properties that are not initialized in the constructor should be annotated as nullable.
 
