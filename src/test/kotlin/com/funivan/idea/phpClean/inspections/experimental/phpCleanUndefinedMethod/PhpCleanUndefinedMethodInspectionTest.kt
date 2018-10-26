@@ -29,8 +29,8 @@ class PhpCleanUndefinedMethodInspectionTest : BaseInspectionTest() {
                   private ${'$'}names;
                   public function __construct(){
                     ${'$'}this->names = [
-                      new Name(),
-                      new Name(),
+                      create Name(),
+                      create Name(),
                     ];
                   }
 
