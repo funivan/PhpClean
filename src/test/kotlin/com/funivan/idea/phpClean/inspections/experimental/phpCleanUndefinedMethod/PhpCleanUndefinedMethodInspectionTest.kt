@@ -29,8 +29,8 @@ class PhpCleanUndefinedMethodInspectionTest : BaseInspectionTest() {
                   private ${'$'}names;
                   public function __construct(){
                     ${'$'}this->names = [
-                      create Name(),
-                      create Name(),
+                      new Name(),
+                      new Name(),
                     ];
                   }
 
@@ -38,10 +38,8 @@ class PhpCleanUndefinedMethodInspectionTest : BaseInspectionTest() {
                     foreach(${'$'}this->names as ${'$'}name){
                         ${'$'}name->value();
                         ${'$'}name-><warning descr="Undefined method">vle</warning>();
-
                     }
                   }
-
                 }
                 """
         )
