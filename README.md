@@ -9,16 +9,16 @@ Code analyzers.
 Public methods should be closes (make method or class final)
 
 ### MethodShouldBeFinal
-Public methods should be closes (make method or class final)
+Public methods should be closed (make method or class final)
 
 ### MethodVisibility 
-Method should be `private` or `public`
+Protected methods make our classes more open. Write private or public methods only.
 
 ### MissingParameterTypeDeclaration 
-Always specify parameter type
-
-### PropertyAnnotation
-Properties that are not initialized in the constructor should be annotated as nullable.
+Always specify parameter type. This is a good practice.
 
 ### PhpCleanUndefinedMethod (experimental)
 Try to fix undefined method phpstorm bugs: https://youtrack.jetbrains.com/issue/WI-5223
+
+### PropertyAnnotation
+Properties that are not initialized in the constructor should be annotated as nullable.

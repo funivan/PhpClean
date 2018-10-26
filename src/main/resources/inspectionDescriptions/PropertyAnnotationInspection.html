@@ -1,8 +1,7 @@
-<html>
-<body>
 Properties that are not initialized in the constructor should be annotated as nullable.
+<!--main-->
 <br>
-<pre>
+<code>
 class User {
  /** @var string */ //<--- warning will be here.
  private $name;
@@ -10,6 +9,4 @@ class User {
  public function getName(){ ... }
  public function setName(string $name){ ... }
 }
-</pre>
-</body>
-</html>
+</code>

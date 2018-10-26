@@ -19,17 +19,10 @@ class MethodCanBePrivateInspection : PhpInspection() {
             override fun visitPhpClass(clazz: PhpClass) {
                 if (clazz.isFinal && clazz.extendsList.referenceElements.isEmpty()) {
                     for (method in clazz.ownMethods.filter { it.modifier.isProtected }) {
-                        var qf: LocalQuickFix? = null
-                        val keyword: PsiElement? = protectedKeyword(method)
-                        if (keyword !== null) {
-                            qf = MakeMethodPrivateQF(
-                                    Pointer(keyword).create()
-                            )
-                        }
                         holder.registerProblem(
                                 method.nameIdentifier ?: method,
                                 "Method can be private",
-                                qf
+                                quickFix(method)
                         )
                     }
                 }
@@ -37,9 +30,17 @@ class MethodCanBePrivateInspection : PhpInspection() {
         }
     }
 
+    private fun quickFix(method: Method): LocalQuickFix? {
+        return protectedKeyword(method)?.let {
+            MakeMethodPrivateQF(
+                    Pointer(it).create()
+            )
+        }
+    }
+
     private fun protectedKeyword(method: Method): PsiElement? {
-        val firstChild = method.firstChild
         var keyword: PsiElement? = null
+        val firstChild = method.firstChild
         if (firstChild is PhpModifierList) {
             keyword = firstChild.getNode().findChildByType(PhpTokenTypes.kwPROTECTED)?.psi
         }

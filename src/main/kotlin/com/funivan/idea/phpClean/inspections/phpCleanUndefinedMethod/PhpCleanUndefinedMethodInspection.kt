@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.inspections.experimental.phpCleanUndefinedMethod
+package com.funivan.idea.phpClean.inspections.phpCleanUndefinedMethod
 
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor

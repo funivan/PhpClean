@@ -69,7 +69,7 @@
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpClean.inspections.experimental.phpCleanUndefinedMethod.PhpCleanUndefinedMethodInspection"
+                implementationClass="com.funivan.idea.phpClean.inspections.phpCleanUndefinedMethod.PhpCleanUndefinedMethodInspection"
         />
         <localInspection
                 groupPath="PHP"
