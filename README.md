@@ -6,7 +6,7 @@ Code analyzers.
 ## List of inspection:
 
 ### MethodCanBePrivate
-Public methods should be closes (make method or class final)
+Protected methods can be converted to private.
 
 ### MethodShouldBeFinal
 Public methods should be closed (make method or class final)
