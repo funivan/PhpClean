@@ -43,4 +43,16 @@ class MethodCanBePrivateInspectionTest : BaseInspectionTest() {
         )
     }
 
+    fun testCheckPublicMethod() {
+        assert(
+                MethodCanBePrivateInspection(),
+                """<?php
+                final class Id {
+                  public function __construct() {}
+                  public function size() {}
+                }
+                """
+        )
+    }
+
 }
