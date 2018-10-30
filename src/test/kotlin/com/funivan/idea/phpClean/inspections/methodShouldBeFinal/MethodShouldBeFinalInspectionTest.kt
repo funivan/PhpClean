@@ -9,7 +9,7 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
                 MethodShouldBeFinalInspection(),
                 """<?php
                 class User{
-                 public function <warning descr="Method should be final">name</warning>():string{
+                 public function <warning descr="Method should be final">name</warning>() : string {
                   return "";
                  }
                 }

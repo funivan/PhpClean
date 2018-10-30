@@ -9,9 +9,7 @@ class MissingReturnTypeInspectionTest : BaseInspectionTest() {
                 MissingReturnTypeInspection(),
                 """<?php
                 class Action {
-                 /**
-                  * @return void
-                  */
+                 /** @return void */
                   protected function <warning descr="Missing return type">hide</warning>(){}
                 }
                 """
