@@ -83,6 +83,16 @@
                 language="PHP"
                 implementationClass="com.funivan.idea.phpClean.inspections.methodShouldBeFinal.MethodShouldBeFinalInspection"
         />
+        <localInspection
+                groupPath="PHP"
+                shortName="VirtualTypeCheckInspection"
+                displayName="Virtual type check"
+                groupName="PhpClean"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.virtualTypeCheck.VirtualTypeCheckInspection"
+        />
     </extensions>
 
     <actions>

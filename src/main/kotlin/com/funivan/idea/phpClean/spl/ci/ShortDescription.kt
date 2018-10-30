@@ -9,11 +9,15 @@ class ShortDescription(private val inspection: PhpInspection) {
         val description = ResourceUtil.loadText(
                 inspection.javaClass.getResource("/inspectionDescriptions/" + inspection.shortName + ".html")
         )
-        val match = Regex("(.+)\n<!-- main -->", RegexOption.DOT_MATCHES_ALL).find(description)
+        val match = Regex("(.+)\n" + delimiter, RegexOption.DOT_MATCHES_ALL).find(description)
         var result = ""
         if (match !== null) {
             result = match.groupValues.firstOrNull() ?: ""
         }
         return result
+    }
+
+    companion object {
+        val delimiter = "<!-- main -->"
     }
 }

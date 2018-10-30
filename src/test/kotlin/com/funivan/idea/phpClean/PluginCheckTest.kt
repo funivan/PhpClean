@@ -11,7 +11,7 @@ class PluginCheckTest : BaseInspectionTest() {
         for (inspection in AllInspections().all()) {
             val value = ShortDescription(inspection).value()
             Assert.assertTrue(
-                    "Inspection ${inspection.shortName} description should have main section",
+                    "Inspection ${inspection.shortName} description should have section delimiter (" + ShortDescription.delimiter + ")",
                     value !== ""
             )
         }

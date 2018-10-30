@@ -1,0 +1,6 @@
+Use assert to check variable type instead of doc comment.
+<!-- main -->
+<code>
+    /** @var $user User */ <-- invalid
+    assert($user instanceof User) <-- valid
+</code>
