@@ -9,7 +9,7 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
                 """<?php
                 class User{}
                 /** @var ${'$'}user <warning descr="Use assert to check variable type">User</warning> */;
-                assert(${'$'}user instanceof User); // // Valid
+                assert(${'$'}user instanceof User); // Valid
                 """
         )
     }
