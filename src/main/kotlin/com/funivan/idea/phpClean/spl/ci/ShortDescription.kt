@@ -10,12 +10,9 @@ class ShortDescription(private val inspection: PhpInspection) {
                 inspection.javaClass.getResource("/inspectionDescriptions/" + inspection.shortName + ".html")
         )
         val match = Regex("(.+)\n<!-- main -->", RegexOption.DOT_MATCHES_ALL).find(description)
-        var result = "";
+        var result = ""
         if (match !== null) {
-            match.groupValues.firstOrNull()?.let {
-                result = it
-            }
-
+            result = match.groupValues.firstOrNull() ?: ""
         }
         return result
     }

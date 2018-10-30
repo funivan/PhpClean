@@ -4,7 +4,7 @@ import com.funivan.idea.phpClean.BaseInspectionTest
 
 
 class PropertyAnnotationInspectionTest : BaseInspectionTest() {
-    fun testProperyIsNotAnnotatedCorrectly() {
+    fun testPropertyIsNotAnnotatedCorrectly() {
         assert(
                 PropertyAnnotationInspection(),
                 """
