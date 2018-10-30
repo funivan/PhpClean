@@ -9,6 +9,7 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
                 """<?php
                 class User{}
                 /** @var ${'$'}user <warning descr="Use assert to check variable type">User</warning> */;
+                assert(${'$'}user instanceof User); // // Valid
                 """
         )
     }
@@ -43,6 +44,19 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
                 """<?php
                 /** @var ${'$'}user string|null */;
                 /** @var ${'$'}user stdClass|int */;
+                """
+        )
+    }
+
+    fun testFunctionParam() {
+        assert(
+                VirtualTypeCheckInspection(),
+                """<?php
+                class Options{}
+                /** @param ${'$'}options Options */
+                function show(${'$'}options){
+
+                }
                 """
         )
     }

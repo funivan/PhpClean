@@ -16,7 +16,7 @@ class VirtualTypeCheckInspection : PhpInspection() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {
             override fun visitPhpDocTag(tag: PhpDocTag) {
-                if (tag.children.size == 3) {
+                if (tag.children.size == 3 && tag.name == "@var") {
                     val variable = tag.children.firstOrNull { it is PhpDocVariable }
                     val variableType = tag.children.firstOrNull { it is PhpDocType }
                     if (variable is PhpDocVariable && variableType is PhpDocType) {

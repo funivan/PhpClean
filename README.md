@@ -68,6 +68,15 @@ class A {
   // ^^^ Property is not annotated correctly. Add null type
 }
 ```
+
+### VirtualTypeCheck
+Use assert to check variable type instead of doc comment.
+```php
+class User{}
+/** @var $user User</warning>;
+// ^^^ Use assert to check variable type
+assert($user instanceof User); // Valid
+```
                  
 ## Installation
 You can install nightly builds using custom repository.
