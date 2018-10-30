@@ -40,7 +40,7 @@ Always specify parameter type. This is a good practice.
 function withName($name){}
 // ^^^ Missing parameter type
 ```
-### MissingReturnTypeInspection 
+### MissingReturnType
 Always specify result type of the function.
 ```php
 class Action {
