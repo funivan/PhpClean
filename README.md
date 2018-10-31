@@ -73,7 +73,7 @@ class A {
 Use assert to check variable type instead of doc comment.
 ```php
 class User{}
-/** @var $user User</warning>;
+/** @var $user User */;
 // ^^^ Use assert to check variable type
 assert($user instanceof User); // Valid
 ```
