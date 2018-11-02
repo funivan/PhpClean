@@ -1,5 +1,6 @@
 package com.funivan.idea.phpClean.inspections.virtualTypeCheck
 
+import com.funivan.idea.phpClean.spl.Pointer
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.PhpIndex
@@ -27,7 +28,12 @@ class VirtualTypeCheckInspection : PhpInspection() {
                                 if (PhpIndex.getInstance(variableType.project).getClassesByFQN(plain).isNotEmpty()) {
                                     holder.registerProblem(
                                             variableType,
-                                            "Use assert to check variable type"
+                                            "Use assert to check variable type",
+                                            UseAssertQF(
+                                                    Pointer(tag.parent).create(),
+                                                    Pointer(variable).create(),
+                                                    Pointer(variableType).create()
+                                            )
                                     )
                                 }
                             }

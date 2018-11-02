@@ -60,4 +60,19 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+
+    fun testReverseFormat() {
+        assert(
+                VirtualTypeCheckInspection(),
+                """<?php
+/** @var <warning descr="Use assert to check variable type">Options</warning> ${'$'}options */
+class Options{};
+                """.trimIndent(),
+                """<?php
+assert(${'$'}options instanceof Options);
+class Options{};
+                """.trimIndent()
+        )
+    }
+
 }
