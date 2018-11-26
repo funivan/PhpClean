@@ -26,7 +26,9 @@ class MethodShouldBeFinalInspection : PhpInspection() {
 
     private fun methods(clazz: PhpClass): List<Method> {
         return clazz.ownMethods.filter {
-            !it.modifier.isFinal && !it.modifier.isAbstract && it.name != "__construct"
+            !it.modifier.isFinal
+                    && !it.modifier.isAbstract && it.name != "__construct"
+                    && !it.modifier.isStatic
         }
     }
 }

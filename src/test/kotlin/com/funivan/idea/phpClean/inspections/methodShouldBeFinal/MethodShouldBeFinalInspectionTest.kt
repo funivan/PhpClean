@@ -60,4 +60,15 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+
+    fun testSkipStaticMethod(){
+        assert(
+                MethodShouldBeFinalInspection(),
+                """<?php
+                class Dealer {
+                  public static function show(){}
+                }
+                """
+        )
+    }
 }
