@@ -5,11 +5,11 @@
 Static Code Analysis for PhpStorm and Intellij Idea.
 
 ## Installation
-### Stable builds
+#### Stable builds
 Open IDE go to `Settings->Plugins->Marketplace` search for the `PhpClean`.
 Hit `install` button. Restart your IDE.
 
-### Nightly build - get fresh version after each commit
+#### Nightly build - get fresh version after each commit
 You can install nightly builds using custom repository.
  
 Open IDE go to `Settings->Plugins->Manage plugin repositories` and add repository
@@ -19,7 +19,7 @@ Then you can install **PhpClean**
 
 ## List of inspection:
 
-### MethodCanBePrivate
+#### MethodCanBePrivate
 Protected methods can be converted to private.
 ```php
 final class A {
@@ -27,7 +27,7 @@ final class A {
   // ^^^ Method can be private
 }
 ```
-### MethodShouldBeFinal
+#### MethodShouldBeFinal
 Public methods should be closed (make method or class final)
 ```php
 class User{
@@ -37,7 +37,7 @@ class User{
  }
 }
 ```          
-### MethodVisibility 
+#### MethodVisibility 
 Protected methods make our classes more open. Write private or public methods only.
 ```php
 class User {
@@ -47,13 +47,13 @@ class User {
   private function login() : string {}
 }
 ```
-### MissingParameterTypeDeclaration 
+#### MissingParameterTypeDeclaration 
 Always specify parameter type. This is a good practice.
 ```php
 function withName($name){}
 // ^^^ Missing parameter type
 ```
-### MissingReturnType
+#### MissingReturnType
 Always specify result type of the function.
 ```php
 class Action {
@@ -63,7 +63,7 @@ class Action {
 }
 ```
 
-### PhpCleanUndefinedMethod (experimental)
+#### PhpCleanUndefinedMethod (experimental)
 Try to fix undefined method phpstorm bugs: https://youtrack.jetbrains.com/issue/WI-5223
 ```php
 final class Email { public function send(){}}
@@ -72,7 +72,7 @@ $email->send();
 $email->show();
 // ^^^ Undefined method
 ```
-### PropertyAnnotation
+#### PropertyAnnotation
 Properties that are not initialized in the constructor should be annotated as nullable.
 ```php
 class A {
@@ -82,7 +82,7 @@ class A {
 }
 ```
 
-### VirtualTypeCheck
+#### VirtualTypeCheck
 Use assert to check variable type instead of doc comment.
 ```php
 class User{}
