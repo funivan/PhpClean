@@ -8,7 +8,7 @@ import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
 class MissingReturnTypeInspection : PhpInspection() {
-    private val skip = hashSetOf("__construct", "__clone")
+    private val skip = hashSetOf("__construct", "__clone", "__destruct")
     override fun getShortName() = "MissingReturnTypeInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {

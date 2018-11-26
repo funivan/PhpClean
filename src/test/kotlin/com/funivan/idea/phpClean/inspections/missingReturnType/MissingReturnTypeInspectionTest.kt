@@ -33,6 +33,7 @@ class MissingReturnTypeInspectionTest : BaseInspectionTest() {
                 class UserName {
                   protected function __construct(){}
                   protected function __clone(){}
+                  protected function __destruct() {}
                 }
                 """
         )
