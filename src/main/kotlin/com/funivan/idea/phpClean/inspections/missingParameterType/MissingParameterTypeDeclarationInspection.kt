@@ -1,26 +1,33 @@
 package com.funivan.idea.phpClean.inspections.missingParameterType
 
 
-import com.funivan.idea.phpClean.constrains.Constrain
-import com.funivan.idea.phpClean.visitors.ParameterVisitor
+import com.funivan.idea.phpClean.spl.ParameterDescription
 import com.intellij.codeInspection.ProblemsHolder
-import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.inspections.PhpInspection
+import com.jetbrains.php.lang.psi.elements.Method
+import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
 class MissingParameterTypeDeclarationInspection : PhpInspection() {
 
-    override fun getShortName(): String {
-        return "MissingParameterTypeDeclarationInspection"
-    }
+    private val name = "MissingParameterTypeDeclarationInspection"
+
+    override fun getShortName() = name
 
 
-    override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-        return ParameterVisitor(
-                Constrain { it.declaredType.size() == 0 },
-                "Missing parameter type",
-                holder
-        )
+    override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PhpElementVisitor {
+        return object : PhpElementVisitor() {
+            override fun visitPhpMethod(method: Method) {
+                val description = ParameterDescription(method)
+                method.parameters
+                        .filter { it.declaredType.size() == 0 }
+                        .filter { !description.get(it.name).contains("@Suppress(${name})") }
+                        .forEach {
+                            // @todo Add suppress QF for the missing parameter
+                            holder.registerProblem(it, "Missing parameter type")
+                        }
+            }
+        }
     }
 
 }
