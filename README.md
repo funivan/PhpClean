@@ -1,6 +1,11 @@
 # PhpClean - PhpStorm/IDEA plugin  
 
-[![Build Status](https://travis-ci.com/funivan/PhpClean.svg?branch=master)](https://travis-ci.com/funivan/PhpClean)
+![Build Status](https://img.shields.io/travis/com/funivan/PhpClean.svg?style=flat-square)
+![Version](https://img.shields.io/jetbrains/plugin/v/11272.svg?style=flat-square)
+![Downloads](https://img.shields.io/jetbrains/plugin/d/11272.svg?style=flat-square)
+![License](https://img.shields.io/github/license/funivan/PhpClean.svg?style=flat-square)
+
+
 
 Static Code Analysis for PhpStorm and Intellij Idea.
 
@@ -15,6 +20,10 @@ You can install nightly builds using custom repository.
 Open IDE go to `Settings->Plugins->Manage plugin repositories` and add repository
 `http://funivan.com/ci/PhpClean-nightly.xml`
 Then you can install **PhpClean**
+
+
+![GitHub commits (since latest release)](https://img.shields.io/github/commits-since/funivan/PhpClean/latest.svg?style=flat-square)
+
 
 
 ## List of inspection:
