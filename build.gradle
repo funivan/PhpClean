@@ -13,7 +13,7 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 patchPluginXml {
-    changeNotes project.property("changeNotes").toString()
+    changeNotes project.property("changeNotes").toString().replace("\n", "<br>\n")
 }
 intellij {
     version ideaVersion
