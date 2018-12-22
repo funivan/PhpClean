@@ -90,7 +90,16 @@ class A {
   // ^^^ Property is not annotated correctly. Add null type
 }
 ```
-
+#### ToStringCall
+**Experimental** Detect automatic type casting
+```php
+class Hello {
+    public function randomize(): self { /* .. */return $this; }
+    public function __toString(){ echo 'Hi'; }
+}
+echo (new Hello())->randomize();
+// ^^^ Deprecated __toString call
+```
 #### VirtualTypeCheck
 Use assert to check variable type instead of doc comment.
 ```php
