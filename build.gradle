@@ -32,7 +32,7 @@ intellij {
 jar.archiveName = "${name}.jar"
 
 task deployFtp(type:Exec){
-    commandLine "curl --max-time 30 -T \"{build/libs/PhpClean.jar,build/libs/PhpClean-nightly.xml}\" -u $ftp_login:$ftp_password ftp://$ftp_host/"
+    commandLine "curl --max-time 30 -T \"{build/libs/PhpClean.jar,build/libs/PhpClean-nightly.xml}\" -u ${System.env.ftp_login}:${System.env.ftp_password} ftp://${System.env.ftp_host}/"
 }
 task patchRepositoryXml(type: Copy) {
     from 'src/ci/PhpClean-nightly.xml'
