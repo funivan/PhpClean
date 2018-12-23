@@ -12,8 +12,7 @@ matrix:
     - name: "Stable Test"
       env: IDEA="IU-182.4505.22" PHP="182.4129.45"
       script:
-        - ./gradlew check buildPlugin patchRepositoryXml
-        - curl --max-time 15 -T "{build/libs/PhpClean.jar,build/libs/PhpClean-nightly.xml}" -u $ftp_login:$ftp_password ftp://$ftp_host/
+        - ./gradlew check buildPlugin patchRepositoryXml deployFtp
     - name: "EAP Tests"
       env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="183.4284.150"
       script:
