@@ -49,13 +49,15 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                 """
                     <?php
                     class Hello {
-                      public function str():string{ echo 'Hi'; }
+                      public function str():string{ return 'Hi'; }
                       /**
                        * @return string|int|boolean
                        */
                       public function s(){ echo 'Hi'; }
                     }
                     echo (new Hello())->str();
+                    ${'$'}hi = new Hello();
+                    echo ${'$'}hi->str();
                     echo (new Hello())->s();
                     """
         )

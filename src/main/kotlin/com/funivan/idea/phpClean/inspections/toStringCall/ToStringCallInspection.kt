@@ -31,7 +31,7 @@ class ToStringCallInspection : PhpInspection() {
                     if (resolve is Method) {
                         val type = resolve.returnType
                         var safeType = false
-                        if (type == null || listOf("\\string", "\\int", "\\float").contains(type.classReference.fqn)) {
+                        if (type == null || listOf("string", "int", "float").contains(type.text)) {
                             safeType = true
                         }
                         if (!safeType) {

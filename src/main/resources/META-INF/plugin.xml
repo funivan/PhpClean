@@ -26,7 +26,7 @@
         <localInspection
                 groupPath="PHP"
                 shortName="ToStringCallInspection"
-                displayName="Virtual toString call"
+                displayName="Deprecated __toString call"
                 groupName="PhpClean"
                 enabledByDefault="true"
                 level="WARNING"
