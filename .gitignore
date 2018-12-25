@@ -4,3 +4,4 @@ PhpClean.iml
 out/
 build/
 .gradle/
+local.properties

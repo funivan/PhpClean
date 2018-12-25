@@ -15,6 +15,10 @@ compileTestKotlin {
 patchPluginXml {
     changeNotes project.property("changeNotes").toString().replace("\n", "<br>\n")
 }
+
+if (file('local.properties').exists()) {
+    apply from: 'local.properties'
+}
 intellij {
     version ideaVersion
     sandboxDirectory project.rootDir.canonicalPath + "/build/idea-sandbox"
@@ -31,19 +35,22 @@ intellij {
 }
 jar.archiveName = "${name}.jar"
 
-task deployFtp(type:Exec){
-    commandLine "curl --max-time 30 -T \"{build/libs/PhpClean.jar,build/libs/PhpClean-nightly.xml}\" -u ${System.env.ftp_login}:${System.env.ftp_password} ftp://${System.env.ftp_host}/"
+task deployFtp(type: Exec) {
+    def ci_ftp_host = project.hasProperty("ftp_host") ? project.property("ftp_host").toString() : System.getenv("ci_ftp_host")
+    def ci_ftp_password = project.hasProperty("ftp_password") ? project.property("ftp_password").toString() : System.getenv("ci_ftp_password")
+    def ci_ftp_login = project.hasProperty("ftp_login") ? project.property("ftp_login").toString() : System.getenv("ci_ftp_login")
+    commandLine "curl --max-time 30 -T \"{build/libs/PhpClean.jar,build/libs/PhpClean-nightly.xml}\" -u ${ci_ftp_login}:${ci_ftp_password} ftp://${ci_ftp_host}/"
 }
 task patchRepositoryXml(type: Copy) {
     from 'src/ci/PhpClean-nightly.xml'
     into "${buildDir}/libs"
     expand([
-            buildDate: System.currentTimeMillis(),
-            fileSize: '18000',
-            version: project.property("version").toString(),
+            buildDate : System.currentTimeMillis(),
+            fileSize  : '18000',
+            version   : project.property("version").toString(),
             pluginName: project.property("pluginName"),
-            fileName: jar.archiveName,
-            group: project.property("group")
+            fileName  : jar.archiveName,
+            group     : project.property("group")
     ])
     doFirst {
         ant.defaultexcludes remove: "${buildDir}/libs/*.xml"
