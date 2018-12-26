@@ -39,7 +39,7 @@ task deployFtp(type: Exec) {
     def ci_ftp_host = project.hasProperty("ftp_host") ? project.property("ftp_host").toString() : System.getenv("ci_ftp_host")
     def ci_ftp_password = project.hasProperty("ftp_password") ? project.property("ftp_password").toString() : System.getenv("ci_ftp_password")
     def ci_ftp_login = project.hasProperty("ftp_login") ? project.property("ftp_login").toString() : System.getenv("ci_ftp_login")
-    commandLine "curl", "--max-time 15", "-T", "{build/libs/PhpClean.jar,build/libs/PhpClean-nightly.xml}", "ftp://${ci_ftp_login}:${ci_ftp_password}@${ci_ftp_host}/"
+    commandLine "curl", "--max-time", "15", "-T", "{build/libs/PhpClean.jar,build/libs/PhpClean-nightly.xml}", "ftp://${ci_ftp_login}:${ci_ftp_password}@${ci_ftp_host}/"
 }
 task patchRepositoryXml(type: Copy) {
     from 'src/ci/PhpClean-nightly.xml'
