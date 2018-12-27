@@ -15,10 +15,6 @@ compileTestKotlin {
 patchPluginXml {
     changeNotes project.property("changeNotes").toString().replace("\n", "<br>\n")
 }
-
-if (file('local.properties').exists()) {
-    apply from: 'local.properties'
-}
 intellij {
     version ideaVersion
     sandboxDirectory project.rootDir.canonicalPath + "/build/idea-sandbox"
