@@ -1,4 +1,5 @@
 .idea/
+.env
 PhpClean.iml
 .grade/
 out/
