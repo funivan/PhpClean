@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 if [[ -f ".env" ]]; then
- echo "file exists"
  export $(cat .env | xargs)
 fi
 export ORG_GRADLE_PROJECT_version=$(date +%Y.%-m.%-d%H%M%S)
