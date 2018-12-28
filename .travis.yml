@@ -9,7 +9,7 @@ matrix:
     - name: "Stable Test"
       env: IDEA="IU-182.4505.22" PHP="182.4129.45"
       script:
-        - ./deploy.sh
+        - export ORG_GRADLE_PROJECT_version=$(date +%Y.%-m.%-d%H%M%S) ; ./gradlew check buildPlugin patchRepositoryXml deployNightly
     - name: "EAP Tests"
       env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="183.4284.150"
       script:

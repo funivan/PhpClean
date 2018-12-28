@@ -12,6 +12,9 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
+if (file('local.properties').exists()) {
+    apply from: 'local.properties'
+}
 patchPluginXml {
     changeNotes project.property("changeNotes").toString().replace("\n", "<br>\n")
 }
@@ -45,6 +48,10 @@ task patchRepositoryXml(type: Copy) {
     doFirst {
         ant.defaultexcludes remove: "${buildDir}/libs/*.xml"
     }
+}
+task deployNightly(type: Exec) {
+    def ci_deploy_uri = project.hasProperty("ci_deploy_uri") ? project.property("ci_deploy_uri").toString() : System.getenv("DEPLOY_URI")
+    commandLine "curl", "-F", "file[]=@build/libs/PhpClean.jar", "-F", "file[]=@build/libs/PhpClean-nightly.xml", "${ci_deploy_uri}"
 }
 apply plugin: "idea"
 apply plugin: "kotlin"
