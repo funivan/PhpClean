@@ -1,5 +1,6 @@
 package com.funivan.idea.phpClean.spl.ci
 
+import com.funivan.idea.phpClean.inspections.globalVariableUsage.GlobalVariableUsageInspection
 import com.funivan.idea.phpClean.inspections.methodCanBePrivate.MethodCanBePrivateInspection
 import com.funivan.idea.phpClean.inspections.methodShouldBeFinal.MethodShouldBeFinalInspection
 import com.funivan.idea.phpClean.inspections.methodVisibility.MethodVisibilityInspection
@@ -13,6 +14,7 @@ import com.funivan.idea.phpClean.inspections.virtualTypeCheck.VirtualTypeCheckIn
 
 class AllInspections {
     fun all() = listOf(
+            GlobalVariableUsageInspection(),
             MethodCanBePrivateInspection(),
             MethodShouldBeFinalInspection(),
             MethodVisibilityInspection(),

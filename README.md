@@ -28,6 +28,13 @@ Then you can install **PhpClean**
 
 ## List of inspection:
 
+#### GlobalVariableUsageInspection
+This inspection detects usages of global variables.
+```php
+echo $_GET['name'];
+// ^^^ Deprecated global variable usage
+```
+
 #### MethodCanBePrivate
 Protected methods can be converted to private.
 ```php

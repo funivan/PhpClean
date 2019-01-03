@@ -15,6 +15,16 @@
     <extensions defaultExtensionNs="com.intellij">
         <localInspection
                 groupPath="PHP"
+                shortName="GlobalVariableUsageInspection"
+                displayName="Global variable usage"
+                groupName="PhpClean"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.globalVariableUsage.GlobalVariableUsageInspection"
+        />
+        <localInspection
+                groupPath="PHP"
                 shortName="PropertyAnnotationInspection"
                 displayName="Property annotation"
                 groupName="PhpClean"
