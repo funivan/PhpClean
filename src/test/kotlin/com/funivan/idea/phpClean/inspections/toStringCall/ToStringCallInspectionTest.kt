@@ -12,7 +12,20 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                       public function randomize(): self { /* .. */return ${'$'}this; }
                       public function __toString(){ echo 'Hi'; }
                     }
-                     <warning descr="Deprecated __toString call">echo</warning>(new Hello())->randomize();
+                     echo <warning descr="Deprecated __toString call">(new Hello())->randomize()</warning>;
+                    """
+        )
+    }
+    fun testConcatenation() {
+        assert(
+                ToStringCallInspection(),
+                """
+                    <?php
+                    class Hello {
+                      public function randomize(): self { /* .. */return ${'$'}this; }
+                      public function __toString(){ echo 'Hi'; }
+                    }
+                     ${'$'}phrase = 'Hi ' . <warning descr="Deprecated __toString call">(new Hello())->randomize()</warning>;
                     """
         )
     }
@@ -27,6 +40,7 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                       public function __toString(){ echo 'Hi'; }
                     }
                      echo (new Hello())->randomize()->__toString();
+                     'Who say ' . (new Hello())->randomize()->__toString() . '?';
                     """
         )
     }
@@ -39,7 +53,8 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     class Hello {
                       public function __toString(){ echo 'Hi'; }
                     }
-                    <warning descr="Deprecated __toString call">echo</warning> new Hello();
+                    echo <warning descr="Deprecated __toString call">new Hello()</warning>;
+                    ${'$'}phrase = <warning descr="Deprecated __toString call">new Hello()</warning> . ' there';
                     """
         )
     }
@@ -58,6 +73,7 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     echo (new Hello())->str();
                     ${'$'}hi = new Hello();
                     echo ${'$'}hi->str();
+                    ${'$'}message = ${'$'}hi->str() . 'msg';
                     echo (new Hello())->s();
                     """
         )

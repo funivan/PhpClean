@@ -6,27 +6,26 @@ import com.jetbrains.php.lang.inspections.PhpInspection
 import com.jetbrains.php.lang.psi.elements.Method
 import com.jetbrains.php.lang.psi.elements.MethodReference
 import com.jetbrains.php.lang.psi.elements.NewExpression
-import com.jetbrains.php.lang.psi.elements.PhpEchoStatement
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
 class ToStringCallInspection : PhpInspection() {
+    val context = IsToStringContext()
     override fun getShortName() = "ToStringCallInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {
             override fun visitPhpNewExpression(expression: NewExpression) {
                 val parent = expression.parent
-                if (parent is PhpEchoStatement) {
+                if (context.match(parent)) {
                     holder.registerProblem(
-                            parent.firstChild ?: expression,
+                            expression,
                             "Deprecated __toString call"
                     )
                 }
             }
 
             override fun visitPhpMethodReference(reference: MethodReference) {
-                val parent = reference.parent
-                if (parent is PhpEchoStatement) {
+                if (context.match(reference.parent)) {
                     val resolve = reference.resolve()
                     if (resolve is Method) {
                         val type = resolve.returnType
@@ -36,7 +35,7 @@ class ToStringCallInspection : PhpInspection() {
                         }
                         if (!safeType) {
                             holder.registerProblem(
-                                    parent.firstChild ?: reference,
+                                    reference,
                                     "Deprecated __toString call"
                             )
                         }
