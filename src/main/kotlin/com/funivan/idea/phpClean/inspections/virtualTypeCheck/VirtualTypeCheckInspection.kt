@@ -25,7 +25,8 @@ class VirtualTypeCheckInspection : PhpInspection() {
                         if (!type.isUndefined && type.types.size == 1) {
                             val plain = type.toStringResolved()
                             if (!PhpType.isPluralType(plain) && !PhpType.isNotExtendablePrimitiveType(plain)) {
-                                if (PhpIndex.getInstance(variableType.project).getClassesByFQN(plain).isNotEmpty()) {
+                                val index = PhpIndex.getInstance(variableType.project)
+                                if (index.getClassesByFQN(plain).isNotEmpty() || index.getInterfacesByFQN(plain).isNotEmpty()) {
                                     holder.registerProblem(
                                             variableType,
                                             "Use assert to check variable type",

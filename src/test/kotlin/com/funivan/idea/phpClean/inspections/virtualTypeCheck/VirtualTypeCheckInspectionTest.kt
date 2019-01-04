@@ -13,6 +13,16 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+    fun testUseAssertWithInterface() {
+        assert(
+                VirtualTypeCheckInspection(),
+                """<?php
+                interface User{}
+                /** @var ${'$'}user <warning descr="Use assert to check variable type">User</warning> */;
+                assert(${'$'}user instanceof User); // Valid
+                """
+        )
+    }
 
     fun testIgnoreArray() {
         assert(
