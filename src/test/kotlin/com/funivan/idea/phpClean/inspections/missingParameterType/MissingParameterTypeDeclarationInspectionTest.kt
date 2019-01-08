@@ -14,6 +14,7 @@ class MissingParameterTypeDeclarationInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+
     fun testMethodWithParameterTypes() {
         assert(
                 MissingParameterTypeDeclarationInspection(),
@@ -34,6 +35,17 @@ class MissingParameterTypeDeclarationInspectionTest : BaseInspectionTest() {
                      * @param string ${'$'}name @Suppress(MissingParameterTypeDeclarationInspection)
                      */
                     function withId(${'$'}name){}
+                }
+                """
+        )
+    }
+
+    fun testInvalidPsi() {
+        assert(
+                MissingParameterTypeDeclarationInspection(),
+                """<?php
+                class User{
+                    abstract function withId(<error descr="Expected: variable">,</error><error descr="Unexpected: )">)</error>
                 }
                 """
         )
