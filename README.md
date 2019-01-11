@@ -44,7 +44,7 @@ final class A {
 }
 ```
 #### MethodShouldBeFinal
-Public methods should be closed (make method or class final)
+Methods should be closed (make method or class final)
 ```php
 class User{
  public function name() : string {

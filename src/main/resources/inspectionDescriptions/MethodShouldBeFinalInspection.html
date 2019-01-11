@@ -1,2 +1,10 @@
-Public methods should be closed (make method or class final)
+Methods should be closed (make method or class final)
+<code><?php
+    class User{
+    public function name() : string {
+      // ^^^ Method should be final
+      return "";
+     }
+    }
+?></code>
 <!-- main -->
