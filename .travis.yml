@@ -7,9 +7,7 @@ before_install:
 matrix:
   include:
     - name: "Stable Test"
-      env: IDEA="IU-182.4505.22" PHP="182.4129.45"
-      script:
-        - ./gradlew check buildPlugin
+      env: IDEA="IU-2018.3" PHP="183.4284.150"
   deploy:
     - provider: script
       script:
@@ -19,9 +17,9 @@ matrix:
         branch: master
   allow_failures:
     - name: "EAP Tests"
-      env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="183.4284.150"
-      script:
-        - ./gradlew check buildPlugin
+      env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="191.4212.41"
+script:
+  - ./gradlew check buildPlugin
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
