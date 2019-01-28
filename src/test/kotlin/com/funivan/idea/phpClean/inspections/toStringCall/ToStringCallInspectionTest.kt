@@ -45,6 +45,19 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
         )
     }
 
+    fun testNullableString() {
+        assert(
+                ToStringCallInspection(),
+                """
+                    <?php
+                     class A{
+                      function test(): ?string{ return null; }
+                     }
+                     echo (new A())->test();
+                    """
+        )
+    }
+
     fun testNewObject() {
         assert(
                 ToStringCallInspection(),
