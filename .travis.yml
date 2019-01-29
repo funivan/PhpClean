@@ -7,14 +7,7 @@ before_install:
 matrix:
   include:
     - name: "Stable Test"
-      env: IDEA="IU-2018.3" PHP="183.4284.150"
-      deploy:
-        - provider: script
-          script:
-            - export ORG_GRADLE_PROJECT_version=$(date +%Y.%-m.%-d%H%M%S) ; ./gradlew buildPlugin patchRepositoryXml deployNightly
-          skip_cleanup: true
-          on:
-            branch: master
+      env: IDEA="IU-2018.3" PHP="183.4284.150" DEPLOY=true
   allow_failures:
     - name: "EAP Tests"
       env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="191.4212.41"
@@ -28,3 +21,11 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
   timeout: 3600
+deploy:
+  - provider: script
+    script:
+      - export ORG_GRADLE_PROJECT_version=$(date +%Y.%-m.%-d%H%M%S) ; ./gradlew buildPlugin patchRepositoryXml deployNightly
+    skip_cleanup: true
+    on:
+      branch: master
+      condition: $DEPLOY = true
