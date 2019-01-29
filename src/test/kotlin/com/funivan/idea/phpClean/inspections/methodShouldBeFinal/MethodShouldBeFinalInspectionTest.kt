@@ -71,4 +71,14 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+    fun testSkipPrivateMethods(){
+        assert(
+                MethodShouldBeFinalInspection(),
+                """<?php
+                class Dealer {
+                  private function show(){}
+                }
+                """
+        )
+    }
 }
