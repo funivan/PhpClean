@@ -3,10 +3,7 @@ package com.funivan.idea.phpClean.inspections.toStringCall
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.inspections.PhpInspection
-import com.jetbrains.php.lang.psi.elements.Method
-import com.jetbrains.php.lang.psi.elements.MethodReference
-import com.jetbrains.php.lang.psi.elements.NewExpression
-import com.jetbrains.php.lang.psi.elements.Variable
+import com.jetbrains.php.lang.psi.elements.*
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
