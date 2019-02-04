@@ -97,6 +97,14 @@ class A {
   // ^^^ Property is not annotated correctly. Add null type
 }
 ```
+### RedundantDocCommentTag
+Types that are specified in the php can be omitted in the PhpDoc blocks
+```php
+/**
+ * @return void // <-- warning will be here
+ */
+function show(string $message):void {}
+```
 #### ToStringCall
 **Experimental** Detect automatic type casting
 ```php
