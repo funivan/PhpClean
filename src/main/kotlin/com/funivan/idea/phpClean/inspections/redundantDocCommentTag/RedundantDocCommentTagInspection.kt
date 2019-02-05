@@ -17,17 +17,25 @@ class RedundantDocCommentTagInspection : PhpInspection() {
         return object : PhpElementVisitor() {
             override fun visitPhpFunction(function: Function) {
                 val comment = function.docComment
+                val items = mutableListOf<Pair<PhpDocTag?, PhpType?>>()
                 if (comment != null) {
-                    val returnTag = comment.returnTag
-                    val returnType = function.returnType
-                    if (returnTag !== null && returnType !== null) {
-                        checkComment(returnTag, returnType.type)
+                    items.add(Pair(
+                            comment.returnTag,
+                            function.returnType?.type
+                    ))
+                    for ((index, paramTag) in comment.paramTags.withIndex()) {
+                        items.add(Pair(
+                                paramTag, function.parameters.get(index + 1)?.type
+                        ))
+                    }
+                    for (item in items) {
+                        checkComment(item.first, item.second)
                     }
                 }
             }
 
-            fun checkComment(tag: PhpDocTag, type: PhpType) {
-                if (tag.tagValue == "") {
+            fun checkComment(tag: PhpDocTag?, type: PhpType?) {
+                if (tag != null && type != null && tag.tagValue == "") {
                     val first = tag.firstPsiChild
                     if (first is PhpDocType && first.type.toStringResolved() == type.toStringResolved()) {
                         holder.registerProblem(
