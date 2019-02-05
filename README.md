@@ -97,7 +97,7 @@ class A {
   // ^^^ Property is not annotated correctly. Add null type
 }
 ```
-### RedundantDocCommentTag
+#### RedundantDocCommentTag
 Types that are specified in the php can be omitted in the PhpDoc blocks
 ```php
 /**
