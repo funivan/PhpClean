@@ -30,8 +30,25 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
                     <?php
                      /**
                       *<warning descr="Redundant PhpDoc tag">@param string ${'$'}message</warning>
+                      * @param string ${'$'}test
                       */
                      function show(int ${'$'}a, string ${'$'}message):void {}
+                    """
+        )
+    }
+
+    fun testRedundantParameterTagWithClassFQN() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                    class A{
+                     /**
+                      *<warning descr="Redundant PhpDoc tag">@param \stdClass ${'$'}c</warning>
+                      * @param string ${'$'}a
+                      */
+                     function isObject(${'$'}a, ${'$'}b, stdClass ${'$'}c):bool {}
+                     }
                     """
         )
     }
