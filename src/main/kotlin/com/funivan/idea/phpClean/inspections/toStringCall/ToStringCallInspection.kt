@@ -4,6 +4,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.inspections.PhpInspection
 import com.jetbrains.php.lang.psi.elements.*
+import com.jetbrains.php.lang.psi.elements.Function
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
@@ -33,10 +34,10 @@ class ToStringCallInspection : PhpInspection() {
                 }
             }
 
-            override fun visitPhpMethodReference(reference: MethodReference) {
+            override fun visitPhpFunctionCall(reference: FunctionReference) {
                 if (context.match(reference.parent)) {
                     val resolve = reference.resolve()
-                    if (resolve is Method) {
+                    if (resolve is Function) {
                         val type = resolve.returnType
                         var safeType = false
                         if (type == null || listOf("string", "int", "float", "?string", "?int", "?float").contains(type.text)) {
@@ -50,6 +51,10 @@ class ToStringCallInspection : PhpInspection() {
                         }
                     }
                 }
+            }
+
+            override fun visitPhpMethodReference(reference: MethodReference) {
+                visitPhpFunctionCall(reference)
             }
         }
     }
