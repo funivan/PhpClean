@@ -1,6 +1,8 @@
 Always specify parameter type. This is a good practice.
-<!-- main -->
 <code>
-    function withName($name); <-- bad
-    function withName(string $name); <-- nice
+    class User{
+     function withName($name){}
+     // ^^^ - Missing parameter type
+    }
 </code>
+<!-- main -->
