@@ -1,11 +1,16 @@
-workflow "fast-prototype" {
+workflow "cleanup" {
   on = "pull_request"
-  resolves = ["branch cleanup", "auto-pull-request"]
+  resolves = ["branch cleanup"]
 }
 
 action "branch cleanup" {
   uses = "jessfraz/branch-cleanup-action@master"
   secrets = ["GITHUB_TOKEN"]
+}
+
+workflow "fast-prototype" {
+  on = "push"
+  resolves = ["auto-pull-request"]
 }
 
 action "auto-pull-request" {
