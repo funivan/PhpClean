@@ -10,7 +10,7 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     <?php
                     class Hello {
                       public function randomize(): self { /* .. */return ${'$'}this; }
-                      public function __toString(){ echo 'Hi'; }
+                      public function __toString(){ return 'Hi'; }
                     }
                      echo <warning descr="Deprecated __toString call">(new Hello())->randomize()</warning>;
                     """
