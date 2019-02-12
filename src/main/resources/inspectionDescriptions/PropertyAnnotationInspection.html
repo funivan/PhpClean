@@ -1,11 +1,12 @@
 Properties that are not initialized in the constructor should be annotated as nullable.
 <!-- main -->
 <br>
-<code><?php
+<code>x
 class User {
- /** @var string */ //<--- warning will be here.
+ /** @var string */
+ // ^^^ - warning will be here.
  private $name;
  public function getName(){  }
  public function setName(string $name){  }
 }
-?></code>
+</code>
