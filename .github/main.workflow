@@ -14,7 +14,7 @@ workflow "fast-prototype" {
 }
 
 action "auto-pull-request" {
-  uses = "funivan/github-autopr@0.1.0"
+  uses = "funivan/github-autopr@master"
   secrets = ["GITHUB_TOKEN"]
   args = ".head_commit.message .*#pr.*"
 }
