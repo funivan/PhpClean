@@ -1,12 +1,11 @@
 Try to fix undefined method phpstorm bugs: https://youtrack.jetbrains.com/issue/WI-5223
 <!-- main -->
 Detect undefined method. The cally should be a variable with mixed type
-<code>
+<code><?php
     class Email {
-    public function send(){ }
+      public function send(){ }
     }
-
     /** @var mixed|Email $email */
-    $email->snd(); <-- error
-    $email->send(); <-- ok
-</code>
+    $email->snd(); // <-- error
+    $email->send(); // <-- ok
+?></code>

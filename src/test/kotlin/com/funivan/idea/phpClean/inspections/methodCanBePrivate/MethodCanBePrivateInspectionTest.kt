@@ -8,12 +8,12 @@ class MethodCanBePrivateInspectionTest : BaseInspectionTest() {
         assert(
                 MethodCanBePrivateInspection(),
                 """<?php
-                final class A {
+                final class User {
                   protected function <warning descr="Method can be private">name</warning>() {}
                 }
                 """,
                 """<?php
-                final class A {
+                final class User {
                   private function name() {}
                 }
                 """

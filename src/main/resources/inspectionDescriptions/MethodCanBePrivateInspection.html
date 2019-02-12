@@ -1,2 +1,8 @@
 Protected methods can be converted to private.
+<code><?php
+final class User {
+  protected function name() {}
+  // ^^^^ - Method can be private
+}
+?></code>
 <!-- main -->

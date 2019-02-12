@@ -32,15 +32,15 @@ Then you can install **PhpClean**
 This inspection detects usages of global variables.
 ```php
 echo $_GET['name'];
-// ^^^ Deprecated global variable usage
+// ^^^ - Deprecated global variable usage
 ```
 
 #### MethodCanBePrivate
 Protected methods can be converted to private.
 ```php
-final class A {
+final class User {
   protected function name() {} 
-  // ^^^ Method can be private
+  // ^^^ - Method can be private
 }
 ```
 #### MethodShouldBeFinal
