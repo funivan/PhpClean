@@ -9,6 +9,7 @@ action "branch cleanup" {
 }
 
 action "auto-pull-request" {
-  uses = "repetitive/actions/auto-pull-request@master"
+  uses = "funivan/github-autopr@0.1.0"
   secrets = ["GITHUB_TOKEN"]
+  args = ".head_commit.message .*#pr.*"
 }
