@@ -52,4 +52,17 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
                     """
         )
     }
+
+    fun testReturnMultipleTypes() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                     /**
+                      * @return \Generator|string[]
+                      */
+                     function names():\Generator {yield "";}
+                    """
+        )
+    }
 }

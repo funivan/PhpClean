@@ -39,15 +39,16 @@ class RedundantDocCommentTagInspection : PhpInspection() {
 
             fun checkComment(tag: PhpDocTag?, type: PhpType?) {
                 if (tag != null && type != null && tag.tagValue == "") {
-                    val first = tag.firstPsiChild
-                    if (first is PhpDocType && first.type.toStringResolved() == type.toStringResolved()) {
+                    val children = tag.children.slice(IntRange(0, 1))
+                    val first = children.firstOrNull()
+                    val last = children.lastOrNull()
+                    if (first is PhpDocType && last !is PhpDocType && first.type.types.size == 1 && first.type.toStringResolved() == type.toStringResolved()) {
                         holder.registerProblem(
                                 tag,
                                 "Redundant PhpDoc tag",
                                 RemoveTagQF(Pointer(tag).create())
                         )
                     }
-
                 }
             }
         }
