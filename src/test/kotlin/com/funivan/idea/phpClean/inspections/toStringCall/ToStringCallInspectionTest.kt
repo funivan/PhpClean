@@ -91,4 +91,19 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     """
         )
     }
+    fun testStaticMethod() {
+        assert(
+                ToStringCallInspection(),
+                """
+                    <?php
+                    class someClass {
+                     public function __toString(){
+                     }
+                     public static function create() : self{
+                     }
+                    }
+                    echo <warning descr="Deprecated __toString call">SomeClass::create()</warning>;
+                    """
+        )
+    }
 }
