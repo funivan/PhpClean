@@ -18,6 +18,6 @@ class ShortDescription(private val inspection: PhpInspection) {
     }
 
     companion object {
-        val delimiter = "<!-- main -->"
+        const val delimiter = "<!-- main -->"
     }
 }

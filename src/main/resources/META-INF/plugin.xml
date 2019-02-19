@@ -13,6 +13,17 @@
     <depends>com.intellij.modules.platform</depends>
     <idea-version since-build="145.0"/>
     <extensions defaultExtensionNs="com.intellij">
+        
+        <localInspection
+                groupPath="PHP"
+                shortName="DeprecatedDocTagInspection"
+                displayName="Deprecated doc tag"
+                groupName="PhpClean"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.deprecatedDocTag.DeprecatedDocTagInspection"
+        />
         <localInspection
                 groupPath="PHP"
                 shortName="GlobalVariableUsageInspection"
