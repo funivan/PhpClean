@@ -29,11 +29,3 @@ deploy:
     on:
       branch: master
       condition: $DEPLOY = true
-
-  - provider: releases
-      api_key: $GITHUB_OAUTH
-      file: "./build/libs/PhpClean.jar"
-      skip_cleanup: true
-      on:
-        tags: true
-        condition: $DEPLOY = true
