@@ -19,12 +19,10 @@ class MissingParameterTypeDeclarationInspection : PhpInspection() {
         return object : PhpElementVisitor() {
             override fun visitPhpMethod(method: Method) {
                 val description = ParameterDescription(method)
-                method.parameters
+                Parameters(method)
                         .filter { it.declaredType.size() == 0 }
                         .filter { !description.get(it.name).contains("@Suppress(${name})") }
-                        .filter { it.name !== "" }
                         .forEach {
-                            // @todo Add suppress QF for the missing parameter
                             holder.registerProblem(it, "Missing parameter type")
                         }
             }
