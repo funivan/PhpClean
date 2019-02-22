@@ -4,6 +4,7 @@ import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.Paramet
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ParameterType
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ReturnType
 import com.funivan.idea.phpClean.spl.Pointer
+import com.funivan.idea.phpClean.spl.jb.qf.RemoveTagQF
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType

@@ -1,5 +1,7 @@
 package com.funivan.idea.phpClean.inspections.deprecatedDocTag
 
+import com.funivan.idea.phpClean.spl.Pointer
+import com.funivan.idea.phpClean.spl.jb.qf.RemoveTagQF
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.ui.ListEditForm
 import com.intellij.psi.PsiElementVisitor
@@ -19,7 +21,8 @@ class DeprecatedDocTagInspection : PhpInspection() {
                 if (tags.contains(tag.name.removePrefix("@"))) {
                     holder.registerProblem(
                             tag,
-                            "Deprecated tag"
+                            "Deprecated tag",
+                            RemoveTagQF(Pointer(tag).create())
                     )
                 }
             }

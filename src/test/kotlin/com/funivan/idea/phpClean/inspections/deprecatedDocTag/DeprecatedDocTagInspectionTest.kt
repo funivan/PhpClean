@@ -14,6 +14,12 @@ class DeprecatedDocTagInspectionTest : BaseInspectionTest() {
                      * <warning descr="Deprecated tag">@property ${'$'}name</warning>
                      */
                      class User{}
+                """,
+                """<?php
+                    /**
+                     *
+                     */
+                     class User{}
                 """
         )
     }
@@ -29,6 +35,14 @@ class DeprecatedDocTagInspectionTest : BaseInspectionTest() {
                      * @property-write ${'$'}id
                      * <warning descr="Deprecated tag">@property-read ${'$'}name</warning>
                      * <warning descr="Deprecated tag">@method user()</warning>
+                     */
+                """,
+                """<?php
+                    /**
+                     * @property ${'$'}user
+                     * @property-write ${'$'}id
+                     *
+                     *
                      */
                 """
         )
