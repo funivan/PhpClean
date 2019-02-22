@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.inspections.redundantDocCommentTag
+package com.funivan.idea.phpClean.spl.jb.qf
 
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
