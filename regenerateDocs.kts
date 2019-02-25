@@ -1,5 +1,17 @@
 import java.io.File
 
+fun write(file: File, content: String): Boolean {
+    var result = false
+    if (!file.exists()) {
+        file.createNewFile()
+    }
+    if (file.readText() != content) {
+        result = true
+        file.writeText(content)
+    }
+    return result
+}
+
 class Block(private val file: File) {
     fun file() = file
     fun uid() = file.name.replace("Inspection.html", "")
@@ -9,7 +21,7 @@ class Block(private val file: File) {
             .replace("</code>", "```").trim()
 }
 
-var changed = 0
+var changed = mutableListOf<Boolean>()
 val blocks = mutableListOf<Block>()
 val inspectionDirectory = "src/main/resources/inspectionDescriptions"
 val directory = "src/main/kotlin/com/funivan/idea/phpClean/inspections"
@@ -20,13 +32,9 @@ File(directory)
         .forEach {
             blocks.add(it)
             val file = File(inspectionDirectory + "/" + it.file().name)
-            if (!file.exists()) {
-                file.createNewFile()
-            }
-            if (file.readText() != it.file().readText()) {
-                changed++
-                file.writeText(it.file().readText())
-            }
+            changed.add(
+                    write(file, it.file().readText())
+            )
         }
 val readme = File("README.md")
 var content = readme.readText()
@@ -37,8 +45,5 @@ content = content.replace(
 content = content + "\n" + blocks.sortedBy { it.uid() }
         .map { "#### ${it.uid()} \n${it.short()}\n" }
         .joinToString("")
-if (readme.readText() != content) {
-    changed++
-    readme.writeText(content)
-}
-println(changed)
+changed.add(write(readme, content))
+println("Changed files : " + changed.filter { it == true }.size)
