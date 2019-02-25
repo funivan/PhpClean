@@ -1,5 +1,6 @@
 package com.funivan.idea.phpClean.inspections.globalVariableUsage
 
+import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.inspections.PhpInspection
@@ -7,7 +8,7 @@ import com.jetbrains.php.lang.psi.elements.Variable
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
-class GlobalVariableUsageInspection : PhpInspection() {
+class GlobalVariableUsageInspection : PhpCleanInspection() {
     val names = hashSetOf(
             "GLOBALS",
             "_SERVER",

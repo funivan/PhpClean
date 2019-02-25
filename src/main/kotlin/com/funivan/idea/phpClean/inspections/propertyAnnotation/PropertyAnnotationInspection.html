@@ -1,10 +1,9 @@
 Properties that are not initialized in the constructor should be annotated as nullable.
 <!-- main -->
 <br>
-<code>x
+<code>
 class User {
- /** @var string */
- // ^^^ - warning will be here.
+ /** @var string */ // <-- Property is not annotated correctly. Add null type
  private $name;
  public function getName(){  }
  public function setName(string $name){  }

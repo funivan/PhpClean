@@ -1,9 +1,0 @@
-<b>Experimental</b> Detect automatic type casting
-<code>
-    class Hello {
-        public function randomize(): self { /* .. */return $this; }
-        public function __toString(){ return 'Hi'; }
-    }
-    echo (new Hello())->randomize(); // <-- error
-</code>
-<!-- main -->

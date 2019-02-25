@@ -27,100 +27,105 @@ Then you can install **PhpClean**
 
 
 ## List of inspection:
-
-#### GlobalVariableUsageInspection
-This inspection detects usages of global variables.
-```php
-echo $_GET['name'];
-// ^^^ - Deprecated global variable usage
-```
-
-#### MethodCanBePrivate
-Protected methods can be converted to private.
-```php
-final class User {
-  protected function name() {} 
-  // ^^^ - Method can be private
-}
-```
-#### MethodShouldBeFinal
-Methods should be closed (make method or class final)
-```php
-class User{
- public function name() : string {
- // ^^^ Method should be final
-  return "";
- }
-}
-```          
-#### MethodVisibility 
-Protected methods make our classes more open. Write private or public methods only.
-```php
-class User {
-  protected function name() : string {}
-  // ^^^ Do not write protected methods. Only public or private
-  public function id() : string {}
-  private function login() : string {}
-}
-```
-#### MissingParameterTypeDeclaration 
-Always specify parameter type. This is a good practice.
-```php
-function withName($name){}
-// ^^^ Missing parameter type
-```
-#### MissingReturnType
-Always specify result type of the function.
-```php
-class Action {
- /** @return void */
- protected function hide(){}
- // ^^^ Missing return type
-}
-```
-
-#### PhpCleanUndefinedMethod (experimental)
-Try to fix undefined method phpstorm bugs: https://youtrack.jetbrains.com/issue/WI-5223
-```php
-final class Email { public function send(){}}
-/** @var mixed|Email $email */;
-$email->send();
-$email->show();
-// ^^^ Undefined method
-```
-#### PropertyAnnotation
-Properties that are not initialized in the constructor should be annotated as nullable.
-```php
-class A {
-  /** @var string[] */
-  private $first;
-  // ^^^ Property is not annotated correctly. Add null type
-}
-```
-#### RedundantDocCommentTag
-Types that are specified in the php can be omitted in the PhpDoc blocks
+#### RedundantDocCommentTag 
+Types that are specified in the php can be omitted in the PhpDoc blocks<br>
 ```php
 /**
- * @return void // <-- warning will be here
+ * @return void // <-- Redundant PhpDoc tag
  */
-function show(string $message):void {}
+ function show(string $message):void {}
 ```
-#### ToStringCall
-**Experimental** Detect automatic type casting
+
+#### ToStringCall 
+<b>Experimental</b> Detect automatic type casting
 ```php
 class Hello {
     public function randomize(): self { /* .. */return $this; }
-    public function __toString(){ echo 'Hi'; }
+    public function __toString(){ return 'Hi'; }
 }
-echo (new Hello())->randomize();
-// ^^^ Deprecated __toString call
+echo (new Hello())->randomize(); // <-- Deprecated __toString call
 ```
-#### VirtualTypeCheck
+
+#### VirtualTypeCheck 
 Use assert to check variable type instead of doc comment.
+
 ```php
-class User{}
-/** @var $user User */;
-// ^^^ Use assert to check variable type
-assert($user instanceof User); // Valid
+    /** @var $user User */ // <-- Use assert to check variable type
+    assert($user instanceof User);
 ```
-                 
+
+#### DeprecatedDocTag 
+You can deprecate some PhpDoc tags in your project.
+
+#### MissingReturnType 
+Always specify result type of the function.
+```php
+function phrase(){ // <-- Missing return type
+    return "hi";
+}
+```
+
+#### MethodCanBePrivate 
+Protected methods can be converted to private.
+```php
+final class User {
+  protected function name() {} // <-- Method can be private
+}
+```
+
+#### GlobalVariableUsage 
+This inspection detects usages of global variables.
+```php
+echo $_GET['name']; // <-- Deprecated global variable usage
+```
+
+#### PhpCleanUndefinedMethod 
+Try to fix undefined method phpstorm bugs: https://youtrack.jetbrains.com/issue/WI-5223
+```php
+class Email {
+  public function send(){ }
+}
+/** @var mixed|Email $email */
+$email->snd(); // <-- Undefined method
+$email->send();
+```
+
+Detect undefined method. The cally should be a variable with mixed type
+
+#### MissingParameterTypeDeclaration 
+Always specify parameter type. This is a good practice.
+```php
+class User{
+ function withName($name){}  // <-- Missing parameter type
+}
+```
+
+#### PropertyAnnotation 
+Properties that are not initialized in the constructor should be annotated as nullable.
+
+<br>
+```php
+class User {
+ /** @var string */ // <-- Property is not annotated correctly. Add null type
+ private $name;
+ public function getName(){  }
+ public function setName(string $name){  }
+}
+```
+
+#### MethodVisibility 
+Protected methods make our classes more open. Write private or public methods only.
+
+The better way is to use
+<a href="https://en.wikipedia.org/wiki/Object_composition">object composition</a> technique
+if you want to make you object more flexible.
+
+#### MethodShouldBeFinal 
+Methods should be closed (make method or class final)
+```php
+class User {
+ public function name() : string { // <-- Method should be final
+   return "";
+ }
+}
+```

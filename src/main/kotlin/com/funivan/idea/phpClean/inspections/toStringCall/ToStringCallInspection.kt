@@ -1,14 +1,14 @@
 package com.funivan.idea.phpClean.inspections.toStringCall
 
+import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
-import com.jetbrains.php.lang.inspections.PhpInspection
 import com.jetbrains.php.lang.psi.elements.*
 import com.jetbrains.php.lang.psi.elements.Function
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
-class ToStringCallInspection : PhpInspection() {
+class ToStringCallInspection : PhpCleanInspection() {
     val context = IsToStringContext()
     override fun getShortName() = "ToStringCallInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {

@@ -1,13 +1,13 @@
 package com.funivan.idea.phpClean.inspections.methodShouldBeFinal
 
+import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
-import com.jetbrains.php.lang.inspections.PhpInspection
 import com.jetbrains.php.lang.psi.elements.Method
 import com.jetbrains.php.lang.psi.elements.PhpClass
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
-class MethodShouldBeFinalInspection : PhpInspection() {
+class MethodShouldBeFinalInspection : PhpCleanInspection() {
     override fun getShortName() = "MethodShouldBeFinalInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {

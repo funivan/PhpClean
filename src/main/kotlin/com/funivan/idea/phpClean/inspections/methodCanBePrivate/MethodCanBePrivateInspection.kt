@@ -1,5 +1,6 @@
 package com.funivan.idea.phpClean.inspections.methodCanBePrivate
 
+import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.funivan.idea.phpClean.spl.Pointer
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemsHolder
@@ -12,7 +13,7 @@ import com.jetbrains.php.lang.psi.elements.PhpClass
 import com.jetbrains.php.lang.psi.elements.PhpModifierList
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
-class MethodCanBePrivateInspection : PhpInspection() {
+class MethodCanBePrivateInspection : PhpCleanInspection() {
     override fun getShortName() = "MethodCanBePrivateInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {

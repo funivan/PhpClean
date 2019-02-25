@@ -1,12 +1,12 @@
 package com.funivan.idea.phpClean.inspections.methodVisibility
 
+import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.funivan.idea.phpClean.visitors.MethodVisitor
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
-import com.jetbrains.php.lang.inspections.PhpInspection
 
 
-class MethodVisibilityInspection : PhpInspection() {
+class MethodVisibilityInspection : PhpCleanInspection() {
 
     override fun getShortName(): String {
         return "MethodVisibilityInspection"
