@@ -3,20 +3,20 @@ package com.funivan.idea.phpClean.inspections.redundantDocCommentTag
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ParameterInfo
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ParameterType
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ReturnType
+import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.funivan.idea.phpClean.spl.Pointer
 import com.funivan.idea.phpClean.spl.jb.qf.RemoveTagQF
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType
 import com.jetbrains.php.lang.documentation.phpdoc.psi.tags.PhpDocTag
-import com.jetbrains.php.lang.inspections.PhpInspection
 import com.jetbrains.php.lang.psi.elements.Function
 import com.jetbrains.php.lang.psi.elements.Method
 import com.jetbrains.php.lang.psi.resolve.types.PhpType
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
-class RedundantDocCommentTagInspection : PhpInspection() {
+class RedundantDocCommentTagInspection : PhpCleanInspection() {
     override fun getShortName() = "RedundantDocCommentTagInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {

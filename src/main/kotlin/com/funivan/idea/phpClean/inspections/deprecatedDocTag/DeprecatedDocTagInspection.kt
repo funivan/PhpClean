@@ -1,5 +1,6 @@
 package com.funivan.idea.phpClean.inspections.deprecatedDocTag
 
+import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.funivan.idea.phpClean.spl.Pointer
 import com.funivan.idea.phpClean.spl.jb.qf.RemoveTagQF
 import com.intellij.codeInspection.ProblemsHolder
@@ -7,12 +8,10 @@ import com.intellij.codeInspection.ui.ListEditForm
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.util.ui.JBUI
 import com.jetbrains.php.lang.documentation.phpdoc.psi.tags.PhpDocTag
-import com.jetbrains.php.lang.inspections.PhpInspection
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
-import java.util.*
 import javax.swing.JComponent
 
-class DeprecatedDocTagInspection : PhpInspection() {
+class DeprecatedDocTagInspection : PhpCleanInspection() {
     var tags: MutableList<String> = mutableListOf()
     override fun getShortName() = "DeprecatedDocTagInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {

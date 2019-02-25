@@ -6,3 +6,4 @@ out/
 build/
 .gradle/
 local.properties
+src/main/resources/inspectionDescriptions
