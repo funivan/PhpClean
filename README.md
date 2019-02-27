@@ -28,6 +28,16 @@ Then you can install **PhpClean**
 
 ## List of inspection:
 <!-- inspections -->
+#### ClassNameCollision 
+Classes with same name in different namespaces can be confused.
+```php
+namespace App{
+  class User{};
+}
+namespace Cli{
+  class User{};
+}
+```
 #### DeprecatedDocTag 
 You can deprecate some PhpDoc tags in your project.
 #### GlobalVariableUsage 
