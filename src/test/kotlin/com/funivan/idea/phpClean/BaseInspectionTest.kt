@@ -14,7 +14,7 @@ abstract class BaseInspectionTest : LightCodeInsightFixtureTestCase() {
         myFixture.testHighlighting(true, false, true)
         if (fixed != null) {
             myFixture.getAllQuickFixes().forEach { myFixture.launchAction(it) }
-            myFixture.checkResult(fixed)
+            myFixture.checkResult(fixed, false)
         }
     }
 }

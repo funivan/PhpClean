@@ -16,7 +16,6 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
                 """
                     <?php
                      /**
-                      *
                       */
                      function show(string ${'$'}message):void {}
                     """
