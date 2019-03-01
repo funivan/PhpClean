@@ -1,6 +1,7 @@
 package com.funivan.idea.phpClean.inspections.toStringCall
 
 import com.funivan.idea.phpClean.spl.PhpCleanInspection
+import com.funivan.idea.phpClean.spl.Pointer
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.psi.elements.*
@@ -18,7 +19,10 @@ class ToStringCallInspection : PhpCleanInspection() {
                     if (IsSingleClassType().match(variable)) {
                         holder.registerProblem(
                                 variable,
-                                "Deprecated __toString call"
+                                "Deprecated __toString call",
+                                AddToStringCallQF(
+                                        Pointer(variable as PhpPsiElement).create()
+                                )
                         )
                     }
                 }
@@ -29,7 +33,10 @@ class ToStringCallInspection : PhpCleanInspection() {
                 if (context.match(parent)) {
                     holder.registerProblem(
                             expression,
-                            "Deprecated __toString call"
+                            "Deprecated __toString call",
+                            AddToStringCallQF(
+                                    Pointer(expression as PhpPsiElement).create()
+                            )
                     )
                 }
             }
@@ -46,7 +53,10 @@ class ToStringCallInspection : PhpCleanInspection() {
                         if (!safeType) {
                             holder.registerProblem(
                                     reference,
-                                    "Deprecated __toString call"
+                                    "Deprecated __toString call",
+                                    AddToStringCallQF(
+                                            Pointer(reference as PhpPsiElement).create()
+                                    )
                             )
                         }
                     }

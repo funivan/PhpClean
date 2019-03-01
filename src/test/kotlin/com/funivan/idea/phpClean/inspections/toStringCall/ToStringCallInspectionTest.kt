@@ -12,10 +12,19 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                       public function randomize(): self { /* .. */return ${'$'}this; }
                       public function __toString(){ return 'Hi'; }
                     }
-                     echo <warning descr="Deprecated __toString call">(new Hello())->randomize()</warning>;
+                    echo <warning descr="Deprecated __toString call">(new Hello())->randomize()</warning>;
+                    """,
+                """
+                    <?php
+                    class Hello {
+                      public function randomize(): self { /* .. */return ${'$'}this; }
+                      public function __toString(){ return 'Hi'; }
+                    }
+                    echo (new Hello())->randomize()->__toString();
                     """
         )
     }
+
     fun testConcatenation() {
         assert(
                 ToStringCallInspection(),
@@ -26,6 +35,15 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                       public function __toString(){ echo 'Hi'; }
                     }
                      ${'$'}phrase = 'Hi ' . <warning descr="Deprecated __toString call">(new Hello())->randomize()</warning>;
+                    """
+                ,
+                """
+                    <?php
+                    class Hello {
+                      public function randomize(): self { /* .. */return ${'$'}this; }
+                      public function __toString(){ echo 'Hi'; }
+                    }
+                     ${'$'}phrase = 'Hi ' . (new Hello())->randomize()->__toString();
                     """
         )
     }
@@ -68,9 +86,18 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     }
                     echo <warning descr="Deprecated __toString call">new Hello()</warning>;
                     ${'$'}phrase = <warning descr="Deprecated __toString call">new Hello()</warning> . ' there';
+                    """,
+                """
+                    <?php
+                    class Hello {
+                      public function __toString(){ echo 'Hi'; }
+                    }
+                    echo (new Hello())->__toString();
+                    ${'$'}phrase = (new Hello())->__toString() . ' there';
                     """
         )
     }
+
     fun testMethodStringReturned() {
         assert(
                 ToStringCallInspection(),
@@ -91,6 +118,7 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     """
         )
     }
+
     fun testStaticMethod() {
         assert(
                 ToStringCallInspection(),
@@ -103,6 +131,16 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                      }
                     }
                     echo <warning descr="Deprecated __toString call">SomeClass::create()</warning>;
+                    """,
+                """
+                    <?php
+                    class someClass {
+                     public function __toString(){
+                     }
+                     public static function create() : self{
+                     }
+                    }
+                    echo SomeClass::create()->__toString();
                     """
         )
     }
