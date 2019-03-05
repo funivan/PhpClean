@@ -28,11 +28,11 @@ if (file("local.properties").exists()) {
     apply(from = "local.properties")
 }
 println("Version: ${version}")
-//tasks {
-//    patchPluginXml {
-//        changeNotes(project.property("changeNotes").toString().replace("\n", "<br>\n"))
-//    }
-//}
+tasks {
+    patchPluginXml {
+        changeNotes(project.property("changeNotes").toString().replace("\n", "<br>\n"))
+    }
+}
 intellij {
     version = prop("ideaVersion")
     sandboxDirectory = project.rootDir.canonicalPath + "/build/idea-sandbox"
@@ -47,23 +47,23 @@ intellij {
             "properties"
     )
 }
-//jar.archiveName = "${name}.jar"
-//
-//task patchRepositoryXml (type: Copy) {
-//    from "src/ci/PhpClean-nightly.xml"
-//    into "${buildDir}/libs"
-//    expand([
-//        buildDate : System. currentTimeMillis (),
-//    fileSize  : "18000",
-//    version   : project.property("version").toString(),
-//    pluginName: project.property("pluginName"),
-//    fileName  : jar.archiveName,
-//    group     : project.property("group")
-//    ])
-//    doFirst {
-//        ant.defaultexcludes remove : "${buildDir}/libs/*.xml"
-//    }
-//}
+tasks.jar {
+    archiveName = "${name}.jar"
+}
+
+tasks.register<Copy>("patchRepositoryXml") {
+    from("src/ci/PhpClean-nightly.xml")
+    into("${buildDir}/libs")
+    expand(hashMapOf(
+            "pluginName" to project.property("pluginName"),
+            "fileSize" to "18000",
+            "version" to project.property("version").toString(),
+            "pluginName" to project.property("pluginName"),
+            "buildDate" to System.currentTimeMillis(),
+            "fileName" to "${name}.jar",
+            "group" to project.property("group")
+    ))
+}
 //task deployNightly (type: Exec) {
 //    def ci_deploy_uri = project . hasProperty ("ci_deploy_uri") ? project.property("ci_deploy_uri").toString() : System.getenv("DEPLOY_URI")
 //    commandLinex "curl", "-s", "-F", "file[]=@build/libs/PhpClean.jar", "-F", "file[]=@build/libs/PhpClean-nightly.xml", "${ci_deploy_uri}"
