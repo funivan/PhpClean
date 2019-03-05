@@ -27,7 +27,7 @@ apply {
 if (file("local.properties").exists()) {
     apply(from = "local.properties")
 }
-println("Version: ${version}")
+println("Version: $version")
 tasks {
     patchPluginXml {
         changeNotes(project.property("changeNotes").toString().replace("\n", "<br>\n"))
@@ -48,19 +48,19 @@ intellij {
     )
 }
 tasks.jar {
-    archiveName = "${name}.jar"
+    archiveName = "$name.jar"
 }
 
 tasks.register<Copy>("patchRepositoryXml") {
     from("src/ci/PhpClean-nightly.xml")
-    into("${buildDir}/libs")
+    into("$buildDir/libs")
     expand(hashMapOf(
             "pluginName" to project.property("pluginName"),
             "fileSize" to "18000",
             "version" to project.property("version").toString(),
             "pluginName" to project.property("pluginName"),
             "buildDate" to System.currentTimeMillis(),
-            "fileName" to "${name}.jar",
+            "fileName" to "$name.jar",
             "group" to project.property("group")
     ))
 }
