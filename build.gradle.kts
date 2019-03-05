@@ -64,10 +64,17 @@ tasks.register<Copy>("patchRepositoryXml") {
             "group" to project.property("group")
     ))
 }
-//task deployNightly (type: Exec) {
-//    def ci_deploy_uri = project . hasProperty ("ci_deploy_uri") ? project.property("ci_deploy_uri").toString() : System.getenv("DEPLOY_URI")
-//    commandLinex "curl", "-s", "-F", "file[]=@build/libs/PhpClean.jar", "-F", "file[]=@build/libs/PhpClean-nightly.xml", "${ci_deploy_uri}"
-//}
+
+tasks.register<Exec>("deployNightly") {
+    commandLine = listOf(
+            "curl", "-s", "-F",
+            "file[]=@build/libs/PhpClean.jar",
+            "-F",
+            "file[]=@build/libs/PhpClean-nightly.xml",
+            safeProp("ci_deploy_uri", safeEnv("DEPLOY_URI", ""))
+    )
+}
+
 
 dependencies {
     implementation(kotlin("stdlib"))
@@ -79,4 +86,13 @@ tasks.withType<KotlinCompile>().configureEach {
 fun prop(name: String): String {
     return extra.properties[name] as? String
             ?: error("Property `$name` is not defined in gradle.properties")
+}
+
+fun safeProp(name: String, fallback: String): String {
+    return extra.properties[name] as? String
+            ?: fallback
+}
+
+fun safeEnv(name: String, fallback: String): String {
+    return System.getenv(name) ?: fallback
 }
