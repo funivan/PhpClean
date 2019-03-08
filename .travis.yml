@@ -24,7 +24,7 @@ cache:
 deploy:
   - provider: script
     script:
-      - export ORG_GRADLE_PROJECT_version=$(date +%Y.%-m.%-d%H%M%S) ; ./gradlew buildPlugin patchRepositoryXml deployNightly
+      - export ORG_GRADLE_PROJECT_version=$(date +%Y.%-m.%-d%H%M%S) ; ./gradlew generateDocs buildPlugin patchRepositoryXml deployNightly
     skip_cleanup: true
     on:
       branch: master

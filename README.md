@@ -31,11 +31,11 @@ Then you can install **PhpClean**
 #### ClassNameCollision 
 Classes with same name in different namespaces can be confused.
 ```php
-namespace App{
-  class User{};
+namespace App {
+  class User{}; // <- Class name collision with \Cli\User
 }
-namespace Cli{
-  class User{};
+namespace Cli {
+  class User{}; // <- Class name collision with \App\User
 }
 ```
 #### DeprecatedDocTag 
