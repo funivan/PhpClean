@@ -76,32 +76,34 @@ tasks.register<Exec>("deployNightly") {
 }
 
 tasks.register("generateDocs") {
-    val changed = mutableListOf<Boolean>()
-    val blocks = mutableListOf<Block>()
-    val inspectionDirectory = "src/main/resources/inspectionDescriptions"
-    val directory = "src/main/kotlin/com/funivan/idea/phpClean/inspections"
-    File(directory)
-            .walkTopDown()
-            .filter { it.name.contains("Inspection.kt") }
-            .map { Block(File(it.path.replace(".kt", ".html"))) }
-            .forEach {
-                blocks.add(it)
-                val file = File(inspectionDirectory + "/" + it.file().name)
-                changed.add(
-                        write(file, it.file().readText())
-                )
-            }
-    val readme = File("README.md")
-    var content = readme.readText()
-    content = content.replace(
-            Regex("(<!-- inspections -->)(.+)", RegexOption.DOT_MATCHES_ALL),
-            "$1"
-    )
-    content = content + "\n" + blocks.sortedBy { it.uid() }
-            .map { "#### ${it.uid()} \n${it.short()}\n" }
-            .joinToString("")
-    changed.add(write(readme, content))
-    println("Changed files : " + changed.filter { it == true }.size)
+    doLast {
+        val changed = mutableListOf<Boolean>()
+        val blocks = mutableListOf<Block>()
+        val inspectionDirectory = "src/main/resources/inspectionDescriptions"
+        val directory = "src/main/kotlin/com/funivan/idea/phpClean/inspections"
+        File(directory)
+                .walkTopDown()
+                .filter { it.name.contains("Inspection.kt") }
+                .map { Block(File(it.path.replace(".kt", ".html"))) }
+                .forEach {
+                    blocks.add(it)
+                    val file = File(inspectionDirectory + "/" + it.file().name)
+                    changed.add(
+                            write(file, it.file().readText())
+                    )
+                }
+        val readme = File("README.md")
+        var content = readme.readText()
+        content = content.replace(
+                Regex("(<!-- inspections -->)(.+)", RegexOption.DOT_MATCHES_ALL),
+                "$1"
+        )
+        content = content + "\n" + blocks.sortedBy { it.uid() }
+                .map { "#### ${it.uid()} \n${it.short()}\n" }
+                .joinToString("")
+        changed.add(write(readme, content))
+        println("Changed files : " + changed.filter { it == true }.size)
+    }
 }
 
 dependencies {
