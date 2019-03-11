@@ -1,11 +1,11 @@
 <b>Experimental</b> Try to fix undefined method phpstorm bugs: https://youtrack.jetbrains.com/issue/WI-5223
-<code>
+<pre>
 class Email {
   public function send(){ }
 }
 /** @var mixed|Email $email */
 $email->snd(); // <-- Undefined method
 $email->send();
-</code>
+</pre>
 <!-- main -->
 Detect undefined method. The cally should be a variable with mixed type
