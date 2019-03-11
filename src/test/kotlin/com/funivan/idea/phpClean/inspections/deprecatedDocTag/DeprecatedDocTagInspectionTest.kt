@@ -17,7 +17,6 @@ class DeprecatedDocTagInspectionTest : BaseInspectionTest() {
                 """,
                 """<?php
                     /**
-                     *
                      */
                      class User{}
                 """
@@ -41,8 +40,6 @@ class DeprecatedDocTagInspectionTest : BaseInspectionTest() {
                     /**
                      * @property ${'$'}user
                      * @property-write ${'$'}id
-                     *
-                     *
                      */
                 """
         )
