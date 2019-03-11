@@ -23,11 +23,11 @@ apply {
     plugin("kotlin")
     plugin("org.jetbrains.intellij")
 }
-
 if (file("local.properties").exists()) {
     apply(from = "local.properties")
 }
 println("Version: $version")
+val fileName = "$name.jar"
 tasks {
     patchPluginXml {
         changeNotes(project.property("changeNotes").toString().replace("\n", "<br>\n"))
@@ -48,10 +48,13 @@ intellij {
     )
 }
 tasks.jar {
-    archiveName = "$name.jar"
+    archiveName = fileName
 }
 
 tasks.register<Copy>("patchRepositoryXml") {
+    doFirst {
+        delete("${buildDir}/libs/*.xml")
+    }
     from("src/ci/PhpClean-nightly.xml")
     into("$buildDir/libs")
     expand(hashMapOf(
@@ -60,17 +63,16 @@ tasks.register<Copy>("patchRepositoryXml") {
             "version" to project.property("version").toString(),
             "pluginName" to project.property("pluginName"),
             "buildDate" to System.currentTimeMillis(),
-            "fileName" to "$name.jar",
+            "fileName" to fileName,
             "group" to project.property("group")
     ))
 }
 
 tasks.register<Exec>("deployNightly") {
     commandLine = listOf(
-            "curl", "-s", "-F",
-            "file[]=@build/libs/PhpClean.jar",
-            "-F",
-            "file[]=@build/libs/PhpClean-nightly.xml",
+            "curl", "-s",
+            "-F", "file[]=@build/libs/${fileName}",
+            "-F", "file[]=@build/libs/PhpClean-nightly.xml",
             safeProp("ci_deploy_uri", safeEnv("DEPLOY_URI", ""))
     )
 }
