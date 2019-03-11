@@ -1,10 +1,10 @@
 Classes with same name in different namespaces can be confused.
-<code>
+<pre>
 namespace App {
   class User{}; // <- Class name collision with \Cli\User
 }
 namespace Cli {
   class User{}; // <- Class name collision with \App\User
 }
-</code>
+</pre>
 <!-- main -->
