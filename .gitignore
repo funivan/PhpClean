@@ -6,5 +6,5 @@ out/
 build/
 .gradle/
 local.properties
-src/main/resources/inspectionDescriptions
+src/main/resources/inspectionDescriptions/*.html
 !/**/.gitkeep
