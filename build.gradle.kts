@@ -29,6 +29,16 @@ if (file("local.properties").exists()) {
 println("Version: $version")
 val fileName = "$name.jar"
 tasks {
+    register("copyInspections") {
+        doLast {
+            blocks().forEach {
+                write(
+                        File("src/main/resources/inspectionDescriptions/" + it.file().name),
+                        it.full()
+                )
+            }
+        }
+    }
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
@@ -84,16 +94,6 @@ tasks.register<Exec>("deployNightly") {
     )
 }
 
-tasks.register("copyInspections") {
-    doLast {
-        blocks().forEach {
-            write(
-                    File("src/main/resources/inspectionDescriptions/" + it.file().name),
-                    it.full()
-            )
-        }
-    }
-}
 tasks.register("updateReadme") {
     doLast {
         val readme = File("README.md")
