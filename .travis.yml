@@ -15,6 +15,7 @@ matrix:
       env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="191.4212.41"
 script:
   - ./gradlew check buildPlugin
+  - ./gradlew udateReadme
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -26,7 +27,7 @@ cache:
 deploy:
   - provider: script
     script:
-      - export ORG_GRADLE_PROJECT_version=$(date +%Y.%-m.%-d%H%M%S) ; ./gradlew buildPlugin patchRepositoryXml deployNightly
+      - export ORG_GRADLE_PROJECT_version=$(date +%Y.%-m.%-d%H%M%S) ; ./gradlew buildPlugin deployNightly
     skip_cleanup: true
     on:
       branch: master

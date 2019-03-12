@@ -29,8 +29,15 @@ if (file("local.properties").exists()) {
 println("Version: $version")
 val fileName = "$name.jar"
 tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
     patchPluginXml {
         changeNotes(project.property("changeNotes").toString().replace("\n", "<br>\n"))
+    }
+    named("buildPlugin") {
+        dependsOn("copyInspections")
+        dependsOn("patchRepositoryXml")
     }
 }
 intellij {
@@ -77,44 +84,38 @@ tasks.register<Exec>("deployNightly") {
     )
 }
 
-tasks.register("generateDocs") {
+tasks.register("copyInspections") {
     doLast {
-        val changed = mutableListOf<Boolean>()
-        val blocks = mutableListOf<Block>()
-        val inspectionDirectory = "src/main/resources/inspectionDescriptions"
-        val directory = "src/main/kotlin/com/funivan/idea/phpClean/inspections"
-        File(directory)
-                .walkTopDown()
-                .filter { it.name.contains("Inspection.kt") }
-                .map { Block(File(it.path.replace(".kt", ".html"))) }
-                .forEach {
-                    blocks.add(it)
-                    val file = File(inspectionDirectory + "/" + it.file().name)
-                    changed.add(
-                            write(file, it.file().readText())
-                    )
-                }
+        blocks().forEach {
+            write(
+                    File("src/main/resources/inspectionDescriptions/" + it.file().name),
+                    it.full()
+            )
+        }
+    }
+}
+tasks.register("updateReadme") {
+    doLast {
         val readme = File("README.md")
         var content = readme.readText()
         content = content.replace(
                 Regex("(<!-- inspections -->)(.+)", RegexOption.DOT_MATCHES_ALL),
                 "$1"
         )
-        content = content + "\n" + blocks.sortedBy { it.uid() }
-                .map { "#### ${it.uid()} \n${it.short()}\n" }
+        content = content + "\n" + blocks().sortedBy { it.uid() }
+                .map {
+                    val description = it.short().replace("<pre>", "```php").replace("</pre>", "```")
+                    "#### ${it.uid()}\n${description}\n"
+                }
                 .joinToString("")
-        changed.add(write(readme, content))
-        println("Changed files : " + changed.filter { it == true }.size)
+        if (write(readme, content)) {
+            throw GradleException("Readme is not up to date")
+        }
     }
 }
-
 dependencies {
     implementation(kotlin("stdlib"))
 }
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
-}
-
 fun prop(name: String): String {
     return extra.properties[name] as? String
             ?: error("Property `$name` is not defined in gradle.properties")
@@ -144,9 +145,13 @@ fun write(file: File, content: String): Boolean {
 class Block(private val file: File) {
     fun file() = file
     fun uid() = file.name.replace("Inspection.html", "")
-    fun short() = file.readText()
+    fun full() = file.readText()
+    fun short() = full()
             .replace(Regex("<!-- main -->(.*)", RegexOption.DOT_MATCHES_ALL), "")
-            .replace("<code>", "```php")
-            .replace("</code>", "```").trim()
+            .trim()
 }
 
+fun blocks() = File("src/main/kotlin/com/funivan/idea/phpClean/inspections")
+        .walkTopDown()
+        .filter { it.name.contains("Inspection.kt") }
+        .map { Build_gradle.Block(File(it.path.replace(".kt", ".html"))) }
