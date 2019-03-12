@@ -39,6 +39,21 @@ tasks {
             }
         }
     }
+    register("checkReadme") {
+        doLast {
+            if (readmeFile().readText()!= generatedReadmeContent(readmeFile())) {
+                throw GradleException("Readme is not up to date")
+            }
+        }
+    }
+    register("updateReadme") {
+        doLast {
+            val readme = readmeFile()
+            if (write(readme, generatedReadmeContent(readme))) {
+                println("Readme updated")
+            }
+        }
+    }
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
@@ -94,25 +109,6 @@ tasks.register<Exec>("deployNightly") {
     )
 }
 
-tasks.register("updateReadme") {
-    doLast {
-        val readme = File("README.md")
-        var content = readme.readText()
-        content = content.replace(
-                Regex("(<!-- inspections -->)(.+)", RegexOption.DOT_MATCHES_ALL),
-                "$1"
-        )
-        content = content + "\n" + blocks().sortedBy { it.uid() }
-                .map {
-                    val description = it.short().replace("<pre>", "```php").replace("</pre>", "```")
-                    "#### ${it.uid()}\n${description}\n"
-                }
-                .joinToString("")
-        if (write(readme, content)) {
-            throw GradleException("Readme is not up to date")
-        }
-    }
-}
 dependencies {
     implementation(kotlin("stdlib"))
 }
@@ -155,3 +151,20 @@ fun blocks() = File("src/main/kotlin/com/funivan/idea/phpClean/inspections")
         .walkTopDown()
         .filter { it.name.contains("Inspection.kt") }
         .map { Build_gradle.Block(File(it.path.replace(".kt", ".html"))) }
+
+fun generatedReadmeContent(readme: File): String {
+    var content = readme.readText()
+    content = content.replace(
+            Regex("(<!-- inspections -->)(.+)", RegexOption.DOT_MATCHES_ALL),
+            "$1"
+    )
+    content = content + "\n" + blocks().sortedBy { it.uid() }
+            .map {
+                val description = it.short().replace("<pre>", "```php").replace("</pre>", "```")
+                "#### ${it.uid()}\n${description}\n"
+            }
+            .joinToString("")
+    return content
+}
+
+fun readmeFile() = File("README.md")
