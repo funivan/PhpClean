@@ -40,9 +40,8 @@ class RedundantDocCommentTagInspection : PhpCleanInspection() {
 
             fun checkComment(tag: PhpDocTag?, type: PhpType?) {
                 if (tag != null && type != null && tag.tagValue == "") {
-                    val children = tag.children.slice(IntRange(0, 1))
-                    val first = children.firstOrNull()
-                    val last = children.lastOrNull()
+                    val first = tag.children.getOrNull(0)
+                    val last = tag.children.getOrNull(1)
                     if (first is PhpDocType && last !is PhpDocType && first.type.types.size == 1 && first.type.toStringResolved() == type.toStringResolved()) {
                         holder.registerProblem(
                                 tag,
