@@ -14,7 +14,7 @@ matrix:
       env: IDEA="IU-2018.3" PHP="183.4284.150" DEPLOY=true
   allow_failures:
     - name: "EAP Tests"
-      env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="191.4212.41"
+      env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="191.7479.51"
 script:
   - ./gradlew check buildPlugin checkReadme
 before_cache:
