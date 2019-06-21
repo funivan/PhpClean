@@ -1,9 +1,10 @@
+sudo: false
 language: java
 jdk:
   - oraclejdk8
 before_install:
-- "export ORG_GRADLE_PROJECT_ideaVersion=${IDEA}"
-- "export ORG_GRADLE_PROJECT_phpPluginVersion=${PHP}"
+  - "export ORG_GRADLE_PROJECT_ideaVersion=${IDEA}"
+  - "export ORG_GRADLE_PROJECT_phpPluginVersion=${PHP}"
 install:
   echo "install skip"
 matrix:
