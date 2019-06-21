@@ -64,4 +64,17 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
                     """
         )
     }
+
+    fun testCheckEmptyTag() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                     /**
+                      * @return  
+                      */
+                     function name():string {return "";}
+                    """
+        )
+    }
 }
