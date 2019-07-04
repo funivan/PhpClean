@@ -1,5 +1,6 @@
 package com.funivan.idea.phpClean.inspections.methodShouldBeFinal
 
+import com.funivan.idea.phpClean.constrains.method.IsMagic
 import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
@@ -8,6 +9,7 @@ import com.jetbrains.php.lang.psi.elements.PhpClass
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 class MethodShouldBeFinalInspection : PhpCleanInspection() {
+    val magic = IsMagic()
     override fun getShortName() = "MethodShouldBeFinalInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {
@@ -30,7 +32,7 @@ class MethodShouldBeFinalInspection : PhpCleanInspection() {
                     && !it.modifier.isPrivate
                     && !it.modifier.isAbstract
                     && !it.modifier.isStatic
-                    && it.name != "__construct"
+                    && !magic.match(it)
         }
     }
 }
