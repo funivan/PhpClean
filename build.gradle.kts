@@ -14,8 +14,8 @@ buildscript {
     }
 }
 plugins {
-    id("org.jetbrains.intellij") version "0.3.5"
-    id("org.jetbrains.kotlin.jvm") version "1.3.21"
+    id("org.jetbrains.intellij") version "0.4.9"
+    id("org.jetbrains.kotlin.jvm") version "1.3.41"
     idea
 }
 apply {
@@ -90,10 +90,9 @@ tasks.register<Copy>("patchRepositoryXml") {
     from("src/ci/PhpClean-nightly.xml")
     into("$buildDir/libs")
     expand(hashMapOf(
-            "pluginName" to project.property("pluginName"),
             "fileSize" to "18000",
             "version" to project.property("version").toString(),
-            "pluginName" to project.property("pluginName"),
+            "pluginName" to name,
             "buildDate" to System.currentTimeMillis(),
             "fileName" to fileName,
             "group" to project.property("group")
@@ -150,7 +149,7 @@ class Block(private val file: File) {
 fun blocks() = File("src/main/kotlin/com/funivan/idea/phpClean/inspections")
         .walkTopDown()
         .filter { it.name.contains("Inspection.kt") }
-        .map { Build_gradle.Block(File(it.path.replace(".kt", ".html"))) }
+        .map { Block(File(it.path.replace(".kt", ".html"))) }
 
 fun generatedReadmeContent(readme: File): String {
     var content = readme.readText()
