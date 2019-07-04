@@ -50,12 +50,14 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
         )
     }
 
-    fun testSkipConstructMethod() {
+    fun testSkipMagicMethods() {
         assert(
                 MethodShouldBeFinalInspection(),
                 """<?php
                 class Dealer {
                   public function __construct(){}
+                  public function __destruct(){}
+                  public function __call(){}
                 }
                 """
         )
