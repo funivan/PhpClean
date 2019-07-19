@@ -1,10 +1,9 @@
 package com.funivan.idea.phpClean.inspections.missingParameterType
 
 
-import com.funivan.idea.phpClean.spl.ParameterDescription
 import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.intellij.codeInspection.ProblemsHolder
-import com.jetbrains.php.lang.psi.elements.Method
+import com.jetbrains.php.lang.psi.elements.PhpClass
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
@@ -17,16 +16,24 @@ class MissingParameterTypeDeclarationInspection : PhpCleanInspection() {
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PhpElementVisitor {
         return object : PhpElementVisitor() {
-            override fun visitPhpMethod(method: Method) {
-                val description = ParameterDescription(method)
-                Parameters(method)
-                        .filter { it.declaredType.size() == 0 }
-                        .filter { !description.get(it.name).contains("@Suppress(${name})") }
+            override fun visitPhpClass(phpClass: PhpClass) {
+                val parent by lazy {
+                    ClassesByFqn(phpClass.project, Implementations(phpClass)).all()
+                }
+                val contains = fun(base: List<PhpClass>, name: String): Boolean {
+                    return base.filter { it.findMethodByName(name) != null }.firstOrNull() != null
+                }
+                phpClass.ownMethods
+                        .map { InvalidMethodParameters(it, name) }
+                        .filter { it.parameters().isNotEmpty() }
+                        .filter {
+                            !contains(parent, it.method().name)
+                        }
+                        .flatMap { it.parameters() }
                         .forEach {
                             holder.registerProblem(it, "Missing parameter type")
                         }
             }
         }
     }
-
 }

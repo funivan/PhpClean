@@ -50,4 +50,22 @@ class MissingParameterTypeDeclarationInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+    fun testSkipOverwrittenMethods() {
+        assert(
+                MissingParameterTypeDeclarationInspection(),
+                """<?php
+                 interface Uid{
+                    function hash(<warning descr="Missing parameter type">${'$'}salt</warning>);
+                 }
+                 class Id implements Uid{
+                    function with(<warning descr="Missing parameter type">${'$'}id</warning>){}
+                 }
+                 class TrimmedId extends Id{
+                    function with(${'$'}id){}
+                    function hash(${'$'}salt){}
+                    function rebuild(<warning descr="Missing parameter type">${'$'}uid</warning>){}
+                 }
+                """
+        )
+    }
 }
