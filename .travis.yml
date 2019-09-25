@@ -10,8 +10,10 @@ install:
   echo "install skip"
 matrix:
   include:
-    - name: "Stable Test"
-      env: IDEA="IU-2018.3" PHP="183.4284.150" DEPLOY=true
+    - name: "latest"
+      env: IDEA="IU-2019.2.3" PHP="192.6817.12" DEPLOY=true
+    - name: "2018"
+      env: IDEA="IU-2018.3" PHP="183.4284.150"
   allow_failures:
     - name: "EAP Tests"
       env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="191.7479.51"
