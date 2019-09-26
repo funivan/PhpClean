@@ -16,7 +16,7 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
                 if (name != null) {
                     val phpIndex = PhpIndex.getInstance(phpClass.project)
                     val classes = phpIndex.getClassesByName(name.text)
-                    val first = classes.filter { it.fqn != phpClass.fqn }.firstOrNull()
+                    val first = classes.firstOrNull { it.fqn != phpClass.fqn }
                     if (first != null) {
                         holder.registerProblem(
                                 name,

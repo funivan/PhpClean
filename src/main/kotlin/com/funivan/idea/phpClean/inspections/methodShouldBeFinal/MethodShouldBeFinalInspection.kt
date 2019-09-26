@@ -9,7 +9,7 @@ import com.jetbrains.php.lang.psi.elements.PhpClass
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 class MethodShouldBeFinalInspection : PhpCleanInspection() {
-    val magic = IsMagic()
+    private val magic = IsMagic()
     override fun getShortName() = "MethodShouldBeFinalInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {

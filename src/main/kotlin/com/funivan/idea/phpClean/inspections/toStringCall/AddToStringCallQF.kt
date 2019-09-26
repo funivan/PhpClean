@@ -19,7 +19,7 @@ class AddToStringCallQF(private val pointer: SmartPsiElementPointer<PhpPsiElemen
             if (braces) {
                 text = "($text)"
             }
-            val fn = PhpPsiElementFactory.createMethodReference(project, text + "->__toString()")
+            val fn = PhpPsiElementFactory.createMethodReference(project, "$text->__toString()")
             element.replace(fn)
         }
     }

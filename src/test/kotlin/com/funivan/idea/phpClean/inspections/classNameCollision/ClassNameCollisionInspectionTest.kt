@@ -1,7 +1,6 @@
 package com.funivan.idea.phpClean.inspections.classNameCollision
 
 import com.funivan.idea.phpClean.BaseInspectionTest
-import com.funivan.idea.phpClean.inspections.deprecatedDocTag.DeprecatedDocTagInspection
 
 class ClassNameCollisionInspectionTest : BaseInspectionTest() {
 
@@ -18,6 +17,7 @@ class ClassNameCollisionInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+
     fun testCollisionInGlobalNamespace() {
         assert(
                 ClassNameCollisionInspection(),
