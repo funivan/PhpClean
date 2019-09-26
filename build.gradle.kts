@@ -30,6 +30,8 @@ println("Version: $version")
 val fileName = "$name.jar"
 tasks {
     register("copyInspections") {
+        group = "Plugin"
+        description = "Copy inspections to the resource folder"
         doLast {
             blocks().forEach {
                 write(
@@ -40,13 +42,17 @@ tasks {
         }
     }
     register("checkReadme") {
+        group = "Plugin"
+        description = "Check readme file"
         doLast {
-            if (readmeFile().readText()!= generatedReadmeContent(readmeFile())) {
+            if (readmeFile().readText() != generatedReadmeContent(readmeFile())) {
                 throw GradleException("Readme is not up to date")
             }
         }
     }
     register("updateReadme") {
+        group = "Plugin"
+        description = "Update readme file"
         doLast {
             val readme = readmeFile()
             if (write(readme, generatedReadmeContent(readme))) {
@@ -54,15 +60,49 @@ tasks {
             }
         }
     }
+    register<Copy>("patchRepositoryXml") {
+        group = "Plugin"
+        description = "Patch repository xml"
+        doFirst {
+            delete("${buildDir}/libs/*.xml")
+        }
+        from("src/ci/PhpClean-nightly.xml")
+        into("$buildDir/libs")
+        expand(hashMapOf(
+                "fileSize" to "18000",
+                "version" to project.property("version").toString(),
+                "pluginName" to name,
+                "buildDate" to System.currentTimeMillis(),
+                "fileName" to fileName,
+                "group" to project.property("group")
+        ))
+    }
+    register<Exec>("deployNightly") {
+        group = "Plugin"
+        description = "Deploy plugin to custom repository"
+        dependsOn("patchRepositoryXml")
+        commandLine = listOf(
+                "curl", "-s",
+                "-F", "file[]=@build/libs/${fileName}",
+                "-F", "file[]=@build/libs/PhpClean-nightly.xml",
+                safeProp("ci_deploy_uri", safeEnv("DEPLOY_URI", ""))
+        )
+    }
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+    jar {
+        archiveName = fileName
     }
     patchPluginXml {
         changeNotes(project.property("changeNotes").toString().replace("\n", "<br>\n"))
     }
-    named("buildPlugin") {
+    test {
+        dependsOn("checkReadme")
+    }
+    buildPlugin {
+        dependsOn("check")
         dependsOn("copyInspections")
-        dependsOn("patchRepositoryXml")
     }
 }
 intellij {
@@ -80,34 +120,8 @@ intellij {
             "properties"
     )
 }
-tasks.jar {
-    archiveName = fileName
-}
 
-tasks.register<Copy>("patchRepositoryXml") {
-    doFirst {
-        delete("${buildDir}/libs/*.xml")
-    }
-    from("src/ci/PhpClean-nightly.xml")
-    into("$buildDir/libs")
-    expand(hashMapOf(
-            "fileSize" to "18000",
-            "version" to project.property("version").toString(),
-            "pluginName" to name,
-            "buildDate" to System.currentTimeMillis(),
-            "fileName" to fileName,
-            "group" to project.property("group")
-    ))
-}
 
-tasks.register<Exec>("deployNightly") {
-    commandLine = listOf(
-            "curl", "-s",
-            "-F", "file[]=@build/libs/${fileName}",
-            "-F", "file[]=@build/libs/PhpClean-nightly.xml",
-            safeProp("ci_deploy_uri", safeEnv("DEPLOY_URI", ""))
-    )
-}
 
 dependencies {
     implementation(kotlin("stdlib"))
