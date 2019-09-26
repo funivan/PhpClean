@@ -18,7 +18,7 @@ class ParameterDescription(private val method: Method) {
                 val name = tag.varName
                 val description = tag.tagValue
                 if (name != null) {
-                    result.set(name, description)
+                    result[name] = description
                 }
             }
         }

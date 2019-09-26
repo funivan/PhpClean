@@ -86,7 +86,7 @@ tasks.jar {
 
 tasks.register<Copy>("patchRepositoryXml") {
     doFirst {
-        delete("${buildDir}/libs/*.xml")
+        delete("$buildDir/libs/*.xml")
     }
     from("src/ci/PhpClean-nightly.xml")
     into("$buildDir/libs")
@@ -103,7 +103,7 @@ tasks.register<Copy>("patchRepositoryXml") {
 tasks.register<Exec>("deployNightly") {
     commandLine = listOf(
             "curl", "-s",
-            "-F", "file[]=@build/libs/${fileName}",
+            "-F", "file[]=@build/libs/$fileName",
             "-F", "file[]=@build/libs/PhpClean-nightly.xml",
             safeProp("ci_deploy_uri", safeEnv("DEPLOY_URI", ""))
     )
@@ -161,7 +161,7 @@ fun generatedReadmeContent(readme: File): String {
     content = content + "\n" + blocks().sortedBy { it.uid() }
             .map {
                 val description = it.short().replace("<pre>", "```php").replace("</pre>", "```")
-                "#### ${it.uid()}\n${description}\n"
+                "#### ${it.uid()}\n$description\n"
             }
             .joinToString("")
     return content

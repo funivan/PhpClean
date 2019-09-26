@@ -15,7 +15,7 @@ class InvalidMethodParameters(private val method: Method, private val inspection
             val description = ParameterDescription(method)
             result = Parameters(method)
                     .filter { it.declaredType.size() == 0 }
-                    .filter { !description.get(it.name).contains("@Suppress(${inspectionName})") }
+                    .filter { !description.get(it.name).contains("@Suppress($inspectionName)") }
                     .toList()
             parameters = result
         }

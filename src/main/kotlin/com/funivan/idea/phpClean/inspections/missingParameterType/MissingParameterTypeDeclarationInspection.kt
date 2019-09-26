@@ -21,7 +21,7 @@ class MissingParameterTypeDeclarationInspection : PhpCleanInspection() {
                     ClassesByFqn(phpClass.project, Implementations(phpClass)).all()
                 }
                 val contains = fun(base: List<PhpClass>, name: String): Boolean {
-                    return base.filter { it.findMethodByName(name) != null }.firstOrNull() != null
+                    return base.firstOrNull { it.findMethodByName(name) != null } != null
                 }
                 phpClass.ownMethods
                         .map { InvalidMethodParameters(it, name) }
