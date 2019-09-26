@@ -74,6 +74,7 @@ intellij {
     setPlugins(
             "com.jetbrains.php:${prop("phpPluginVersion")}",
             "CSS",
+            "java",
             "java-i18n",
             "PsiViewer:3.28.93",
             "properties"
