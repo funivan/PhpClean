@@ -77,4 +77,29 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
                     """
         )
     }
+    fun testCheckNullableReturnType() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                     /**
+                      *<warning descr="Redundant PhpDoc tag">@return bool|null</warning>
+                      */
+                     function show():?bool {}
+                    """
+        )
+    }
+
+    fun testCheckNullableParameterType() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                     /**
+                      *<warning descr="Redundant PhpDoc tag">@param stdClass|null ${'$'}o</warning>
+                      */
+                     function show(?stdClass ${'$'}o) {}
+                    """
+        )
+    }
 }

@@ -29,6 +29,9 @@ if (file("local.properties").exists()) {
 println("Version: $version")
 val fileName = "$name.jar"
 tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "1.8"
+    }
     register("copyInspections") {
         doLast {
             blocks().forEach {
@@ -41,7 +44,7 @@ tasks {
     }
     register("checkReadme") {
         doLast {
-            if (readmeFile().readText()!= generatedReadmeContent(readmeFile())) {
+            if (readmeFile().readText() != generatedReadmeContent(readmeFile())) {
                 throw GradleException("Readme is not up to date")
             }
         }
