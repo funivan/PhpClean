@@ -25,15 +25,6 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
                     }
                 }
             }
-//            override fun visitPhpDocTag(tag: PhpDocTag) {
-//                if (tags.contains(tag.name.removePrefix("@"))) {
-//                    holder.registerProblem(
-//                            tag,
-//                            "Deprecated tag",
-//                            RemoveTagQF(Pointer(tag).create())
-//                    )
-//                }
-//            }
         }
     }
 
