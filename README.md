@@ -77,16 +77,6 @@ function phrase(){ // <-- Missing return type
     return 'hi';
 }
 ```
-#### PhpCleanUndefinedMethod
-<b>Experimental</b> Try to fix undefined method phpstorm bugs: https://youtrack.jetbrains.com/issue/WI-5223
-```php
-class Email {
-  public function send(){ }
-}
-/** @var mixed|Email $email */
-$email->snd(); // <-- Undefined method
-$email->send();
-```
 #### PropertyAnnotation
 Properties that are not initialized in the constructor should be annotated as nullable.
 ```php
