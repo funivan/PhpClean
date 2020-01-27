@@ -14,8 +14,8 @@ buildscript {
     }
 }
 plugins {
-    id("org.jetbrains.intellij") version "0.4.9"
-    id("org.jetbrains.kotlin.jvm") version "1.3.41"
+    id("org.jetbrains.intellij") version "0.4.15"
+    id("org.jetbrains.kotlin.jvm") version "1.3.61"
     idea
 }
 apply {
