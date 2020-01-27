@@ -64,6 +64,9 @@ tasks {
         dependsOn("test")
         archiveFileName.set("${intellij.pluginName}.jar")
     }
+    named("test"){
+        dependsOn("checkReadme")
+    }
     named("buildPlugin") {
         dependsOn("copyInspections")
         dependsOn("patchRepositoryXml")

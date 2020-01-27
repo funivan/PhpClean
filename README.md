@@ -30,6 +30,7 @@ Then you can install **PhpClean**
 <!-- inspections -->
 #### ClassNameCollision
 Classes with same name in different namespaces can be confused.
+(Disabled by default)
 ```php
 namespace App {
   class User{}; // <- Class name collision with \Cli\User

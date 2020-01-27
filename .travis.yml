@@ -16,7 +16,7 @@ matrix:
     - name: "EAP Tests"
       env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="193.3519.40"
 script:
-  - ./gradlew check buildPlugin checkReadme
+  - ./gradlew check buildPlugin
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
