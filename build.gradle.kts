@@ -14,9 +14,9 @@ buildscript {
     }
 }
 plugins {
+    idea apply true
+    kotlin("jvm") version "1.3.61"
     id("org.jetbrains.intellij") version "0.4.15"
-    id("org.jetbrains.kotlin.jvm") version "1.3.61"
-    idea
 }
 apply {
     plugin("java")
@@ -27,10 +27,10 @@ if (file("local.properties").exists()) {
     apply(from = "local.properties")
 }
 println("Version: $version")
-val fileName = "$name.jar"
 tasks {
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
+        kotlinOptions.freeCompilerArgs += "-progressive"
     }
     register("copyInspections") {
         doLast {
@@ -57,11 +57,12 @@ tasks {
             }
         }
     }
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
     patchPluginXml {
         changeNotes(project.property("changeNotes").toString().replace("\n", "<br>\n"))
+    }
+    named<Zip>("buildPlugin") {
+        dependsOn("test")
+        archiveFileName.set("${intellij.pluginName}.jar")
     }
     named("buildPlugin") {
         dependsOn("copyInspections")
@@ -83,10 +84,6 @@ intellij {
             "properties"
     )
 }
-tasks.jar {
-    archiveName = fileName
-}
-
 tasks.register<Copy>("patchRepositoryXml") {
     doFirst {
         delete("$buildDir/libs/*.xml")
@@ -98,7 +95,7 @@ tasks.register<Copy>("patchRepositoryXml") {
             "version" to project.property("version").toString(),
             "pluginName" to name,
             "buildDate" to System.currentTimeMillis(),
-            "fileName" to fileName,
+            "fileName" to "${intellij.pluginName}.jar",
             "group" to project.property("group")
     ))
 }
@@ -106,14 +103,14 @@ tasks.register<Copy>("patchRepositoryXml") {
 tasks.register<Exec>("deployNightly") {
     commandLine = listOf(
             "curl", "-s",
-            "-F", "file[]=@build/libs/$fileName",
+            "-F", "file[]=@build/libs/${intellij.pluginName}.jar",
             "-F", "file[]=@build/libs/PhpClean-nightly.xml",
             safeProp("ci_deploy_uri", safeEnv("DEPLOY_URI", ""))
     )
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    compileOnly(kotlin("stdlib-jdk8"))
 }
 fun prop(name: String): String {
     return extra.properties[name] as? String
