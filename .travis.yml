@@ -10,11 +10,10 @@ install:
   echo "install skip"
 matrix:
   include:
-    - env: IDEA="IU-2019.3" PHP="193.5233.102" DEPLOY=true
-    - env: IDEA="IU-2019.2.3" PHP="192.6817.12"
+    - env: IDEA="IU-2020.1.2" PHP="201.7846.64"
   allow_failures:
     - name: "EAP Tests"
-      env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="193.3519.40"
+      env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="202.4866"
 script:
   - ./gradlew check buildPlugin
 before_cache:
