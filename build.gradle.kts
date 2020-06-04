@@ -103,15 +103,6 @@ tasks.register<Copy>("patchRepositoryXml") {
     ))
 }
 
-tasks.register<Exec>("deployNightly") {
-    commandLine = listOf(
-            "curl", "-s",
-            "-F", "file[]=@build/libs/${intellij.pluginName}.jar",
-            "-F", "file[]=@build/libs/PhpClean-nightly.xml",
-            safeProp("ci_deploy_uri", safeEnv("DEPLOY_URI", ""))
-    )
-}
-
 dependencies {
     compileOnly(kotlin("stdlib-jdk8"))
 }
