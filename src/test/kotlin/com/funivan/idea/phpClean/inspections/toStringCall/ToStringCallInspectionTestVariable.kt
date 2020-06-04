@@ -17,4 +17,36 @@ class ToStringCallInspectionTestVariable : BaseInspectionTest() {
                     """
         )
     }
+
+    fun testShortTagEcho() {
+        assert(
+                ToStringCallInspection(),
+                """
+                    <?php
+                    class Hello {
+                      public function __toString(){ echo 'Hi'; }
+                    }
+                    ${'$'}phrase = new Hello();
+                    ?>
+                    <?= <warning descr="Deprecated __toString call">${'$'}phrase</warning> ?>
+                    """
+        )
+    }
+
+    fun testVariableComparison() {
+        assert(
+                ToStringCallInspection(),
+                """
+                    <?php
+                    class Hello {
+                      public function __toString(){ echo 'Hi'; }
+                    }
+                    ${'$'}phrase = new Hello();
+                    <warning descr="Deprecated __toString call">${'$'}phrase</warning> == 'Hi';
+                    "${'$'}a Hi" == <warning descr="Deprecated __toString call">${'$'}phrase</warning>;
+                     ${'$'}phrase === 'test';
+                     ${'$'}phrase == 123;
+                    """
+        )
+    }
 }
