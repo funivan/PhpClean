@@ -10,17 +10,8 @@
 Static Code Analysis for PhpStorm and Intellij Idea.
 
 ## Installation
-#### Stable builds
 Open IDE go to `Settings->Plugins->Marketplace` search for the `PhpClean`.
-Hit `install` button. Restart your IDE.
-
-#### Nightly build - get fresh version after each commit
-You can install nightly builds using custom repository.
- 
-Open IDE go to `Settings->Plugins->Manage plugin repositories` and add repository
-`http://funivan.com/ci/PhpClean-nightly.xml`
-Then you can install **PhpClean**
-
+Hit `install` button.
 
 ![GitHub commits (since latest release)](https://img.shields.io/github/commits-since/funivan/PhpClean/latest.svg?style=flat-square)
 

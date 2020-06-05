@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build Plugin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v1
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Build the plugin
+        run: ./gradlew buildPlugin
+
+      - name: Verify Plugin Compatilibity on IntelliJ Platform
+        id: verify
+        uses: ChrisCarini/intellij-platform-plugin-verifier-action@v0.0.2
+        with:
+          ide-versions: |
+            ideaIU:2019.3
+
+      - name: Get log file path and print contents
+        run: |
+          echo "The verifier log file [${{steps.verify.outputs.verification-output-log-filename}}] contents : " ;
+          cat ${{steps.verify.outputs.verification-output-log-filename}}

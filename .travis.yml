@@ -13,7 +13,7 @@ matrix:
     - env: IDEA="IU-2020.1.2" PHP="201.7846.64"
   allow_failures:
     - name: "EAP Tests"
-      env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="202.4866"
+      env: IDEA="IU-LATEST-EAP-SNAPSHOT" PHP="202.5103.13"
 script:
   - ./gradlew check buildPlugin
 before_cache:
