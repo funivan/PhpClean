@@ -102,4 +102,79 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
                     """
         )
     }
+
+    fun testRedundantFieldTag() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                    class PhpClean {
+                        /**
+                         * <warning descr="Redundant PhpDoc tag">@var bool</warning>
+                         */ 
+                        private bool ${'$'}isClean = false;                        
+                    }
+                    """
+        )
+    }
+
+    fun testFieldTagWithClassFQN() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                    class PhpClean {
+                        /**
+                         * <warning descr="Redundant PhpDoc tag">@var \stdClass</warning>
+                         */ 
+                        private \stdClass ${'$'}cleaner;                        
+                    }
+                    """
+        )
+    }
+
+    fun testFieldTagWithMultipleTypes() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                    class PhpClean {
+                        /**
+                         * @var \Generator|string[]
+                         */ 
+                        private \Generator ${'$'}rules;                        
+                    }
+                    """
+        )
+    }
+
+    fun testFieldWithEmptyTag() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                    class PhpClean {
+                        /**
+                         * @var
+                         */ 
+                        private \Generator ${'$'}rules;                        
+                    }
+                    """
+        )
+    }
+
+    fun testCheckNullableFieldType() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                    class PhpClean {
+                        /**
+                         * <warning descr="Redundant PhpDoc tag">@var \stdClass|null</warning>
+                         */ 
+                        private ?\stdClass ${'$'}cleaner;                          
+                    }
+                    """
+        )
+    }
 }

@@ -1,5 +1,6 @@
 package com.funivan.idea.phpClean.inspections.redundantDocCommentTag
 
+import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.FieldInfo
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ParameterInfo
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ParameterType
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ReturnType
@@ -9,6 +10,7 @@ import com.funivan.idea.phpClean.spl.jb.qf.RemoveTagQF
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.documentation.phpdoc.psi.tags.PhpDocTag
+import com.jetbrains.php.lang.psi.elements.Field
 import com.jetbrains.php.lang.psi.elements.Function
 import com.jetbrains.php.lang.psi.elements.Method
 import com.jetbrains.php.lang.psi.resolve.types.PhpType
@@ -30,6 +32,19 @@ class RedundantDocCommentTagInspection : PhpCleanInspection() {
                     items.add(ReturnType(comment.returnTag, function))
                     for (paramTag in comment.paramTags) {
                         items.add(ParameterInfo(paramTag, function))
+                    }
+                    for (item in items) {
+                        checkComment(item.doc(), item.type())
+                    }
+                }
+            }
+
+            override fun visitPhpField(field: Field) {
+                val comment = field.docComment
+                val items = mutableListOf<ParameterType>()
+                if (comment != null) {
+                    for (paramTag in comment.paramTags) {
+                        items.add(FieldInfo(paramTag, field))
                     }
                     for (item in items) {
                         checkComment(item.doc(), item.type())
