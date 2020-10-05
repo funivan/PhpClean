@@ -1,6 +1,5 @@
 package com.funivan.idea.phpClean.inspections.redundantDocCommentTag
 
-import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.FieldInfo
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ParameterInfo
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ParameterType
 import com.funivan.idea.phpClean.inspections.redundantDocCommentTag.tags.ReturnType
@@ -41,13 +40,9 @@ class RedundantDocCommentTagInspection : PhpCleanInspection() {
 
             override fun visitPhpField(field: Field) {
                 val comment = field.docComment
-                val items = mutableListOf<ParameterType>()
                 if (comment != null) {
                     for (paramTag in comment.paramTags) {
-                        items.add(FieldInfo(paramTag, field))
-                    }
-                    for (item in items) {
-                        checkComment(item.doc(), item.type())
+                        checkComment(paramTag, field.declaredType)
                     }
                 }
             }
