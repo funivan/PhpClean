@@ -150,4 +150,41 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    fun testWithoutInitInConstructor() {
+        assert(
+                PropertyAnnotationInspection(),
+                """
+                    <?php
+                    class A {
+                        /**
+                         * @var string
+                         */
+                        private <warning descr="Property is not annotated correctly. Add null type">${'$'}p</warning>;
+                        
+                        public function __construct() {
+                        }
+                    }
+                """
+        )
+    }
+
+    fun testWithInitInConstructor() {
+        assert(
+                PropertyAnnotationInspection(),
+                """
+                    <?php
+                    class A {
+                        /**
+                         * @var string
+                         */
+                        private ${'$'}p;
+                        
+                        public function __construct() {
+                          ${'$'}this->p = "";
+                        }
+                    }
+                """
+        )
+    }
+
 }
