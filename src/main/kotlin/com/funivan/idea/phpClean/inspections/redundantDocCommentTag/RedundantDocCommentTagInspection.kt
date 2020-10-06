@@ -9,6 +9,7 @@ import com.funivan.idea.phpClean.spl.jb.qf.RemoveTagQF
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.documentation.phpdoc.psi.tags.PhpDocTag
+import com.jetbrains.php.lang.psi.elements.Field
 import com.jetbrains.php.lang.psi.elements.Function
 import com.jetbrains.php.lang.psi.elements.Method
 import com.jetbrains.php.lang.psi.resolve.types.PhpType
@@ -33,6 +34,15 @@ class RedundantDocCommentTagInspection : PhpCleanInspection() {
                     }
                     for (item in items) {
                         checkComment(item.doc(), item.type())
+                    }
+                }
+            }
+
+            override fun visitPhpField(field: Field) {
+                val comment = field.docComment
+                if (comment != null) {
+                    for (paramTag in comment.paramTags) {
+                        checkComment(paramTag, field.declaredType)
                     }
                 }
             }
