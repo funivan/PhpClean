@@ -5,11 +5,20 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        idea: [ "IU-2020.1.2" ]
+        php: [ "201.7846.64" ]
+        include:
+          - idea: "IU-LATEST-EAP-SNAPSHOT"
+            php: "202.5103.13"
+            experimental: true
+
     name: Build Plugin
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Setup Java
         uses: actions/setup-java@v1
@@ -18,6 +27,9 @@ jobs:
 
       - name: Build the plugin
         run: ./gradlew buildPlugin
+        env:
+            ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.idea }}
+            ORG_GRADLE_PROJECT_phpPluginVersion: ${{ matrix.php }}
 
       - name: Verify Plugin Compatilibity on IntelliJ Platform
         id: verify
