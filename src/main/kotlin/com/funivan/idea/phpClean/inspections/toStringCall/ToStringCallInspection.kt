@@ -44,12 +44,9 @@ class ToStringCallInspection : PhpCleanInspection() {
             override fun visitPhpFunctionCall(reference: FunctionReference) {
                 if (context.match(reference.parent)) {
                     val resolve = reference.resolve()
-                    if (resolve is Function) {
-                        val type = resolve.returnType
-                        var safeType = false
-                        if (type == null || listOf("string", "int", "float", "?string", "?int", "?float").contains(type.text)) {
-                            safeType = true
-                        }
+                    if (resolve is Function && resolve.name != "__toString") {
+                        val types = resolve.declaredType.typesSorted.joinToString(separator="|")
+                        val safeType = (listOf("\\string", "\\int", "\\float", "\\null|\\string", "\\null|\\int", "\\null|\\float").contains(types))
                         if (!safeType) {
                             holder.registerProblem(
                                     reference,

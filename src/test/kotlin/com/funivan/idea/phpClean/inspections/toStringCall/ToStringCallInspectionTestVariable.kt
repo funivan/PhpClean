@@ -13,7 +13,7 @@ class ToStringCallInspectionTestVariable : BaseInspectionTest() {
                     }
                     ${'$'}phrase = new Hello();
                     echo <warning descr="Deprecated __toString call">${'$'}phrase</warning>;
-                    echo ${'$'}phrase->__toString();
+                    ${'$'}phrase->__toString();
                     """
         )
     }

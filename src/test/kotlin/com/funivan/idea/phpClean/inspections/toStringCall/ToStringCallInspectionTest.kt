@@ -114,7 +114,7 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     ${'$'}hi = new Hello();
                     echo ${'$'}hi->str();
                     ${'$'}message = ${'$'}hi->str() . 'msg';
-                    echo (new Hello())->s();
+                    echo <warning descr="Deprecated __toString call">(new Hello())->s()</warning>;
                     """
         )
     }

@@ -164,6 +164,9 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
                         public function __construct() {
                         }
                     }
+                    class B {
+                        private ?string ${'$'}id; 
+                    }
                 """
         )
     }
