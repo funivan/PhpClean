@@ -11,8 +11,9 @@ jobs:
           - idea: "IU-2020.2.1"
             php: "202.6948.15"
 
-          - idea: "IU-LATEST-EAP-SNAPSHOT"
-            php: "202.5103.13"
+          # latest EAP
+          - idea: "203-EAP-SNAPSHOT"
+            php: "203.4818.52"
             experimental: true
 
     name: Build Plugin
@@ -28,7 +29,7 @@ jobs:
       - name: Build the plugin
         uses: burrunan/gradle-cache-action@v1.5
         with:
-          arguments: buildPlugin
+          arguments: buildPlugin --info --scan
         env:
             ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.idea }}
             ORG_GRADLE_PROJECT_phpPluginVersion: ${{ matrix.php }}
