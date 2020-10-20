@@ -5,11 +5,21 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        include:
+          - idea: "IU-2020.2.1"
+            php: "202.6948.15"
+
+          # latest EAP
+          - idea: "203-EAP-SNAPSHOT"
+            php: "203.4818.52"
+            experimental: true
+
     name: Build Plugin
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Setup Java
         uses: actions/setup-java@v1
@@ -17,16 +27,9 @@ jobs:
           java-version: 11
 
       - name: Build the plugin
-        run: ./gradlew buildPlugin
-
-      - name: Verify Plugin Compatilibity on IntelliJ Platform
-        id: verify
-        uses: ChrisCarini/intellij-platform-plugin-verifier-action@v0.0.2
+        uses: burrunan/gradle-cache-action@v1.5
         with:
-          ide-versions: |
-            ideaIU:2019.3
-
-      - name: Get log file path and print contents
-        run: |
-          echo "The verifier log file [${{steps.verify.outputs.verification-output-log-filename}}] contents : " ;
-          cat ${{steps.verify.outputs.verification-output-log-filename}}
+          arguments: buildPlugin --info --scan
+        env:
+            ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.idea }}
+            ORG_GRADLE_PROJECT_phpPluginVersion: ${{ matrix.php }}

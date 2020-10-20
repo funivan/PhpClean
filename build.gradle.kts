@@ -16,16 +16,14 @@ buildscript {
 plugins {
     idea apply true
     kotlin("jvm") version "1.3.61"
-    id("org.jetbrains.intellij") version "0.4.15"
+    id("org.jetbrains.intellij") version "0.5.0"
 }
 apply {
     plugin("java")
     plugin("kotlin")
     plugin("org.jetbrains.intellij")
 }
-if (file("local.properties").exists()) {
-    apply(from = "local.properties")
-}
+
 println("Version: $version")
 tasks {
     withType<KotlinCompile> {
@@ -69,7 +67,6 @@ tasks {
     }
     named("buildPlugin") {
         dependsOn("copyInspections")
-        dependsOn("patchRepositoryXml")
     }
 }
 intellij {
@@ -87,22 +84,6 @@ intellij {
             "properties"
     )
 }
-tasks.register<Copy>("patchRepositoryXml") {
-    doFirst {
-        delete("$buildDir/libs/*.xml")
-    }
-    from("src/ci/PhpClean-nightly.xml")
-    into("$buildDir/libs")
-    expand(hashMapOf(
-            "fileSize" to "18000",
-            "version" to project.property("version").toString(),
-            "pluginName" to name,
-            "buildDate" to System.currentTimeMillis(),
-            "fileName" to "${intellij.pluginName}.jar",
-            "group" to project.property("group")
-    ))
-}
-
 dependencies {
     compileOnly(kotlin("stdlib-jdk8"))
 }
