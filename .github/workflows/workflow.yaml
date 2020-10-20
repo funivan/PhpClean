@@ -8,8 +8,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - idea: "IU-2020.1.2"
-            php: "201.7846.64"
+          - idea: "IU-2020.2.1"
+            php: "202.6948.15"
 
           - idea: "IU-LATEST-EAP-SNAPSHOT"
             php: "202.5103.13"
