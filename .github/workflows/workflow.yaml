@@ -32,16 +32,3 @@ jobs:
         env:
             ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.idea }}
             ORG_GRADLE_PROJECT_phpPluginVersion: ${{ matrix.php }}
-
-      - name: Verify Plugin Compatilibity on IntelliJ Platform
-        id: verify
-        uses: ChrisCarini/intellij-platform-plugin-verifier-action@v0.0.2
-        with:
-          ide-versions: |
-            ideaIU:2019.3
-            ideaIC:LATEST-EAP-SNAPSHOT
-
-      - name: Get log file path and print contents
-        run: |
-          echo "The verifier log file [${{steps.verify.outputs.verification-output-log-filename}}] contents : " ;
-          cat ${{steps.verify.outputs.verification-output-log-filename}}
