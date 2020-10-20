@@ -25,6 +25,7 @@ jobs:
         with:
           ide-versions: |
             ideaIU:2019.3
+            ideaIC:LATEST-EAP-SNAPSHOT
 
       - name: Get log file path and print contents
         run: |
