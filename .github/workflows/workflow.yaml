@@ -28,7 +28,7 @@ jobs:
       - name: Build the plugin
         uses: burrunan/gradle-cache-action@v1.5
         with:
-          args: buildPlugin
+          arguments: buildPlugin
         env:
             ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.idea }}
             ORG_GRADLE_PROJECT_phpPluginVersion: ${{ matrix.php }}
