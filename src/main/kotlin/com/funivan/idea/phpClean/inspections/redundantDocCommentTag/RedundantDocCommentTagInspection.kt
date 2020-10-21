@@ -8,6 +8,7 @@ import com.funivan.idea.phpClean.spl.Pointer
 import com.funivan.idea.phpClean.spl.jb.qf.RemoveTagQF
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
+import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType
 import com.jetbrains.php.lang.documentation.phpdoc.psi.tags.PhpDocTag
 import com.jetbrains.php.lang.psi.elements.Field
 import com.jetbrains.php.lang.psi.elements.Function
@@ -52,11 +53,14 @@ class RedundantDocCommentTagInspection : PhpCleanInspection() {
                     val doc = tag.type.toStringResolved()
                     val declared = type.toStringResolved()
                     if (doc == declared) {
-                        holder.registerProblem(
-                                tag,
-                                "Redundant PhpDoc tag",
-                                RemoveTagQF(Pointer(tag).create())
-                        )
+                        val skip = (tag.firstPsiChild as PhpDocType?)?.canonicalText?.contains(Regex("[<\\]]+"))
+                        if (skip == false) {
+                            holder.registerProblem(
+                                    tag,
+                                    "Redundant PhpDoc tag",
+                                    RemoveTagQF(Pointer(tag).create())
+                            )
+                        }
                     }
                 }
             }

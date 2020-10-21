@@ -177,4 +177,25 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
                     """
         )
     }
+
+    fun testGenericType() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
+                    class PhpClean {
+                     /**
+                      * @var array[]
+                      */
+                     private array ${'$'}a;
+                       /**
+                        * @param string[]
+                        * @return array<string>
+                        */
+                       public function get(array ${'$'}items):array {
+                       }
+                    }
+                    """
+        )
+    }
 }
