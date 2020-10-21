@@ -13,7 +13,7 @@ class MissingReturnTypeInspection : PhpCleanInspection() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {
             override fun visitPhpMethod(method: Method) {
-                if (method.returnType == null) {
+                if (method.declaredType.isEmpty) {
                     val name = method.nameNode?.psi
                     if (name != null && !skip.contains(name.text)) {
                         holder.registerProblem(name, "Missing return type")

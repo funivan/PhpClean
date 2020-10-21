@@ -15,7 +15,7 @@ class ToStringCallInspectionTestFunction : BaseInspectionTest() {
                       return new Phrase();
                     }
                     echo <warning descr="Deprecated __toString call">hi()</warning>;
-                    echo hi()->__toString();
+                    hi()->__toString();
                     """,
                 """
                     <?php
@@ -26,7 +26,7 @@ class ToStringCallInspectionTestFunction : BaseInspectionTest() {
                       return new Phrase();
                     }
                     echo hi()->__toString();
-                    echo hi()->__toString();
+                    hi()->__toString();
                     """
         )
     }

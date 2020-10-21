@@ -8,28 +8,20 @@ jobs:
     strategy:
       matrix:
         include:
-          - idea: "IU-2020.2.1"
-            php: "202.6948.15"
-
-          # latest EAP
-          - idea: "203-EAP-SNAPSHOT"
-            php: "203.4818.52"
-            experimental: true
+          - idea: "IU-2020.2"
+            php: "202.6397.115"
 
     name: Build Plugin
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Setup Java
-        uses: actions/setup-java@v1
+      - uses: actions/setup-java@v1
         with:
           java-version: 11
 
-      - name: Build the plugin
-        uses: burrunan/gradle-cache-action@v1.5
+      - uses: burrunan/gradle-cache-action@v1.5
         with:
-          arguments: buildPlugin --info --scan
+          arguments: check buildPlugin
         env:
             ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.idea }}
             ORG_GRADLE_PROJECT_phpPluginVersion: ${{ matrix.php }}

@@ -11,11 +11,6 @@ class ReturnType(private val returnTag: PhpDocReturnTag?, private val function: 
     }
 
     override fun type(): PhpType? {
-        var result: PhpType? = null
-        val returnType = function.returnType
-        if (returnType != null) {
-            result = returnType.type
-        }
-        return result
+        return function.declaredType
     }
 }
