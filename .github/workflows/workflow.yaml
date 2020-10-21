@@ -8,13 +8,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - idea: "IU-202.6948.69"
-            php: "202.6948.15"
-
-#          # latest EAP
-#          - idea: "203-EAP-SNAPSHOT"
-#            php: "203.4818.52"
-#            experimental: true
+          - idea: "IU-2020.2"
+            php: "202.6397.115"
 
     name: Build Plugin
     runs-on: ubuntu-latest
@@ -24,10 +19,9 @@ jobs:
         with:
           java-version: 11
 
-      - name: Build the plugin
-        uses: eskatos/gradle-command-action@v1
+      - uses: burrunan/gradle-cache-action@v1.5
         with:
-          arguments: buildPlugin --info --scan
+          arguments: check buildPlugin
         env:
             ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.idea }}
             ORG_GRADLE_PROJECT_phpPluginVersion: ${{ matrix.php }}
