@@ -97,10 +97,6 @@ fun safeProp(name: String, fallback: String): String {
             ?: fallback
 }
 
-fun safeEnv(name: String, fallback: String): String {
-    return System.getenv(name) ?: fallback
-}
-
 fun write(file: File, content: String): Boolean {
     var result = false
     if (!file.exists()) {
