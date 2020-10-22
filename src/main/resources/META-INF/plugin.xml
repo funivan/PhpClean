@@ -56,6 +56,16 @@
         />
         <localInspection
                 groupPath="PHP"
+                shortName="PropertyCanBePrivateInspection"
+                displayName="Property can be private"
+                groupName="PhpClean"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.propertyCanBePrivate.PropertyCanBePrivateInspection"
+        />
+        <localInspection
+                groupPath="PHP"
                 shortName="RedundantDocCommentTagInspection"
                 displayName="Redundant doc comment tag"
                 groupName="PhpClean"

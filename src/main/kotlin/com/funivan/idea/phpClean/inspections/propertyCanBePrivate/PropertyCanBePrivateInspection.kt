@@ -1,5 +1,6 @@
-package com.funivan.idea.phpClean.inspections.methodCanBePrivate
+package com.funivan.idea.phpClean.inspections.propertyCanBePrivate
 
+import com.funivan.idea.phpClean.constrains.clazz.IsAloneClass
 import com.funivan.idea.phpClean.qf.makeClassMemberPrivate.MakeClassMemberPrivateQF
 import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.intellij.codeInspection.ProblemsHolder
@@ -8,19 +9,20 @@ import com.jetbrains.php.lang.psi.elements.PhpClass
 import com.jetbrains.php.lang.psi.elements.PhpModifierList
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
-class MethodCanBePrivateInspection : PhpCleanInspection() {
-    override fun getShortName() = "MethodCanBePrivateInspection"
+class PropertyCanBePrivateInspection : PhpCleanInspection() {
+    val constraint = IsAloneClass()
+    override fun getShortName() = "PropertyCanBePrivateInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {
-            override fun visitPhpClass(clazz: PhpClass) {
-                if (clazz.isFinal && clazz.extendsList.referenceElements.isEmpty()) {
-                    for (method in clazz.ownMethods.filter { it.modifier.isProtected }) {
+            override fun visitPhpClass(target: PhpClass) {
+                if (constraint.match(target)) {
+                    for (property in target.ownFields.filter { it.modifier.isProtected }) {
                         holder.registerProblem(
-                                method.nameIdentifier ?: method,
-                                "Method can be private",
+                                property.nameIdentifier ?: property,
+                                "Property can be private",
                                 MakeClassMemberPrivateQF.create(
-                                        method.firstChild as PhpModifierList?,
-                                        "Make method private"
+                                        property.parent.firstChild as PhpModifierList?,
+                                        "Make property private"
                                 )
                         )
                     }
