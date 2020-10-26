@@ -1,8 +1,8 @@
-name: Build
+name: Main
 
 on:
   push:
-
+  tags:
 jobs:
   build:
     strategy:
@@ -10,8 +10,10 @@ jobs:
         include:
           - idea: "IU-2020.2"
             php: "202.6397.115"
+          - idea: "IU-2020.2.3"
+            php: "202.7660.42"
 
-    name: Build Plugin
+    name: Build ~> Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,3 +27,11 @@ jobs:
         env:
             ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.idea }}
             ORG_GRADLE_PROJECT_phpPluginVersion: ${{ matrix.php }}
+
+      - uses: burrunan/gradle-cache-action@v1.5
+        if: ${{ contains(github.ref, '-alpha' )}}
+        with:
+          arguments: check publishPlugin
+        env:
+            ORG_GRADLE_PROJECT_intellijPublishToken: ${{ secrets.intellijPublishToken }}
+            ORG_GRADLE_PROJECT_intellijPublishChannel: "alpha"

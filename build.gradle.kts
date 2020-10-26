@@ -1,3 +1,4 @@
+import org.jetbrains.intellij.tasks.PublishTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 repositories {
@@ -61,6 +62,10 @@ tasks {
     named<Zip>("buildPlugin") {
         dependsOn("test")
         archiveFileName.set("${intellij.pluginName}.jar")
+    }
+    named<PublishTask>("publishPlugin") {
+        setChannels(prop("intellijPublishChannel"))
+        setToken(prop("intellijPublishToken"))
     }
     named("test"){
         dependsOn("checkReadme")
