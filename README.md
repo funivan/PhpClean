@@ -1,6 +1,5 @@
 # PhpClean - PhpStorm/IDEA plugin  
 
-[![Build Status](https://img.shields.io/travis/com/funivan/PhpClean.svg?style=flat-square)](https://travis-ci.com/funivan/PhpClean)
 [![Version](https://img.shields.io/jetbrains/plugin/v/11272.svg?style=flat-square)](https://plugins.jetbrains.com/plugin/11272-phpclean)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/11272.svg?style=flat-square)](https://plugins.jetbrains.com/plugin/11272-phpclean)
 [![License](https://img.shields.io/github/license/funivan/PhpClean.svg?style=flat-square)](LICENSE.md)
@@ -77,6 +76,13 @@ class User {
  private $name;
  public function getName(){  }
  public function setName(string $name){  }
+}
+```
+#### PropertyCanBePrivate
+Protected properties can be converted to private.
+```php
+class User {
+  protected $user; // <-- Property can be private
 }
 ```
 #### RedundantDocCommentTag
