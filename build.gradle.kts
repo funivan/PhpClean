@@ -61,10 +61,9 @@ tasks {
     }
     named<Zip>("buildPlugin") {
         dependsOn("test")
-        archiveFileName.set("${intellij.pluginName}.jar")
     }
     named<PublishTask>("publishPlugin") {
-        setChannels(prop("intellijPublishChannel"))
+        setToken(prop("intellijPublishChannel"))
         setToken(prop("intellijPublishToken"))
     }
     named("test"){
