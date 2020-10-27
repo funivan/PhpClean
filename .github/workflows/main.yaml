@@ -37,16 +37,18 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 11
-      - uses: FranzDiebold/github-env-vars-action@v1.2.1
-      - name: Print environment variables exposed by this action
-        run: |
-          echo "GITHUB_REF_SLUG=$GITHUB_REF_SLUG"
-          echo "GITHUB_REF_NAME=$GITHUB_REF_NAME"
-          echo "GITHUB_REF_NAME_SLUG=$GITHUB_REF_NAME_SLUG"
       - uses: burrunan/gradle-cache-action@v1.5
         with:
-          arguments: clean publishPlugin
+          arguments: publishPlugin
         env:
           ORG_GRADLE_PROJECT_intellijPublishToken: ${{ secrets.intellijPublishToken }}
           ORG_GRADLE_PROJECT_intellijPublishChannel: "alpha"
-          ORG_GRADLE_PROJECT_version: "$GITHUB_REF_NAME"
+          ORG_GRADLE_PROJECT_version: "${GITHUB_REF#refs/tags/}"
+      - name: Upload binaries to release
+          uses: svenstaro/upload-release-action@v2
+          with:
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ github.ref }}
+            file: build/libs/*
+            file_glob: true
+            overwrite: true
