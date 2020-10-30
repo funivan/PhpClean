@@ -16,6 +16,16 @@
 
         <localInspection
                 groupPath="PHP"
+                shortName="AssignMisusedInspection"
+                displayName="Assign misused"
+                groupName="PhpClean"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.assignMisused.AssignMisusedInspection"
+        />
+        <localInspection
+                groupPath="PHP"
                 shortName="ClassNameCollisionInspection"
                 displayName="Class name collision"
                 groupName="PhpClean"
