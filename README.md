@@ -18,6 +18,14 @@ Hit `install` button.
 
 ## List of inspection:
 <!-- inspections -->
+#### AssignMisused
+Detects assignment and comparison operators in one statement.
+```php
+do{
+ //...
+}while( $isValid = $user->getName() == self::ADMIN_USER );
+ // ^^^ Hard to read this statements
+```
 #### ClassNameCollision
 Classes with same name in different namespaces can be confused.
 (Disabled by default)
