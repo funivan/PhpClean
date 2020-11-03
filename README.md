@@ -76,6 +76,17 @@ function phrase(){ // <-- Missing return type
     return 'hi';
 }
 ```
+#### ParentPropertyDeprecated
+Check if parent property is deprecated.
+```php
+  class A {
+    /** @deprecated /*
+    protected $name;
+  }
+  class B extends A{
+    protected $name; // <-- Warn about deprecation
+  }
+```
 #### PropertyAnnotation
 Properties that are not initialized in the constructor should be annotated as nullable.
 ```php
