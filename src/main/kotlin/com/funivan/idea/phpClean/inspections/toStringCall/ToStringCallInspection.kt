@@ -6,11 +6,20 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.lang.psi.elements.*
 import com.jetbrains.php.lang.psi.elements.Function
+import com.jetbrains.php.lang.psi.resolve.types.PhpType
 import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 
 
 class ToStringCallInspection : PhpCleanInspection() {
     val context = IsToStringContext()
+    val safeCastTypes = lazy {
+        PhpType.builder()
+                .add(PhpType.NULL)
+                .add(PhpType.STRING)
+                .add(PhpType.FALSE).add(PhpType.BOOLEAN)
+                .add(PhpType.INT).add(PhpType.FLOAT).add(PhpType.NUMBER).build()
+    }
+
     override fun getShortName() = "ToStringCallInspection"
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {
@@ -45,9 +54,9 @@ class ToStringCallInspection : PhpCleanInspection() {
                 if (context.match(reference.parent)) {
                     val resolve = reference.resolve()
                     if (resolve is Function && resolve.name != "__toString") {
-                        val types = resolve.declaredType.typesSorted.joinToString(separator="|")
-                        val safeType = (listOf("\\string", "\\int", "\\float", "\\null|\\string", "\\null|\\int", "\\null|\\float").contains(types))
-                        if (!safeType) {
+                        val declaredType = resolve.declaredType
+                        val types = declaredType.filter(safeCastTypes.value)
+                        if (!types.isEmpty) {
                             holder.registerProblem(
                                     reference,
                                     "Deprecated __toString call",
