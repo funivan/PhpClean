@@ -1,0 +1,14 @@
+Check if parent property is deprecated.
+<pre>
+  class A {
+    /** @deprecated /*
+    protected $name;
+  }
+  class B extends A{
+    protected $name; // <-- Warn about deprecation
+  }
+</pre>
+<!-- main -->
+The recommended way of resolving this error is to provide deprecated tag for deprecated properties.
+
+Another case it to remove parent deprecated property.

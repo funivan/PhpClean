@@ -116,6 +116,16 @@
         />
         <localInspection
                 groupPath="PHP"
+                shortName="ParentPropertyDeprecated"
+                displayName="Parent property is deprecated"
+                groupName="PhpClean"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.parentPropertyDeprecated.ParentPropertyDeprecatedInspection"
+        />
+        <localInspection
+                groupPath="PHP"
                 shortName="MissingParameterTypeDeclarationInspection"
                 displayName="Missing parameter type declaration"
                 groupName="PhpClean"
