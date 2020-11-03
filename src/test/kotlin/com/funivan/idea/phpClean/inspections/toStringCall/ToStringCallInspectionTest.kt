@@ -63,6 +63,20 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
         )
     }
 
+    fun testFunctionCall() {
+        assert(
+                ToStringCallInspection(),
+                """
+                    <?php
+                    /**
+                     * @return false|string
+                     */
+                     function someFunction(){};
+                     echo someFunction();
+                    """
+        )
+    }
+
     fun testNullableString() {
         assert(
                 ToStringCallInspection(),
@@ -114,7 +128,7 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     ${'$'}hi = new Hello();
                     echo ${'$'}hi->str();
                     ${'$'}message = ${'$'}hi->str() . 'msg';
-                    echo <warning descr="Deprecated __toString call">(new Hello())->s()</warning>;
+                    echo (new Hello())->s();
                     """
         )
     }
