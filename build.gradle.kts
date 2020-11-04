@@ -57,6 +57,7 @@ tasks {
         }
     }
     patchPluginXml {
+        untilBuild("")
         changeNotes(project.property("changeNotes").toString().replace("\n", "<br>\n"))
     }
     named<Zip>("buildPlugin") {
@@ -77,7 +78,7 @@ intellij {
     version = prop("ideaVersion")
     sandboxDirectory = project.rootDir.canonicalPath + "/build/idea-sandbox"
     downloadSources = false
-    updateSinceUntilBuild = false
+    updateSinceUntilBuild = true
     pluginName = name
     setPlugins(
             "com.jetbrains.php:${prop("phpPluginVersion")}",
