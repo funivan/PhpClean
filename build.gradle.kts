@@ -64,7 +64,7 @@ tasks {
         dependsOn("test")
     }
     named<PublishTask>("publishPlugin") {
-        setToken(prop("intellijPublishChannel"))
+        setChannels(prop("intellijPublishChannel"))
         setToken(prop("intellijPublishToken"))
     }
     named("test"){
