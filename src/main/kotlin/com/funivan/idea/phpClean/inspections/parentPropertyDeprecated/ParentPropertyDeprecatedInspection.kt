@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.inspections.deprecatedDocTag
+package com.funivan.idea.phpClean.inspections.parentPropertyDeprecated
 
 import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.intellij.codeInspection.ProblemsHolder

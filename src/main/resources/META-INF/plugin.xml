@@ -42,7 +42,7 @@
                 enabledByDefault="true"
                 level="WARNING"
                 language="PHP"
-                implementationClass="com.funivan.idea.phpClean.inspections.deprecatedDocTag.DeprecatedDocTagInspection"
+                implementationClass="com.funivan.idea.phpClean.inspections.adeprecatedDocTag.DeprecatedDocTagInspection"
         />
         <localInspection
                 groupPath="PHP"
@@ -116,7 +116,7 @@
         />
         <localInspection
                 groupPath="PHP"
-                shortName="ParentPropertyDeprecated"
+                shortName="ParentPropertyDeprecatedInspection"
                 displayName="Parent property is deprecated"
                 groupName="PhpClean"
                 enabledByDefault="true"

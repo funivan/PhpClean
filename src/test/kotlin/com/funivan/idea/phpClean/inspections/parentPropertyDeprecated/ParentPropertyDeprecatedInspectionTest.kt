@@ -1,7 +1,7 @@
 package com.funivan.idea.phpClean.inspections.parentPropertyDeprecated
 
 import com.funivan.idea.phpClean.BaseInspectionTest
-import com.funivan.idea.phpClean.inspections.deprecatedDocTag.ParentPropertyDeprecatedInspection
+import com.funivan.idea.phpClean.inspections.parentPropertyDeprecated.ParentPropertyDeprecatedInspection
 
 class ParentPropertyDeprecatedInspectionTest : BaseInspectionTest() {
     fun testDeprecatedParentProperty() {

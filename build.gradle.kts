@@ -73,6 +73,9 @@ tasks {
     named("buildPlugin") {
         dependsOn("copyInspections")
     }
+    named("runIde") {
+        dependsOn("copyInspections")
+    }
 }
 intellij {
     version = prop("ideaVersion")
