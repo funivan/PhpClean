@@ -1,0 +1,52 @@
+name: Test
+
+on:
+  push:
+jobs:
+  test:
+    name: Test
+    strategy:
+      matrix:
+        include:
+          - idea: "IU-2020.2"
+            php: "202.6397.115"
+          - idea: "IU-2020.2.3"
+            php: "202.7660.42"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - uses: burrunan/gradle-cache-action@v1.5
+        with:
+          arguments: check buildPlugin
+        env:
+            ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.idea }}
+            ORG_GRADLE_PROJECT_phpPluginVersion: ${{ matrix.php }}
+  release:
+    name: Alpha Release
+    if: ${{ contains(github.ref, '-alpha' )}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Set environment variables
+        run: |
+          echo "ORG_GRADLE_PROJECT_version=$(echo ${GITHUB_REF:10})" >> $GITHUB_ENV
+          echo "ORG_GRADLE_PROJECT_intellijPublishToken=${{ secrets.intellijPublishToken }}" >> $GITHUB_ENV
+          echo "ORG_GRADLE_PROJECT_intellijPublishChannel=alpha" >> $GITHUB_ENV
+      - uses: burrunan/gradle-cache-action@v1.5
+        with:
+          arguments: publishPlugin
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: build/libs/*
+          file_glob: true
+          overwrite: true
