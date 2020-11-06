@@ -3,6 +3,7 @@ name: Release
 on:
   push:
     tags:
+      - '*'
 jobs:
   release:
     name: Release plugin
@@ -21,13 +22,14 @@ jobs:
         if: ${{ contains(github.ref, '-alpha' )}}
         run: |
           echo "ORG_GRADLE_PROJECT_intellijPublishChannel=alpha" >> $GITHUB_ENV
-
-      - uses: burrunan/gradle-cache-action@v1.5
+      - name: Publish alpha plugin to JB
+        uses: burrunan/gradle-cache-action@v1.5
         if: ${{ contains(github.ref, '-alpha' )}}
         with:
           arguments: publishPlugin
 
-      - uses: burrunan/gradle-cache-action@v1.5
+      - name: Build nightly plugin
+        uses: burrunan/gradle-cache-action@v1.5
         if: ${{ contains(github.ref, '-nightly' )}}
         with:
           arguments: buildPlugin
