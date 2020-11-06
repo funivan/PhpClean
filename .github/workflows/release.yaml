@@ -21,9 +21,17 @@ jobs:
         if: ${{ contains(github.ref, '-alpha' )}}
         run: |
           echo "ORG_GRADLE_PROJECT_intellijPublishChannel=alpha" >> $GITHUB_ENV
+
       - uses: burrunan/gradle-cache-action@v1.5
+        if: ${{ contains(github.ref, '-alpha' )}}
         with:
           arguments: publishPlugin
+
+      - uses: burrunan/gradle-cache-action@v1.5
+        if: ${{ contains(github.ref, '-nightly' )}}
+        with:
+          arguments: buildPlugin
+
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
