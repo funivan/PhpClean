@@ -23,7 +23,7 @@ Detects assignment and comparison operators in one statement.
 ```php
 do{
  //...
-}while( $isValid = $user->getName() == self::ADMIN_USER );
+}while( false == $user->getName() = self::ADMIN_USER );
  // ^^^ Hard to read this statements
 ```
 #### ClassNameCollision

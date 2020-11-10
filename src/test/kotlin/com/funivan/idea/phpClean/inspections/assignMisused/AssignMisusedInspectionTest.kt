@@ -24,6 +24,10 @@ class AssignMisusedInspectionTest : BaseInspectionTest() {
                     do{} while (<warning descr="Assignment and comparison operators used in one statement">false !== ${'$'}a = ${'$'}b</warning>);
                     do{} while (<warning descr="Assignment and comparison operators used in one statement">false == ${'$'}a = ${'$'}b</warning>);
                     do{} while (<warning descr="Assignment and comparison operators used in one statement">false != ${'$'}a = ${'$'}b</warning>);
+                    if(<warning descr="Assignment and comparison operators used in one statement">0 > ${'$'}a = ${'$'}b</warning>){}
+                    if(<warning descr="Assignment and comparison operators used in one statement">0 >= ${'$'}a = ${'$'}b</warning>){}
+                    if(<warning descr="Assignment and comparison operators used in one statement">0 < ${'$'}a = ${'$'}b</warning>){}
+                    if(<warning descr="Assignment and comparison operators used in one statement">0 <= ${'$'}a = ${'$'}b</warning>){}
                 """
         )
     }
