@@ -13,24 +13,31 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Set environment variables
+      - name: Save plugin version and type to ENV
         run: |
-          echo "ORG_GRADLE_PROJECT_version=$(echo ${GITHUB_REF:10})" >> $GITHUB_ENV
+          echo "PLUGIN_VERSION=$(echo ${GITHUB_REF:10})" >> $GITHUB_ENV
+          echo "PLUGIN_CHANNEL=$(echo "${GITHUB_REF}" | grep -oE "[^-]+$" | grep -oE "^[a-z]+$")" >> $GITHUB_ENV
+      - name: Configure Gradle environment variables
+        run: |
+          echo "ORG_GRADLE_PROJECT_version=$(echo "${PLUGIN_VERSION}")" >> $GITHUB_ENV
           echo "ORG_GRADLE_PROJECT_intellijPublishToken=${{ secrets.intellijPublishToken }}" >> $GITHUB_ENV
-          echo "ORG_GRADLE_PROJECT_intellijPublishChannel=''" >> $GITHUB_ENV
-      - name: Set alpha channel
-        if: ${{ contains(github.ref, '-alpha' )}}
+          echo "ORG_GRADLE_PROJECT_intellijPublishChannel=$(echo "${PLUGIN_CHANNEL}")" >> $GITHUB_ENV
+      - name: Print environment variables
         run: |
-          echo "ORG_GRADLE_PROJECT_intellijPublishChannel=alpha" >> $GITHUB_ENV
+          echo "PLUGIN_VERSION=$PLUGIN_VERSION"
+          echo "PLUGIN_CHANNEL=$PLUGIN_CHANNEL"
+          echo "ORG_GRADLE_PROJECT_version=$ORG_GRADLE_PROJECT_version"
+          echo "ORG_GRADLE_PROJECT_intellijPublishToken=$ORG_GRADLE_PROJECT_intellijPublishToken"
+          echo "ORG_GRADLE_PROJECT_intellijPublishChannel=$ORG_GRADLE_PROJECT_intellijPublishChannel"
       - name: Publish alpha plugin to JB
         uses: burrunan/gradle-cache-action@v1.5
-        if: ${{ contains(github.ref, '-alpha' )}}
+        if: ${{ contains(env.PLUGIN_CHANNEL, 'alpha' )}}
         with:
           arguments: publishPlugin
 
-      - name: Build nightly plugin
+      - name: Build nightly version
         uses: burrunan/gradle-cache-action@v1.5
-        if: ${{ contains(github.ref, '-nightly' )}}
+        if: ${{ contains(env.PLUGIN_CHANNEL, 'nightly' )}}
         with:
           arguments: buildPlugin
 
@@ -41,4 +48,3 @@ jobs:
           tag: ${{ github.ref }}
           file: build/libs/*
           file_glob: true
-          overwrite: true
