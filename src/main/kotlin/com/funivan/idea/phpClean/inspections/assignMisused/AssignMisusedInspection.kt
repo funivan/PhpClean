@@ -16,7 +16,11 @@ class AssignMisusedInspection : PhpCleanInspection() {
                 PhpTokenTypes.opEQUAL,
                 PhpTokenTypes.opNOT_EQUAL,
                 PhpTokenTypes.opIDENTICAL,
-                PhpTokenTypes.opNOT_IDENTICAL
+                PhpTokenTypes.opNOT_IDENTICAL,
+                PhpTokenTypes.opGREATER,
+                PhpTokenTypes.opGREATER_OR_EQUAL,
+                PhpTokenTypes.opLESS,
+                PhpTokenTypes.opLESS_OR_EQUAL
         )
     }
 
