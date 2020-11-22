@@ -29,15 +29,22 @@ jobs:
           echo "ORG_GRADLE_PROJECT_version=$ORG_GRADLE_PROJECT_version"
           echo "ORG_GRADLE_PROJECT_intellijPublishToken=$ORG_GRADLE_PROJECT_intellijPublishToken"
           echo "ORG_GRADLE_PROJECT_intellijPublishChannel=$ORG_GRADLE_PROJECT_intellijPublishChannel"
-      - name: Publish alpha plugin to JB
+
+      - name: Publish plugin to JB [STABLE]
         uses: burrunan/gradle-cache-action@v1.5
-        if: ${{ contains(env.PLUGIN_CHANNEL, 'alpha' )}}
+        if: ${{ env.PLUGIN_CHANNEL == '' }}
         with:
           arguments: publishPlugin
 
-      - name: Build nightly version
+      - name: Publishplugin to JB [ALPHA]
         uses: burrunan/gradle-cache-action@v1.5
-        if: ${{ contains(env.PLUGIN_CHANNEL, 'nightly' )}}
+        if: ${{ env.PLUGIN_CHANNEL == 'alpha' }}
+        with:
+          arguments: publishPlugin
+
+      - name: Build Nightly version
+        uses: burrunan/gradle-cache-action@v1.5
+        if: ${{ env.PLUGIN_CHANNEL == 'nightly' }}
         with:
           arguments: buildPlugin
 
