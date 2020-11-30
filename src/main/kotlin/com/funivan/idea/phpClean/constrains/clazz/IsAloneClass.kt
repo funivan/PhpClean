@@ -8,6 +8,7 @@ class IsAloneClass : ConstrainInterface<PhpClass> {
     override fun match(target: PhpClass): Boolean {
         return (
                 !target.isAbstract &&
+                        !target.isTrait &&
                         PhpClassHierarchyUtils.getAllSubclasses(target).isEmpty()
                         &&
                         target.extendsList.referenceElements.isEmpty())

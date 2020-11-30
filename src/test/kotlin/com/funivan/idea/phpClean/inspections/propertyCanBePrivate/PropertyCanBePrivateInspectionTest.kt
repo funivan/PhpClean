@@ -69,5 +69,26 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+    fun testCheckTrait() {
+        assert(
+                PropertyCanBePrivateInspection(),
+                """<?php
+                trait Number {
+                  protected int ${'$'}val;
+                }
+                """
+        )
+    }
+
+    fun testCheckAbstractClass() {
+        assert(
+                PropertyCanBePrivateInspection(),
+                """<?php
+                abstract class Str {
+                  protected ${'$'}fast;
+                }
+                """
+        )
+    }
 
 }
