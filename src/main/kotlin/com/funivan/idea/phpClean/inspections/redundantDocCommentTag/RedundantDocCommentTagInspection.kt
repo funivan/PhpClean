@@ -53,7 +53,7 @@ class RedundantDocCommentTagInspection : PhpCleanInspection() {
                     val doc = tag.type.toStringResolved()
                     val declared = type.toStringResolved()
                     if (doc == declared) {
-                        val skip = (tag.firstPsiChild as PhpDocType?)?.canonicalText?.contains(Regex("[<\\]]+"))
+                        val skip = (tag.firstPsiChild as? PhpDocType)?.canonicalText?.contains(Regex("[<\\]]+"))
                         if (skip == false) {
                             holder.registerProblem(
                                     tag,
