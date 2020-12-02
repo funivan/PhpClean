@@ -10,15 +10,15 @@ class DeprecatedDocTagInspectionTest : BaseInspectionTest() {
         assert(
                 inspection,
                 """<?php
+                    # Some comment
                     /**
                      * <warning descr="Deprecated tag">@property ${'$'}name</warning>
                      */
                      class User{}
                 """,
                 """<?php
-                    /**
-                     */
-                     class User{}
+                    # Some comment
+class User{}
                 """
         )
     }

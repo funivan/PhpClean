@@ -15,7 +15,25 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
                     """,
                 """
                     <?php
+                    function show(string ${'$'}message):void {}
+                    """
+        )
+    }
+    fun testRedundantReturnTypeWithNonEmptyComment() {
+        assert(
+                RedundantDocCommentTagInspection(),
+                """
+                    <?php
                      /**
+                      * Hello world
+                      *<warning descr="Redundant PhpDoc tag">@return void</warning>
+                      */
+                     function show(string ${'$'}message):void {}
+                    """,
+                """
+                    <?php
+                     /**
+                      * Hello world
                       */
                      function show(string ${'$'}message):void {}
                     """
@@ -29,6 +47,13 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
                     <?php
                      /**
                       *<warning descr="Redundant PhpDoc tag">@param string ${'$'}message</warning>
+                      * @param string ${'$'}test
+                      */
+                     function show(int ${'$'}a, string ${'$'}message):void {}
+                    """,
+                """
+                    <?php
+                     /**
                       * @param string ${'$'}test
                       */
                      function show(int ${'$'}a, string ${'$'}message):void {}
