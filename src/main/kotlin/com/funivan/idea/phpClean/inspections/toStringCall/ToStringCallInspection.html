@@ -1,8 +1,8 @@
 Detect automatic type casting
 <pre>
 class Hello {
-    public function randomize(): self { /* .. */return $this; }
-    public function __toString(){ return 'Hi'; }
+    public function randomize(): self { /* ... */return $this; }
+    public function __toString() { return 'Hi'; }
 }
 echo (new Hello())->randomize(); // <-- Deprecated __toString call
 </pre>

@@ -21,9 +21,9 @@ Hit `install` button.
 #### AssignMisused
 Detects assignment and comparison operators in one statement.
 ```php
-do{
+do {
  //...
-}while( false == $user->getName() = self::ADMIN_USER );
+} while( false == $user->getName() = self::ADMIN_USER );
  // ^^^ Hard to read this statements
 ```
 #### ClassNameCollision
@@ -31,10 +31,10 @@ Classes with same name in different namespaces can be confused.
 (Disabled by default)
 ```php
 namespace App {
-  class User{}; // <- Class name collision with \Cli\User
+  class User {}; // <- Class name collision with \Cli\User
 }
 namespace Cli {
-  class User{}; // <- Class name collision with \App\User
+  class User {}; // <- Class name collision with \App\User
 }
 ```
 #### DeprecatedDocTag
@@ -55,8 +55,8 @@ final class User {
 Methods should be closed (make method or class final)
 ```php
 class User {
- public function name() : string { // <-- Method should be final
-   return "";
+ public function name(): string { // <-- Method should be final
+   return '';
  }
 }
 ```
@@ -65,14 +65,14 @@ Protected methods make our classes more open. Write private or public methods on
 #### MissingParameterTypeDeclaration
 Always specify parameter type. This is a good practice.
 ```php
-class User{
- function withName($name){}  // <-- Missing parameter type
+class User {
+ public function withName($name) {}  // <-- Missing parameter type
 }
 ```
 #### MissingReturnType
 Always specify result type of the function.
 ```php
-function phrase(){ // <-- Missing return type
+function phrase() { // <-- Missing return type
     return 'hi';
 }
 ```
@@ -80,10 +80,10 @@ function phrase(){ // <-- Missing return type
 Check if parent property is deprecated.
 ```php
   class A {
-    /** @deprecated /*
+    /** @deprecated */
     protected $name;
   }
-  class B extends A{
+  class B extends A {
     protected $name; // <-- Warn about deprecation
   }
 ```
@@ -93,8 +93,8 @@ Properties that are not initialized in the constructor should be annotated as nu
 class User {
  /** @var string */ // <-- Property is not annotated correctly. Add null type
  private $name;
- public function getName(){  }
- public function setName(string $name){  }
+ public function getName() {  }
+ public function setName(string $name) {  }
 }
 ```
 #### PropertyCanBePrivate
@@ -110,20 +110,20 @@ Types that are specified in the php can be omitted in the PhpDoc blocks<br>
 /**
  * @return void // <-- Redundant PhpDoc tag
  */
- function show(string $message):void {}
+ function show(string $message): void {}
 ```
 #### ToStringCall
 Detect automatic type casting
 ```php
 class Hello {
-    public function randomize(): self { /* .. */return $this; }
-    public function __toString(){ return 'Hi'; }
+    public function randomize(): self { /* ... */return $this; }
+    public function __toString() { return 'Hi'; }
 }
 echo (new Hello())->randomize(); // <-- Deprecated __toString call
 ```
 #### VirtualTypeCheck
 Use assert to check variable type instead of doc comment.
 ```php
-/** @var $user User */ // <-- Use assert to check variable type
+/** @var User $user */ // <-- Use assert to check variable type
 assert($user instanceof User);
 ```

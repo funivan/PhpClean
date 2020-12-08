@@ -1,8 +1,8 @@
 Detects assignment and comparison operators in one statement.
 <pre>
-do{
+do {
  //...
-}while( false == $user->getName() = self::ADMIN_USER );
+} while( false == $user->getName() = self::ADMIN_USER );
  // ^^^ Hard to read this statements
 </pre>
 <!-- main -->
