@@ -1,10 +1,10 @@
 Check if parent property is deprecated.
 <pre>
   class A {
-    /** @deprecated /*
+    /** @deprecated */
     protected $name;
   }
-  class B extends A{
+  class B extends A {
     protected $name; // <-- Warn about deprecation
   }
 </pre>
