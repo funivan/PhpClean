@@ -21,10 +21,10 @@ Hit `install` button.
 #### AssignMisused
 Detects assignment and comparison operators in one statement.
 ```php
-do {
- //...
-} while( false == $user->getName() = self::ADMIN_USER );
- // ^^^ Hard to read this statements
+while (false !== $current = ldap_next_entry($con, $current)) {
+  // ^^^ Hard to read this statements
+  yield $this->getSingleEntry($con, $current);
+}
 ```
 #### ClassNameCollision
 Classes with same name in different namespaces can be confused.

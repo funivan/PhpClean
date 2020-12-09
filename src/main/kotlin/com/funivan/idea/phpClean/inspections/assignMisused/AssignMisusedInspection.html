@@ -1,8 +1,8 @@
 Detects assignment and comparison operators in one statement.
 <pre>
-do {
- //...
-} while( false == $user->getName() = self::ADMIN_USER );
- // ^^^ Hard to read this statements
+while (false !== $current = ldap_next_entry($con, $current)) {
+  // ^^^ Hard to read this statements
+  yield $this->getSingleEntry($con, $current);
+}
 </pre>
 <!-- main -->
