@@ -63,20 +63,6 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
         )
     }
 
-    fun testFunctionCall() {
-        assert(
-                ToStringCallInspection(),
-                """
-                    <?php
-                    /**
-                     * @return false|string
-                     */
-                     function someFunction(){};
-                     echo someFunction();
-                    """
-        )
-    }
-
     fun testNullableString() {
         assert(
                 ToStringCallInspection(),

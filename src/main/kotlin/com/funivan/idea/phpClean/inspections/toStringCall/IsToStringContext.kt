@@ -9,6 +9,7 @@ import com.jetbrains.php.lang.psi.elements.*
 class IsToStringContext : ConstrainInterface<PsiElement> {
     override fun match(target: PsiElement): Boolean {
         return (target is PhpEchoStatement)
+                || (target is PhpPrintExpression)
                 || (target is ConcatenationExpression)
                 || (target is UnaryExpression && target.operation?.node?.elementType == PhpTokenTypes.opSTRING_CAST)
                 || (
