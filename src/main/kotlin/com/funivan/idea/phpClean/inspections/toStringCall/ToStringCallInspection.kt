@@ -50,7 +50,7 @@ class ToStringCallInspection : PhpCleanInspection() {
                 }
             }
 
-            override fun visitPhpFunctionCall(reference: FunctionReference) {
+            override fun visitPhpMethodReference(reference: MethodReference) {
                 if (context.match(reference.parent)) {
                     val resolve = reference.resolve()
                     if (resolve is Function && resolve.name != "__toString") {
@@ -58,19 +58,15 @@ class ToStringCallInspection : PhpCleanInspection() {
                         val types = declaredType.filter(safeCastTypes.value)
                         if (!types.isEmpty) {
                             holder.registerProblem(
-                                    reference,
-                                    "Deprecated __toString call",
-                                    AddToStringCallQF(
-                                            Pointer(reference as PhpPsiElement).create()
-                                    )
+                                reference,
+                                "Deprecated __toString call",
+                                AddToStringCallQF(
+                                    Pointer(reference as PhpPsiElement).create()
+                                )
                             )
                         }
                     }
                 }
-            }
-
-            override fun visitPhpMethodReference(reference: MethodReference) {
-                visitPhpFunctionCall(reference)
             }
         }
     }
