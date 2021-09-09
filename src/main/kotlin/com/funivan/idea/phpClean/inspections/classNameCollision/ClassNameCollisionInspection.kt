@@ -2,6 +2,7 @@ package com.funivan.idea.phpClean.inspections.classNameCollision
 
 import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.PhpIndex
 import com.jetbrains.php.lang.psi.elements.PhpClass
@@ -12,15 +13,11 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {
             override fun visitPhpClass(phpClass: PhpClass) {
-                val name = phpClass.nameIdentifier
-                if (name != null) {
-                    val phpIndex = PhpIndex.getInstance(phpClass.project)
-                    val classes = phpIndex.getClassesByName(name.text)
-                    val first = classes.firstOrNull { it.fqn != phpClass.fqn }
-                    if (first != null) {
+                phpClass.nameIdentifier?.let { name ->
+                    find(phpClass, name)?.let { clazz ->
                         holder.registerProblem(
-                                name,
-                                "Class name collision with ${first.fqn}"
+                            name,
+                            "Class name collision with ${clazz.fqn}"
                         )
                     }
                 }
@@ -28,4 +25,10 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
         }
     }
 
+    private fun find(
+        origin: PhpClass,
+        name: PsiElement
+    ) = PhpIndex.getInstance(origin.project)
+        .getClassesByName(name.text)
+        .firstOrNull { it.fqn != origin.fqn }
 }

@@ -14,19 +14,9 @@ class ToStringCallInspectionTestFunction : BaseInspectionTest() {
                     function hi() : Phrase {
                       return new Phrase();
                     }
-                    echo <warning descr="Deprecated __toString call">hi()</warning>;
+                    hi();
                     hi()->__toString();
-                    """,
-                """
-                    <?php
-                    class Phrase {
-                      public function __toString(){ echo 'Hello'; }
-                    }
-                    function hi() : Phrase {
-                      return new Phrase();
-                    }
-                    echo hi()->__toString();
-                    hi()->__toString();
+                    echo getcwd() . "/test.php";
                     """
         )
     }
