@@ -8,7 +8,7 @@ class GlobalVariableUsageInspectionTest : BaseInspectionTest() {
         assert(
                 GlobalVariableUsageInspection(),
                 """<?php
-                    echo <warning descr="Deprecated global variable usage">${'$'}_GET</warning>['name'];
+                    echo <warning descr="Global variable usage">${'$'}_GET</warning>['name'];
                 """
         )
     }

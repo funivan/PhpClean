@@ -27,7 +27,7 @@ class GlobalVariableUsageInspection : PhpCleanInspection() {
                 if (names.contains(variable.name)) {
                     holder.registerProblem(
                             variable,
-                            "Deprecated global variable usage"
+                            "Global variable usage"
                     )
                 }
             }

@@ -42,7 +42,7 @@ You can deprecate some PhpDoc tags in your project.
 #### GlobalVariableUsage
 This inspection detects usages of global variables.
 ```php
-echo $_GET['name']; // <-- Deprecated global variable usage
+echo $_GET['name']; // <-- Global variable usage
 ```
 #### MethodCanBePrivate
 Protected methods can be converted to private.
