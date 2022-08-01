@@ -17,7 +17,7 @@ buildscript {
 plugins {
     idea apply true
     kotlin("jvm") version "1.7.10"
-    id("org.jetbrains.intellij") version "0.5.0"
+    id("org.jetbrains.intellij") version "1.7.0"
 }
 apply {
     plugin("java")
