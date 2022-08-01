@@ -5,13 +5,6 @@ on:
 jobs:
   test:
     name: Test
-    strategy:
-      matrix:
-        include:
-          - idea: "IU-2020.2"
-            php: "202.6397.115"
-          - idea: "IU-2020.2.3"
-            php: "202.7660.42"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,6 +15,3 @@ jobs:
       - uses: burrunan/gradle-cache-action@v1.5
         with:
           arguments: check buildPlugin
-        env:
-            ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.idea }}
-            ORG_GRADLE_PROJECT_phpPluginVersion: ${{ matrix.php }}
