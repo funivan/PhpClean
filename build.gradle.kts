@@ -1,149 +1,88 @@
-import org.jetbrains.intellij.tasks.PublishTask
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+plugins {
+    id("java")
+    id("org.jetbrains.kotlin.jvm") version "1.7.10"
+    id("org.jetbrains.intellij") version "1.7.0"
+    id("org.jetbrains.changelog") version "1.3.1"
+    // ktlint linter - read more: https://github.com/JLLeitschuh/ktlint-gradle
+    // id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
+}
+fun properties(key: String) = project.findProperty(key).toString()
+
+// Import variables from gradle.properties file
+val pluginGroup: String by project
+// `pluginName_` variable ends with `_` because of the collision with Kotlin magic getter in the `intellij` closure.
+// Read more about the issue: https://github.com/JetBrains/intellij-platform-plugin-template/issues/29
+val pluginName_: String by project
+val pluginVersion: String by project
+val pluginSinceBuild: String by project
+val pluginVerifierIdeVersions: String by project
+
+val platformType: String by project
+val platformVersion: String by project
+val platformPlugins: String by project
+val platformDownloadSources: String by project
+
+group = pluginGroup
+version = pluginVersion
+println("version: $version")
+// Configure project's dependencies
 repositories {
     mavenCentral()
-    maven {
-        url = uri("http://dl.bintray.com/jetbrains/intellij-plugin-service")
-    }
-}
-buildscript {
-    repositories {
-        dependencies {
-            classpath(kotlin("gradle-plugin", version = "1.3.21"))
-        }
-    }
-}
-plugins {
-    idea apply true
-    kotlin("jvm") version "1.7.10"
-    id("org.jetbrains.intellij") version "0.5.0"
-}
-apply {
-    plugin("java")
-    plugin("kotlin")
-    plugin("org.jetbrains.intellij")
+    jcenter()
 }
 
-println("Version: $version")
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
-        kotlinOptions.freeCompilerArgs += "-progressive"
-    }
-    register("copyInspections") {
-        doLast {
-            blocks().forEach {
-                write(
-                        File("src/main/resources/inspectionDescriptions/" + it.file().name),
-                        it.full()
-                )
-            }
-        }
-    }
-    register("checkReadme") {
-        doLast {
-            if (readmeFile().readText() != generatedReadmeContent(readmeFile())) {
-                throw GradleException("Readme is not up to date")
-            }
-        }
-    }
-    register("updateReadme") {
-        doLast {
-            val readme = readmeFile()
-            if (write(readme, generatedReadmeContent(readme))) {
-                println("Readme updated")
-            }
-        }
-    }
-    patchPluginXml {
-        untilBuild("")
-        changeNotes(project.property("changeNotes").toString().replace("\n", "<br>\n"))
-    }
-    named<Zip>("buildPlugin") {
-        dependsOn("test")
-    }
-    named<PublishTask>("publishPlugin") {
-        setChannels(prop("intellijPublishChannel"))
-        setToken(prop("intellijPublishToken"))
-    }
-    named("test"){
-        dependsOn("checkReadme")
-    }
-    named("buildPlugin") {
-        dependsOn("copyInspections")
-    }
-    named("runIde") {
-        dependsOn("copyInspections")
-    }
-}
+// Configure gradle-intellij-plugin plugin.
+// Read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
-    version = prop("ideaVersion")
-    sandboxDirectory = project.rootDir.canonicalPath + "/build/idea-sandbox"
-    downloadSources = false
-    updateSinceUntilBuild = true
-    pluginName = name
-    setPlugins(
-            "com.jetbrains.php:${prop("phpPluginVersion")}",
-            "CSS",
-            "java",
-            "java-i18n",
-            "PsiViewer:3.28.93",
-            "properties"
-    )
+    pluginName.set(pluginName_)
+    version.set(platformVersion)
+    type.set(platformType)
+    downloadSources.set(platformDownloadSources.toBoolean())
+    updateSinceUntilBuild.set(false)
+    // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
+    plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
 }
 dependencies {
-    compileOnly(kotlin("stdlib-jdk8"))
-}
-fun prop(name: String): String {
-    return extra.properties[name] as? String
-            ?: error("Property `$name` is not defined in gradle.properties")
+    testImplementation(gradleTestKit())
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
 }
 
-fun safeProp(name: String, fallback: String): String {
-    return extra.properties[name] as? String
-            ?: fallback
+// Configure gradle-changelog-plugin plugin.
+// Read more: https://github.com/JetBrains/gradle-changelog-plugin
+
+changelog {
+    version.set(pluginVersion)
+    headerParserRegex.set("""(\d+\.\d+\.\d+)""".toRegex())
 }
 
-fun write(file: File, content: String): Boolean {
-    var result = false
-    if (!file.exists()) {
-        file.createNewFile()
+tasks {
+    withType<JavaCompile> {
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
     }
-    if (file.readText() != content) {
-        result = true
-        file.writeText(content)
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "11"
     }
-    return result
+
+    patchPluginXml {
+        version.set(pluginVersion)
+        sinceBuild.set(pluginSinceBuild)
+
+        // Get the latest available change notes from the changelog file
+        changeNotes.set(
+            changelog.getLatest().toHTML()
+        )
+    }
+
+    runPluginVerifier {
+        ideVersions.set(
+            properties("pluginVerifierIdeVersions")
+                .split(',').map(String::trim).filter(String::isNotEmpty)
+        )
+    }
 }
-
-class Block(private val file: File) {
-    fun file() = file
-    fun uid() = file.name.replace("Inspection.html", "")
-    fun full() = file.readText()
-    fun short() = full()
-            .replace(Regex("<!-- main -->(.*)", RegexOption.DOT_MATCHES_ALL), "")
-            .trim()
-}
-
-fun blocks() = File("src/main/kotlin/com/funivan/idea/phpClean/inspections")
-        .walkTopDown()
-        .filter { it.name.contains("Inspection.kt") }
-        .map { Block(File(it.path.replace(".kt", ".html"))) }
-
-fun generatedReadmeContent(readme: File): String {
-    var content = readme.readText()
-    content = content.replace(
-            Regex("(<!-- inspections -->)(.+)", RegexOption.DOT_MATCHES_ALL),
-            "$1"
-    )
-    content = content + "\n" + blocks().sortedBy { it.uid() }
-            .map {
-                val description = it.short().replace("<pre>", "```php").replace("</pre>", "```")
-                "#### ${it.uid()}\n$description\n"
-            }
-            .joinToString("")
-    return content
-}
-
-fun readmeFile() = File("README.md")
+tasks.getByName("buildSearchableOptions").onlyIf { false }

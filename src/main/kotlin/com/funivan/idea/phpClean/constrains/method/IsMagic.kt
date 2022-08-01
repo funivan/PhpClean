@@ -25,6 +25,6 @@ class IsMagic : ConstrainInterface<Method> {
     }
 
     override fun match(target: Method): Boolean {
-        return names.contains(target.name.toLowerCase())
+        return names.contains(target.name.lowercase())
     }
 }
