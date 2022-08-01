@@ -1,9 +1,30 @@
 package com.funivan.idea.phpClean.inspections.propertyCanBePrivate
 
 import com.funivan.idea.phpClean.BaseInspectionTest
-
+import kotlin.test.Test
 class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
 
+    @Test
+    fun testPhp81() {
+        assert(
+            PropertyCanBePrivateInspection(),
+            """<?php
+                    final class UserDTO {
+                        public function __construct(
+                            protected string <warning descr="Property can be private">${'$'}name</warning> 
+                        ) {}
+                    }
+                """,
+            """<?php
+                    final class UserDTO {
+                        public function __construct(
+                            private string ${'$'}name 
+                        ) {}
+                    }
+                """
+        )
+    }
+    @Test
     fun testCheckFinalClasses() {
         assert(
                 PropertyCanBePrivateInspection(),
@@ -20,6 +41,7 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testPropertyInExtensionClass() {
         assert(
                 PropertyCanBePrivateInspection(),
@@ -31,6 +53,7 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+    @Test
     fun testPropertyInExtendedClass() {
         assert(
                 PropertyCanBePrivateInspection(),
@@ -43,6 +66,7 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testCheckPublicProperties() {
         assert(
                 PropertyCanBePrivateInspection(),
@@ -54,6 +78,7 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testCheckWithTypeDefinition() {
         assert(
                 PropertyCanBePrivateInspection(),
@@ -69,6 +94,7 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+    @Test
     fun testCheckTrait() {
         assert(
                 PropertyCanBePrivateInspection(),
@@ -80,6 +106,7 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testCheckAbstractClass() {
         assert(
                 PropertyCanBePrivateInspection(),
