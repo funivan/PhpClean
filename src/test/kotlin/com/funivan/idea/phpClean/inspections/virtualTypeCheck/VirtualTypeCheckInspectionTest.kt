@@ -7,19 +7,20 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
     @Test
     fun testUseAssert() {
         assert(
-                VirtualTypeCheckInspection(),
-                """<?php
+            VirtualTypeCheckInspection(),
+            """<?php
                 class User{}
                 /** @var ${'$'}user <warning descr="Use assert to check variable type">User</warning> */;
                 assert(${'$'}user instanceof User); // Valid
                 """
         )
     }
+
     @Test
     fun testUseAssertWithInterface() {
         assert(
-                VirtualTypeCheckInspection(),
-                """<?php
+            VirtualTypeCheckInspection(),
+            """<?php
                 interface User{}
                 /** @var ${'$'}user <warning descr="Use assert to check variable type">User</warning> */;
                 assert(${'$'}user instanceof User); // Valid
@@ -30,18 +31,19 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
     @Test
     fun testIgnoreArray() {
         assert(
-                VirtualTypeCheckInspection(),
-                """<?php
+            VirtualTypeCheckInspection(),
+            """<?php
                 /** @var ${'$'}user[] user */;
                 /** @var ${'$'}user stdClass[] */;
                 """
         )
     }
+
     @Test
     fun testSkipPrimitiveTypes() {
         assert(
-                VirtualTypeCheckInspection(),
-                """<?php
+            VirtualTypeCheckInspection(),
+            """<?php
                 /** @var ${'$'}user string */;
                 /** @var ${'$'}user int */;
                 /** @var ${'$'}user resource */;
@@ -55,8 +57,8 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
     @Test
     fun testUnionType() {
         assert(
-                VirtualTypeCheckInspection(),
-                """<?php
+            VirtualTypeCheckInspection(),
+            """<?php
                 /** @var ${'$'}user string|null */;
                 /** @var ${'$'}user stdClass|int */;
                 """
@@ -66,8 +68,8 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
     @Test
     fun testFunctionParam() {
         assert(
-                VirtualTypeCheckInspection(),
-                """<?php
+            VirtualTypeCheckInspection(),
+            """<?php
                 class Options{}
                 /** @param ${'$'}options Options */
                 function show(${'$'}options){
@@ -80,12 +82,12 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
     @Test
     fun testReverseFormat() {
         assert(
-                VirtualTypeCheckInspection(),
-                """<?php
+            VirtualTypeCheckInspection(),
+            """<?php
 /** @var <warning descr="Use assert to check variable type">Options</warning> ${'$'}options */
 class Options{};
                 """.trimIndent(),
-                """<?php
+            """<?php
 assert(${'$'}options instanceof Options);
 class Options{};
                 """.trimIndent()

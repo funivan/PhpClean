@@ -2,6 +2,7 @@ package com.funivan.idea.phpClean.inspections.propertyCanBePrivate
 
 import com.funivan.idea.phpClean.BaseInspectionTest
 import kotlin.test.Test
+
 class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
 
     @Test
@@ -24,16 +25,17 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+
     @Test
     fun testCheckFinalClasses() {
         assert(
-                PropertyCanBePrivateInspection(),
-                """<?php
+            PropertyCanBePrivateInspection(),
+            """<?php
                 final class User {
                   protected <warning descr="Property can be private">${'$'}user</warning>;
                 }
                 """,
-                """<?php
+            """<?php
                 final class User {
                   private ${'$'}user;
                 }
@@ -44,8 +46,8 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
     @Test
     fun testPropertyInExtensionClass() {
         assert(
-                PropertyCanBePrivateInspection(),
-                """<?php
+            PropertyCanBePrivateInspection(),
+            """<?php
                 class A2 {
                   protected ${'$'}name;
                 }
@@ -53,11 +55,12 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+
     @Test
     fun testPropertyInExtendedClass() {
         assert(
-                PropertyCanBePrivateInspection(),
-                """<?php
+            PropertyCanBePrivateInspection(),
+            """<?php
                 class A1{}
                 class B1 extends A1 {
                   protected ${'$'}name;
@@ -69,8 +72,8 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
     @Test
     fun testCheckPublicProperties() {
         assert(
-                PropertyCanBePrivateInspection(),
-                """<?php
+            PropertyCanBePrivateInspection(),
+            """<?php
                 final class Id {
                   public array ${'$'}user;
                 }
@@ -81,24 +84,25 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
     @Test
     fun testCheckWithTypeDefinition() {
         assert(
-                PropertyCanBePrivateInspection(),
-                """<?php
+            PropertyCanBePrivateInspection(),
+            """<?php
                 class Id {
                   protected array <warning descr="Property can be private">${'$'}user</warning>;
                 }
                 """,
-                """<?php
+            """<?php
                 class Id {
                   private array ${'$'}user;
                 }
                 """
         )
     }
+
     @Test
     fun testCheckTrait() {
         assert(
-                PropertyCanBePrivateInspection(),
-                """<?php
+            PropertyCanBePrivateInspection(),
+            """<?php
                 trait Number {
                   protected int ${'$'}val;
                 }
@@ -109,8 +113,8 @@ class PropertyCanBePrivateInspectionTest : BaseInspectionTest() {
     @Test
     fun testCheckAbstractClass() {
         assert(
-                PropertyCanBePrivateInspection(),
-                """<?php
+            PropertyCanBePrivateInspection(),
+            """<?php
                 abstract class Str {
                   protected ${'$'}fast;
                 }

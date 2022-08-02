@@ -1,13 +1,15 @@
 package com.funivan.idea.phpClean.inspections.classNameCollision
 
 import com.funivan.idea.phpClean.BaseInspectionTest
+import kotlin.test.Test
 
 class ClassNameCollisionInspectionTest : BaseInspectionTest() {
 
+    @Test
     fun testClassNameCollision() {
         assert(
-                ClassNameCollisionInspection(),
-                """<?php
+            ClassNameCollisionInspection(),
+            """<?php
                     namespace App {
                       class <warning descr="Class name collision with \Cli\User">User</warning>{};
                     }
@@ -18,10 +20,11 @@ class ClassNameCollisionInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testCollisionInGlobalNamespace() {
         assert(
-                ClassNameCollisionInspection(),
-                """<?php
+            ClassNameCollisionInspection(),
+            """<?php
                     namespace {
                       class <warning descr="Class name collision with \App\User">User</warning>{};
                     }
