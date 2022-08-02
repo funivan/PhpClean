@@ -22,7 +22,7 @@ class VirtualTypeCheckInspection : PhpCleanInspection() {
                     val variableType = tag.children.firstOrNull { it is PhpDocType }
                     if (variable is PhpDocVariable && variableType is PhpDocType) {
                         val type = variableType.type
-                        if (!type.isAmbiguous && type.types.size == 1) {
+                        if (!type.isAmbiguous && type.types.size == 1 && !variableType.text.contains("<")) {
                             val plain = type.toStringResolved()
                             if (!PhpType.isPluralType(plain) && !PhpType.isNotExtendablePrimitiveType(plain)) {
                                 val index = PhpIndex.getInstance(variableType.project)

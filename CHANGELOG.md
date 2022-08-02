@@ -4,6 +4,7 @@
 ## [2022.08.05]
 ### Changed
  - #151 Fix property visibility inspection for php8.1
+ - #156 Skip Virtual type check for generic types
 
 ## [2022.10.22]
 ### Changed

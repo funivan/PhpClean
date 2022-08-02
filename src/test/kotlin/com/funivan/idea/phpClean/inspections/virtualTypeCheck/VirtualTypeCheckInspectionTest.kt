@@ -1,8 +1,10 @@
 package com.funivan.idea.phpClean.inspections.virtualTypeCheck
 
 import com.funivan.idea.phpClean.BaseInspectionTest
+import kotlin.test.Test
 
 class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
+    @Test
     fun testUseAssert() {
         assert(
                 VirtualTypeCheckInspection(),
@@ -13,6 +15,7 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+    @Test
     fun testUseAssertWithInterface() {
         assert(
                 VirtualTypeCheckInspection(),
@@ -24,6 +27,7 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testIgnoreArray() {
         assert(
                 VirtualTypeCheckInspection(),
@@ -33,7 +37,7 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
                 """
         )
     }
-
+    @Test
     fun testSkipPrimitiveTypes() {
         assert(
                 VirtualTypeCheckInspection(),
@@ -48,6 +52,7 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testUnionType() {
         assert(
                 VirtualTypeCheckInspection(),
@@ -58,6 +63,7 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testFunctionParam() {
         assert(
                 VirtualTypeCheckInspection(),
@@ -71,6 +77,7 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testReverseFormat() {
         assert(
                 VirtualTypeCheckInspection(),
@@ -82,6 +89,18 @@ class Options{};
 assert(${'$'}options instanceof Options);
 class Options{};
                 """.trimIndent()
+        )
+    }
+
+    @Test
+    fun testGenericAssertion() {
+        assert(
+            VirtualTypeCheckInspection(),
+            """<?php
+                class ListOfUsers{}
+                class User{}
+                /** @var ${'$'}user \ListOfUsers<User> */;
+                """
         )
     }
 
