@@ -9,6 +9,7 @@ import com.intellij.psi.SmartPsiElementPointer
 import com.jetbrains.php.lang.lexer.PhpTokenTypes
 import com.jetbrains.php.lang.psi.PhpPsiElementFactory
 import com.jetbrains.php.lang.psi.elements.PhpModifierList
+import com.jetbrains.php.lang.psi.elements.impl.PhpPromotedFieldParameterImpl
 
 class MakeClassMemberPrivateQF(
         private val pointer: SmartPsiElementPointer<PsiElement>,
@@ -26,6 +27,13 @@ class MakeClassMemberPrivateQF(
     }
 
     companion object {
+        fun create(element: PhpPromotedFieldParameterImpl, name: String) = element.node
+            .firstChildNode
+            ?.psi
+            ?.let {
+                MakeClassMemberPrivateQF(Pointer(it).create(), name)
+            }
+
         fun create(modifier: PhpModifierList?, name: String) = modifier
                 ?.node
                 ?.findChildByType(PhpTokenTypes.kwPROTECTED)

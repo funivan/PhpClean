@@ -19,6 +19,8 @@ val pluginName_: String by project
 val pluginVersion: String by project
 val pluginSinceBuild: String by project
 val pluginVerifierIdeVersions: String by project
+val intellijPublishChannel: String by project
+val intellijPublishToken: String by project
 
 val platformType: String by project
 val platformVersion: String by project
@@ -51,9 +53,7 @@ dependencies {
     testImplementation(kotlin("test-junit"))
 }
 
-// Configure gradle-changelog-plugin plugin.
 // Read more: https://github.com/JetBrains/gradle-changelog-plugin
-
 changelog {
     version.set(pluginVersion)
     headerParserRegex.set("""(\d+\.\d+\.\d+)""".toRegex())
@@ -68,11 +68,13 @@ tasks {
         kotlinOptions.jvmTarget = "11"
     }
 
+    publishPlugin {
+        token.set(intellijPublishToken)
+        channels.set(listOf(intellijPublishChannel, "default").filter(String::isNotEmpty).take(1))
+    }
     patchPluginXml {
         version.set(pluginVersion)
         sinceBuild.set(pluginSinceBuild)
-
-        // Get the latest available change notes from the changelog file
         changeNotes.set(
             changelog.getLatest().toHTML()
         )
@@ -84,5 +86,86 @@ tasks {
                 .split(',').map(String::trim).filter(String::isNotEmpty)
         )
     }
+
+    register("copyInspections") {
+        doLast {
+            blocks().forEach {
+                write(
+                    File("src/main/resources/inspectionDescriptions/" + it.file().name),
+                    it.full()
+                )
+            }
+        }
+    }
+    register("checkReadme") {
+        doLast {
+            if (readmeFile().readText() != generatedReadmeContent(readmeFile())) {
+                throw GradleException("Readme is not up to date")
+            }
+        }
+    }
+    register("updateReadme") {
+        doLast {
+            val readme = readmeFile()
+            if (write(readme, generatedReadmeContent(readme))) {
+                println("Readme updated")
+            }
+        }
+    }
+
+    named("test"){
+        dependsOn("checkReadme")
+    }
+    named("buildPlugin") {
+        dependsOn("copyInspections")
+    }
+    named("runIde") {
+        dependsOn("copyInspections")
+    }
 }
 tasks.getByName("buildSearchableOptions").onlyIf { false }
+
+// Custom functions
+fun write(file: File, content: String): Boolean {
+    var result = false
+    if (!file.exists()) {
+        file.createNewFile()
+    }
+    if (file.readText() != content) {
+        result = true
+        file.writeText(content)
+    }
+    return result
+}
+
+class Block(private val file: File) {
+    fun file() = file
+    fun uid() = file.name.replace("Inspection.html", "")
+    fun full() = file.readText()
+    fun short() = full()
+        .replace(Regex("<!-- main -->(.*)", RegexOption.DOT_MATCHES_ALL), "")
+        .trim()
+}
+
+fun blocks() = File("src/main/kotlin/com/funivan/idea/phpClean/inspections")
+    .walkTopDown()
+    .filter { it.name.contains("Inspection.kt") }
+    .map { Block(File(it.path.replace(".kt", ".html"))) }
+
+fun generatedReadmeContent(readme: File): String {
+    var content = readme.readText()
+    content = content.replace(
+        Regex("(<!-- inspections -->)(.+)", RegexOption.DOT_MATCHES_ALL),
+        "$1"
+    )
+    content = content + "\n" + blocks().sortedBy { it.uid() }
+        .map {
+            val description = it.short().replace("<pre>", "```php").replace("</pre>", "```")
+            "#### ${it.uid()}\n$description\n"
+        }
+        .joinToString("")
+    return content
+}
+
+fun readmeFile() = File("README.md")
+

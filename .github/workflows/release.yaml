@@ -19,14 +19,14 @@ jobs:
           echo "PLUGIN_CHANNEL=$(echo "${GITHUB_REF}" | grep -oE "[^-]+$" | grep -oE "^[a-z]+$")" >> $GITHUB_ENV
       - name: Configure Gradle environment variables
         run: |
-          echo "ORG_GRADLE_PROJECT_version=$(echo "${PLUGIN_VERSION}")" >> $GITHUB_ENV
+          echo "ORG_GRADLE_PROJECT_pluginVersion=$(echo "${PLUGIN_VERSION}")" >> $GITHUB_ENV
           echo "ORG_GRADLE_PROJECT_intellijPublishToken=${{ secrets.intellijPublishToken }}" >> $GITHUB_ENV
           echo "ORG_GRADLE_PROJECT_intellijPublishChannel=$(echo "${PLUGIN_CHANNEL}")" >> $GITHUB_ENV
       - name: Print environment variables
         run: |
           echo "PLUGIN_VERSION=$PLUGIN_VERSION"
           echo "PLUGIN_CHANNEL=$PLUGIN_CHANNEL"
-          echo "ORG_GRADLE_PROJECT_version=$ORG_GRADLE_PROJECT_version"
+          echo "ORG_GRADLE_PROJECT_pluginVersion=$ORG_GRADLE_PROJECT_version"
           echo "ORG_GRADLE_PROJECT_intellijPublishToken=$ORG_GRADLE_PROJECT_intellijPublishToken"
           echo "ORG_GRADLE_PROJECT_intellijPublishChannel=$ORG_GRADLE_PROJECT_intellijPublishChannel"
 
