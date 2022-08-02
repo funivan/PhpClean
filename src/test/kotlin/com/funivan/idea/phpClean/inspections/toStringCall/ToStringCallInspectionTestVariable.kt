@@ -1,12 +1,14 @@
 package com.funivan.idea.phpClean.inspections.toStringCall
 
 import com.funivan.idea.phpClean.BaseInspectionTest
+import kotlin.test.Test
 
 class ToStringCallInspectionTestVariable : BaseInspectionTest() {
+    @Test
     fun testVariableEchoContext() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     class Hello {
                       public function __toString(){ echo 'Hi'; }
@@ -18,10 +20,11 @@ class ToStringCallInspectionTestVariable : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testShortTagEcho() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     class Hello {
                       public function __toString(){ echo 'Hi'; }
@@ -33,10 +36,11 @@ class ToStringCallInspectionTestVariable : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testVariableComparison() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     class Hello {
                       public function __toString(){ echo 'Hi'; }

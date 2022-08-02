@@ -1,13 +1,14 @@
 package com.funivan.idea.phpClean.inspections.propertyAnnotation
 
 import com.funivan.idea.phpClean.BaseInspectionTest
-
+import kotlin.test.Test
 
 class PropertyAnnotationInspectionTest : BaseInspectionTest() {
+    @Test
     fun testPropertyIsNotAnnotatedCorrectly() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                         /** @var string[] */
@@ -17,10 +18,11 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testPropertiesWithoutDocumentation() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                      private ${'$'}name;
@@ -34,10 +36,11 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testPropertyWithCorrectDocumentation() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                         /** @var string[]|null */
@@ -52,10 +55,11 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testAnnotateOwnFieldsOnly() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class B extends A {
                         /**
@@ -71,10 +75,11 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testPropertiesInFinalClass() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     final class A {
                      /** @var string[]*/
@@ -86,10 +91,11 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testPropertiesInFinalClassWithExtends() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     final class B extends C{
                      /** @var string */
@@ -101,10 +107,11 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testPrivatePropertiesInClassesWithoutConstructor() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                         /** @var string */
@@ -114,10 +121,11 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testPrivatePropertyNotInitializedInTheConstructor() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                         /**
@@ -129,10 +137,11 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testWithParentConstructor() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                      public function __construct(){
@@ -150,10 +159,11 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testWithoutInitInConstructor() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                         /**
@@ -171,10 +181,11 @@ class PropertyAnnotationInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testWithInitInConstructor() {
         assert(
-                PropertyAnnotationInspection(),
-                """
+            PropertyAnnotationInspection(),
+            """
                     <?php
                     class A {
                         /**

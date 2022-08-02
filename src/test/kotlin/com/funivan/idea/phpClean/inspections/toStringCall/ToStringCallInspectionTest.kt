@@ -1,12 +1,14 @@
 package com.funivan.idea.phpClean.inspections.toStringCall
 
 import com.funivan.idea.phpClean.BaseInspectionTest
+import kotlin.test.Test
 
 class ToStringCallInspectionTest : BaseInspectionTest() {
+    @Test
     fun testMethodCall() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     class Hello {
                       public function randomize(): self { /* .. */return ${'$'}this; }
@@ -14,7 +16,7 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     }
                     echo <warning descr="Deprecated __toString call">(new Hello())->randomize()</warning>;
                     """,
-                """
+            """
                     <?php
                     class Hello {
                       public function randomize(): self { /* .. */return ${'$'}this; }
@@ -25,19 +27,19 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testConcatenation() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     class Hello {
                       public function randomize(): self { /* .. */return ${'$'}this; }
                       public function __toString(){ echo 'Hi'; }
                     }
                      ${'$'}phrase = 'Hi ' . <warning descr="Deprecated __toString call">(new Hello())->randomize()</warning>;
-                    """
-                ,
-                """
+                    """,
+            """
                     <?php
                     class Hello {
                       public function randomize(): self { /* .. */return ${'$'}this; }
@@ -48,10 +50,11 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testManualTypeCasting() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     class Hello {
                       public function randomize(): self { /* .. */return ${'$'}this; }
@@ -63,10 +66,11 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testNullableString() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                      class A{
                       function test(): ?string{ return null; }
@@ -76,10 +80,11 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testNewObject() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     class Hello {
                       public function __toString(){ echo 'Hi'; }
@@ -87,7 +92,7 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     echo <warning descr="Deprecated __toString call">new Hello()</warning>;
                     ${'$'}phrase = <warning descr="Deprecated __toString call">new Hello()</warning> . ' there';
                     """,
-                """
+            """
                     <?php
                     class Hello {
                       public function __toString(){ echo 'Hi'; }
@@ -98,10 +103,11 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testMethodStringReturned() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     class Hello {
                       public function str():string{ return 'Hi'; }
@@ -119,10 +125,11 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testStaticMethod() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     class someClass {
                      public function __toString(){
@@ -132,7 +139,7 @@ class ToStringCallInspectionTest : BaseInspectionTest() {
                     }
                     echo <warning descr="Deprecated __toString call">SomeClass::create()</warning>;
                     """,
-                """
+            """
                     <?php
                     class someClass {
                      public function __toString(){

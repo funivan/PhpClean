@@ -1,12 +1,14 @@
 package com.funivan.idea.phpClean.inspections.toStringCall
 
 import com.funivan.idea.phpClean.BaseInspectionTest
+import kotlin.test.Test
 
 class ToStringCallInspectionTestTypeCast : BaseInspectionTest() {
+    @Test
     fun testMethodTypeCast() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     class Hello {
                       public function randomize(): self { /* .. */return ${'$'}this; }
@@ -18,10 +20,11 @@ class ToStringCallInspectionTestTypeCast : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testVariableTypeCast() {
         assert(
-                ToStringCallInspection(),
-                """
+            ToStringCallInspection(),
+            """
                     <?php
                     ${'$'}a = "";
                      echo (string) ${'$'}a;

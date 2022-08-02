@@ -1,13 +1,14 @@
 package com.funivan.idea.phpClean.inspections.parentPropertyDeprecated
 
 import com.funivan.idea.phpClean.BaseInspectionTest
-import com.funivan.idea.phpClean.inspections.parentPropertyDeprecated.ParentPropertyDeprecatedInspection
+import kotlin.test.Test
 
 class ParentPropertyDeprecatedInspectionTest : BaseInspectionTest() {
+    @Test
     fun testDeprecatedParentProperty() {
         assert(
-                ParentPropertyDeprecatedInspection(),
-                """
+            ParentPropertyDeprecatedInspection(),
+            """
                     <?php
                     class A {
                         /** @deprecated */
@@ -20,10 +21,11 @@ class ParentPropertyDeprecatedInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testAllPropertiesAreDeprecated() {
         assert(
-                ParentPropertyDeprecatedInspection(),
-                """
+            ParentPropertyDeprecatedInspection(),
+            """
                     <?php
                     class A {
                         /** @deprecated */
@@ -37,10 +39,11 @@ class ParentPropertyDeprecatedInspectionTest : BaseInspectionTest() {
         )
     }
 
+    @Test
     fun testNonDeprecatedProperties() {
         assert(
-                ParentPropertyDeprecatedInspection(),
-                """
+            ParentPropertyDeprecatedInspection(),
+            """
                     <?php
                     class A { public ${'$'}name; }
                     class B extends A{ public ${'$'}name; }

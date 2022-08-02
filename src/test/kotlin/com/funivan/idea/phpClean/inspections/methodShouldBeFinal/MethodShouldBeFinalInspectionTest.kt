@@ -8,8 +8,8 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
     @Test
     fun testMethodShouldBeFinal() {
         assert(
-                MethodShouldBeFinalInspection(),
-                """<?php
+            MethodShouldBeFinalInspection(),
+            """<?php
                 class User{
                  public function <warning descr="Method should be final">name</warning>() : string {
                   return "";
@@ -23,8 +23,8 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
     @Test
     fun testPhp81() {
         assert(
-                MethodShouldBeFinalInspection(),
-                """<?php
+            MethodShouldBeFinalInspection(),
+            """<?php
                     class CustomerDTO
                     {
                         public function <warning descr="Method should be final">test</warning>() : int{
@@ -43,8 +43,8 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
     @Test
     fun testSkipFinalClass() {
         assert(
-                MethodShouldBeFinalInspection(),
-                """<?php
+            MethodShouldBeFinalInspection(),
+            """<?php
                 final class A{
                  public function id() : string{ return ""; }
                 }
@@ -55,8 +55,8 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
     @Test
     fun testSkipInterface() {
         assert(
-                MethodShouldBeFinalInspection(),
-                """<?php
+            MethodShouldBeFinalInspection(),
+            """<?php
                 interface Name{
                  public function short() : string;
                 }
@@ -67,8 +67,8 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
     @Test
     fun testSkipAbstractMethod() {
         assert(
-                MethodShouldBeFinalInspection(),
-                """<?php
+            MethodShouldBeFinalInspection(),
+            """<?php
                 abstract class UID {
                   abstract public function print() : void;
                 }
@@ -79,8 +79,8 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
     @Test
     fun testSkipMagicMethods() {
         assert(
-                MethodShouldBeFinalInspection(),
-                """<?php
+            MethodShouldBeFinalInspection(),
+            """<?php
                 class Dealer {
                   public function __construct(){}
                   public function __destruct(){}
@@ -91,21 +91,22 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
     }
 
     @Test
-    fun testSkipStaticMethod(){
+    fun testSkipStaticMethod() {
         assert(
-                MethodShouldBeFinalInspection(),
-                """<?php
+            MethodShouldBeFinalInspection(),
+            """<?php
                 class Dealer {
                   public static function show(){}
                 }
                 """
         )
     }
+
     @Test
-    fun testSkipPrivateMethods(){
+    fun testSkipPrivateMethods() {
         assert(
-                MethodShouldBeFinalInspection(),
-                """<?php
+            MethodShouldBeFinalInspection(),
+            """<?php
                 class Dealer {
                   private function show(){}
                 }
