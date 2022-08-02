@@ -50,7 +50,7 @@ class MissingParameterTypeDeclarationInspectionTest : BaseInspectionTest() {
             MissingParameterTypeDeclarationInspection(),
             """<?php
                 class User{
-                    abstract function withId(<error descr="Expected: variable">,</error><error descr="Unexpected: )">)</error>
+                    abstract function withId(<error descr="Expected: variable">,</error>)<EOLError descr="Expected: {"></EOLError>
                 }
                 """
         )
