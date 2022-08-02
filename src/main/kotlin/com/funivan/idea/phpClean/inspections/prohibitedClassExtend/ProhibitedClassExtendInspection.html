@@ -1,0 +1,10 @@
+Classes marked with `@final` doc tag should not be extended
+<pre>
+/**
+ * @final
+ */
+ class User {};
+
+ class Admin extends User {}; // <- Prohibited extentions of @final class User.
+</pre>
+<!-- main -->

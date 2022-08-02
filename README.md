@@ -87,6 +87,16 @@ Check if parent property is deprecated.
     protected $name; // <-- Warn about deprecation
   }
 ```
+#### ProhibitedClassExtend
+Classes marked with `@final` doc tag should not be extended
+```php
+/**
+ * @final
+ */
+ class User {};
+
+ class Admin extends User {}; // <- Prohibited extentions of @final class User.
+```
 #### PropertyAnnotation
 Properties that are not initialized in the constructor should be annotated as nullable.
 ```php

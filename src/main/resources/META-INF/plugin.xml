@@ -126,6 +126,16 @@
         />
         <localInspection
                 groupPath="PHP"
+                shortName="ProhibitedClassExtendInspection"
+                displayName="Prohibited class extend"
+                groupName="PhpClean"
+                enabledByDefault="true"
+                level="WARNING"
+                language="PHP"
+                implementationClass="com.funivan.idea.phpClean.inspections.prohibitedClassExtend.ProhibitedClassExtendInspection"
+        />
+        <localInspection
+                groupPath="PHP"
                 shortName="MissingParameterTypeDeclarationInspection"
                 displayName="Missing parameter type declaration"
                 groupName="PhpClean"
