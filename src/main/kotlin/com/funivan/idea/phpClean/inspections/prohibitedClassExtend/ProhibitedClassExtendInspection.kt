@@ -1,4 +1,4 @@
-package com.funivan.idea.phpClean.inspections.classNameCollision
+package com.funivan.idea.phpClean.inspections.prohibitedClassExtend
 
 import com.funivan.idea.phpClean.inspections.missingParameterType.ClassesByFqn
 import com.funivan.idea.phpClean.inspections.missingParameterType.Implementations

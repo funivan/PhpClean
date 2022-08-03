@@ -1,7 +1,6 @@
 package com.funivan.idea.phpClean.inspections.prohibitedClassExtend
 
 import com.funivan.idea.phpClean.BaseInspectionTest
-import com.funivan.idea.phpClean.inspections.classNameCollision.ProhibitedClassExtendInspection
 import kotlin.test.Test
 
 internal class ProhibitedClassExtendInspectionTest : BaseInspectionTest() {
