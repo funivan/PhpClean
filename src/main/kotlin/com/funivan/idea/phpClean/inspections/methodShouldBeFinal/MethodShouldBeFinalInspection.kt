@@ -14,7 +14,7 @@ class MethodShouldBeFinalInspection : PhpCleanInspection() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : PhpElementVisitor() {
             override fun visitPhpClass(phpClass: PhpClass) {
-                if (!phpClass.isFinal && !phpClass.isInterface) {
+                if (!phpClass.isFinal && !phpClass.isInterface && !phpClass.isAnonymous) {
                     for (method in methods(phpClass)) {
                         holder.registerProblem(
                                 method.nameIdentifier ?: method,
