@@ -18,6 +18,19 @@ class MethodShouldBeFinalInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+    @Test
+    fun testIgnoreAnonumousClass() {
+        assert(
+            MethodShouldBeFinalInspection(),
+            """<?php
+                  return new class {
+	                public function I_do_not_have_to_be_final () : void
+	                {
+	                }
+                  };
+                """
+        )
+    }
 
 
     @Test
