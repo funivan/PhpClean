@@ -2,7 +2,7 @@
 
 # PhpClean Changelog
 ## [2023.02.30]
-## Fixed
+### Fixed
  - #162 Skip "use assert" qf before variable declaration
 
 ## [2022.08.30]
