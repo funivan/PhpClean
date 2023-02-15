@@ -9,10 +9,16 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
         assert(
             VirtualTypeCheckInspection(),
             """<?php
-                class User{}
-                /** @var ${'$'}user <warning descr="Use assert to check variable type">User</warning> */;
-                assert(${'$'}user instanceof User); // Valid
-                """
+class User{}
+/** @var <warning descr="Use assert to check variable type">User</warning> ${'$'}user */
+assert(${'$'}user instanceof User); // Valid
+""",
+            """<?php
+class User{}
+
+assert(${'$'}user instanceof User);
+assert(${'$'}user instanceof User); // Valid
+""",
         )
     }
 
@@ -22,7 +28,7 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
             VirtualTypeCheckInspection(),
             """<?php
                 interface User{}
-                /** @var ${'$'}user <warning descr="Use assert to check variable type">User</warning> */;
+                /** @var <warning descr="Use assert to check variable type">User</warning> ${'$'}user */
                 assert(${'$'}user instanceof User); // Valid
                 """
         )
@@ -33,8 +39,8 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
         assert(
             VirtualTypeCheckInspection(),
             """<?php
-                /** @var ${'$'}user[] user */;
-                /** @var ${'$'}user stdClass[] */;
+                /** @var ${'$'}user[] user */
+                /** @var ${'$'}user stdClass[] */
                 """
         )
     }
@@ -44,12 +50,12 @@ class VirtualTypeCheckInspectionTest : BaseInspectionTest() {
         assert(
             VirtualTypeCheckInspection(),
             """<?php
-                /** @var ${'$'}user string */;
-                /** @var ${'$'}user int */;
-                /** @var ${'$'}user resource */;
-                /** @var ${'$'}user iterable */;
-                /** @var ${'$'}user array */;
-                /** @var ${'$'}user mixed */;
+                /** @var ${'$'}user string */
+                /** @var ${'$'}user int */
+                /** @var ${'$'}user resource */
+                /** @var ${'$'}user iterable */
+                /** @var ${'$'}user array */
+                /** @var ${'$'}user mixed */
                 """
         )
     }
@@ -106,4 +112,20 @@ class Options{};
         )
     }
 
+    @Test
+    fun testSkipQFOnUninitializedVariable() {
+        assert(
+            VirtualTypeCheckInspection(),
+            """<?php
+                class Letter{}
+                /** @var <warning descr="Use assert to check variable type">Letter</warning> ${'$'}letter */
+                ${'$'}letter = new Letter();
+                """,
+            """<?php
+                class Letter{}
+                /** @var Letter ${'$'}letter */
+                ${'$'}letter = new Letter();
+                """
+        )
+    }
 }
