@@ -1,6 +1,10 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # PhpClean Changelog
+## [2023.02.30]
+### Fixed
+ - #162 Skip "use assert" qf before variable declaration
+
 ## [2022.08.30]
 ### Changed
  - #163 Skip "final check" for anonymous classes
