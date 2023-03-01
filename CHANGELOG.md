@@ -4,6 +4,8 @@
 ## [2023.02.30]
 ### Fixed
  - #162 Skip "use assert" qf before variable declaration
+### Added
+ - Introduce new action - use named constructor
 
 ## [2022.08.30]
 ### Changed
