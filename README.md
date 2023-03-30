@@ -143,9 +143,10 @@ assert($user instanceof User);
 
 ## Actions
 #### UseNamedConstructor
-Replace `new ClassName` with selected named constructor
+Replace `new ClassName()` with selected named constructor.
+
 ```php
-class Text{
+class Text {
  public function __construct(string $name){ }
  public static fromName(string $n){}
 }
