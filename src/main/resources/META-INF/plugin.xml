@@ -177,6 +177,12 @@
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
+        <action class="com.funivan.idea.phpClean.actions.useNamedConstructor.UseNamedConstructorAction"
+                id="PhpClean.UseNamedConstructor"
+                text="Use named constructor"
+                description="Use named constructor instead of construct method"
+        >
+            <add-to-group group-id="RefactoringMenu" anchor="after" relative-to-action="SafeDelete"/>
+        </action>
     </actions>
 </idea-plugin>

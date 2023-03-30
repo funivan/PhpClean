@@ -1,9 +1,11 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # PhpClean Changelog
-## [2023.02.30]
+## [2023.03.01]
 ### Fixed
  - #162 Skip "use assert" qf before variable declaration
+### Added
+ - Introduce new action - use named constructor
 
 ## [2022.08.30]
 ### Changed
