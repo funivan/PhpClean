@@ -29,9 +29,9 @@ class UseNamedConstructorAction : BaseRefactoringAction() {
 
     private fun isNamedConstructorCandidate(element: PsiElement): Boolean {
         if (element is Method && element.isStatic) {
-            val constructorParameters = element.containingClass?.constructor?.let { it.parameters.map { it.type } }
-            val p = element.parameters.map { it.type }
-            return constructorParameters == p
+            val constructorParameters = element.containingClass?.constructor?.let { it.parameters.map { it.typeDeclaration?.text ?: "" } }
+            val methodParameters = element.parameters.map { it.typeDeclaration?.text ?: "" }
+            return constructorParameters == methodParameters
         }
         return false
     }
