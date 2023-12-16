@@ -1,7 +1,7 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # PhpClean Changelog
-## [Unreleased]
+## [2023.12.17]
 ### Fixed
 - #186 RedundantDocCommentTagInspection - Skip checking array shapes 
 
