@@ -7,15 +7,13 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testRedundantReturnType() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                      /**
                       *<warning descr="Redundant PhpDoc tag">@return void</warning>
                       */
                      function show(string ${'$'}message):void {}
-                    """,
-            """
+                    """, """
                     <?php
                     function show(string ${'$'}message):void {}
                     """
@@ -25,16 +23,14 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testRedundantReturnTypeWithNonEmptyComment() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                      /**
                       * Hello world
                       *<warning descr="Redundant PhpDoc tag">@return void</warning>
                       */
                      function show(string ${'$'}message):void {}
-                    """,
-            """
+                    """, """
                     <?php
                      /**
                       * Hello world
@@ -47,16 +43,14 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testRedundantParameterTag() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                      /**
                       *<warning descr="Redundant PhpDoc tag">@param string ${'$'}message</warning>
                       * @param string ${'$'}test
                       */
                      function show(int ${'$'}a, string ${'$'}message):void {}
-                    """,
-            """
+                    """, """
                     <?php
                      /**
                       * @param string ${'$'}test
@@ -69,8 +63,7 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testRedundantParameterTagWithClassFQN() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                     class A{
                      /**
@@ -86,8 +79,7 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testReturnMultipleTypes() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                      /**
                       * @return \Generator|string[]
@@ -100,8 +92,7 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testCheckEmptyTag() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                      /**
                       * @return  
@@ -114,8 +105,7 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testCheckNullableReturnType() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                      /**
                       *<warning descr="Redundant PhpDoc tag">@return bool|null</warning>
@@ -128,8 +118,7 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testCheckNullableParameterType() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                      /**
                       *<warning descr="Redundant PhpDoc tag">@param stdClass|null ${'$'}o</warning>
@@ -142,8 +131,7 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testRedundantFieldTag() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                     class PhpClean {
                         /**
@@ -158,8 +146,7 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testFieldTagWithClassFQN() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                     class PhpClean {
                         /**
@@ -172,10 +159,27 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     }
 
     @Test
+    fun testIgnoreArrayShapeTags() {
+        assert(
+            RedundantDocCommentTagInspection(), """
+                    <?php
+                    class PhpClean {
+                     /**
+                      * @param array{id: int, name: string} ${'$'}variable
+                      * @return array{id: int, name: string}
+                      */
+                      function example(array ${'$'}variable): array{
+                        return ['id'=>123, 'name'=>'test'];
+                      }
+                    }
+                    """
+        )
+    }
+
+    @Test
     fun testFieldTagWithMultipleTypes() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                     class PhpClean {
                         /**
@@ -190,8 +194,7 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testFieldWithEmptyTag() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                     class PhpClean {
                         /**
@@ -206,8 +209,7 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testCheckNullableFieldType() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                     class PhpClean {
                         /**
@@ -222,8 +224,7 @@ class RedundantDocCommentTagInspectionTest : BaseInspectionTest() {
     @Test
     fun testGenericType() {
         assert(
-            RedundantDocCommentTagInspection(),
-            """
+            RedundantDocCommentTagInspection(), """
                     <?php
                     class PhpClean {
                      /**
