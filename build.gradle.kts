@@ -32,7 +32,6 @@ println("version: $version")
 // Configure project's dependencies
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 // Configure gradle-intellij-plugin plugin.
@@ -42,7 +41,7 @@ intellij {
     version.set(platformVersion)
     type.set(platformType)
     downloadSources.set(platformDownloadSources.toBoolean())
-    updateSinceUntilBuild.set(false)
+    updateSinceUntilBuild.set(true)
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
 }

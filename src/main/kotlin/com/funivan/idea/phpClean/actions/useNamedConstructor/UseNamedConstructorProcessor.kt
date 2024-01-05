@@ -2,6 +2,7 @@ package com.funivan.idea.phpClean.actions.useNamedConstructor
 
 import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.psi.util.parentOfType
+import com.intellij.psi.util.parentOfTypes
 import com.intellij.refactoring.BaseRefactoringProcessor
 import com.intellij.usageView.UsageInfo
 import com.intellij.usageView.UsageViewDescriptor
@@ -22,7 +23,7 @@ class UseNamedConstructorProcessor(
         return ReferencesSearch.search(constructor)
             .map { it.element.parent as? NewExpression }
             .filter {
-                val inMethod = it?.parentOfType(Method::class)
+                val inMethod = it?.parentOfTypes(Method::class)
                 if (inMethod is Method) {
                     val isSameM = inMethod.name == namedConstructor.name
                     val isSameClass = inMethod.containingClass?.fqn == namedConstructor.containingClass?.fqn
