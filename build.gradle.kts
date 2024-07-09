@@ -4,7 +4,7 @@ plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "2.0.0"
     id("org.jetbrains.intellij") version "1.17.4"
-    id("org.jetbrains.changelog") version "2.2.0"
+    id("org.jetbrains.changelog") version "2.2.1"
     // ktlint linter - read more: https://github.com/JLLeitschuh/ktlint-gradle
     // id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
 }
