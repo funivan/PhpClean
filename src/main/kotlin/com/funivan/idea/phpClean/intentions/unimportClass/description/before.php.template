@@ -1,0 +1,9 @@
+<?php
+
+namespace Test {
+ use App\Model\UserModel;
+
+ // code goes here
+
+ <spot>new UserModel();</spot>
+}

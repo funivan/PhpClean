@@ -7,4 +7,6 @@ build/
 .gradle/
 local.properties
 src/main/resources/inspectionDescriptions/*.html
+src/main/resources/intentionDescriptions/*/*.html
+src/main/resources/intentionDescriptions/*/*.template
 !/**/.gitkeep
