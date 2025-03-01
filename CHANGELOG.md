@@ -1,6 +1,11 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # PhpClean Changelog
+## [Unreleased]
+### Added
+- Add unimport class intention
+
+
 ## [2023.12.17]
 ### Fixed
 - #186 RedundantDocCommentTagInspection - Skip checking array shapes 

@@ -13,6 +13,10 @@
     <depends>com.intellij.modules.platform</depends>
     <idea-version since-build="145.0"/>
     <extensions defaultExtensionNs="com.intellij">
+        <intentionAction>
+            <className>com.funivan.idea.phpClean.intentions.unimportClass.UnimportClassIntention</className>
+            <category>PHP</category>
+        </intentionAction>
 
         <localInspection
                 groupPath="PHP"
