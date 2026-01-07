@@ -121,6 +121,13 @@ tasks {
     named("runIde") {
         dependsOn("copyInspections")
     }
+
+    // Network-sensitive tasks: run ONLY when not in --offline mode
+    // You'll probaly need to prime your caches during an online phase, using a command such as:
+    // ./gradlew help --refresh-dependencies --no-daemon
+    matching { name in listOf("publishPlugin", "runPluginVerifier") }.configureEach {
+        onlyIf { !gradle.startParameter.isOffline }
+    }
 }
 tasks.getByName("buildSearchableOptions").onlyIf { false }
 
