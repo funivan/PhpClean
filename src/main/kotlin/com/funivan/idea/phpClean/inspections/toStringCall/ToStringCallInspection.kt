@@ -25,6 +25,13 @@ class ToStringCallInspection : PhpCleanInspection() {
         return object : PhpElementVisitor() {
             override fun visitPhpVariable(variable: Variable) {
                 if (context.match(variable.parent)) {
+                    if (variable.parent is UnaryExpression) {
+                        val unary = variable.parent as UnaryExpression
+                        val parent = unary.parent
+                        if (parent is MethodReference && parent.classReference == unary) {
+                            return
+                        }
+                    }
                     if (IsSingleClassType().match(variable)) {
                         holder.registerProblem(
                                 variable,
@@ -51,6 +58,9 @@ class ToStringCallInspection : PhpCleanInspection() {
             }
 
             override fun visitPhpMethodReference(reference: MethodReference) {
+                if (reference.parent is UnaryExpression && reference.classReference is Variable) {
+                    return
+                }
                 if (context.match(reference.parent)) {
                     val resolve = reference.resolve()
                     if (resolve is Function && resolve.name != "__toString") {
