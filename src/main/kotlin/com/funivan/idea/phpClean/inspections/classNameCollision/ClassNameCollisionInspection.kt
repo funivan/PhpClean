@@ -44,7 +44,9 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
         name: PsiElement
     ) = PhpIndex.getInstance(origin.project)
         .getClassesByName(name.text)
-        .firstOrNull { it.fqn != origin.fqn && !(ignoreVendorClasses && isVendorClass(it)) }
+        .filter { it.fqn != origin.fqn }
+        .filterNot { ignoreVendorClasses && isVendorClass(it) }
+        .firstOrNull()
 
     private fun isVendorClass(phpClass: PhpClass): Boolean {
         val filePath = phpClass.containingFile.virtualFile?.path
