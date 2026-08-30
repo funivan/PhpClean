@@ -72,6 +72,6 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
         val file = phpClass.containingFile.virtualFile
             ?: return false
 
-        return VfsUtilCore.isAncestor(vendorDir, file, false)
+        return VfsUtilCore.isAncestor(vendorDir, file, true)
     }
 }
