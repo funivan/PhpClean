@@ -47,8 +47,16 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
         .firstOrNull { it.fqn != origin.fqn && !(ignoreVendorClasses && isVendorClass(it)) }
 
     private fun isVendorClass(phpClass: PhpClass): Boolean {
-        return phpClass.containingFile.virtualFile?.path
+        val filePath = phpClass.containingFile.virtualFile?.path
             ?.replace('\\', '/')
-            ?.contains("/vendor/") == true
+            ?: return false
+        val projectPath = phpClass.project.basePath
+            ?.replace('\\', '/')
+            ?: return Regex("(^|/)vendor/").containsMatchIn(filePath)
+
+        if (!filePath.startsWith("$projectPath/")) {
+            return false
+        }
+        return filePath.startsWith("$projectPath/vendor/")
     }
 }
