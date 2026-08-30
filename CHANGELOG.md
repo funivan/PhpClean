@@ -1,6 +1,10 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # PhpClean Changelog
+## [Unreleased]
+### Fixed
+- #212 Spurious "Deprecated __toString call" warning on cast of a method call result, e.g. `(string)$another->returnsBlaFoo();`
+
 ## [2023.12.17]
 ### Fixed
 - #186 RedundantDocCommentTagInspection - Skip checking array shapes 
