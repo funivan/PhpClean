@@ -24,8 +24,9 @@ class ToStringCallIssue212Test : BaseInspectionTest() {
                         }
                     }
                     ${'$'}another = new Another();
-                    (string)(${ '$'}another->returnsBlaFoo());
+                    (string)(${'$'}another->returnsBlaFoo());
                     (string)${'$'}another->returnsBlaFoo();
+            """
         )
     }
 }
