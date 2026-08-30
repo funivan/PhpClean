@@ -3,6 +3,8 @@ package com.funivan.idea.phpClean.inspections.classNameCollision
 import com.funivan.idea.phpClean.spl.PhpCleanInspection
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.ui.SingleCheckboxOptionsPanel
+import com.intellij.openapi.vfs.LocalFileSystem
+import com.intellij.openapi.vfs.VfsUtilCore
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.PhpIndex
@@ -49,13 +51,14 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
         .firstOrNull()
 
     private fun isVendorClass(phpClass: PhpClass): Boolean {
-        val filePath = phpClass.containingFile.virtualFile?.path
+        val file = phpClass.containingFile.virtualFile
+            ?: return false
+        val vendorPath = phpClass.project.basePath
             ?.replace('\\', '/')
             ?: return false
-        val projectPath = phpClass.project.basePath
-            ?.replace('\\', '/')
+        val vendorDir = LocalFileSystem.getInstance().findFileByPath("$vendorPath/vendor")
             ?: return false
 
-        return filePath.startsWith("$projectPath/vendor/")
+        return VfsUtilCore.isAncestor(vendorDir, file, false)
     }
 }
