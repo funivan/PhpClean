@@ -5,6 +5,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.ui.SingleCheckboxOptionsPanel
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VfsUtilCore
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.jetbrains.php.PhpIndex
@@ -44,21 +45,29 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
     private fun find(
         origin: PhpClass,
         name: PsiElement
-    ) = PhpIndex.getInstance(origin.project)
-        .getClassesByName(name.text)
-        .filter { it.fqn != origin.fqn }
-        .filterNot { ignoreVendorClasses && isVendorClass(it) }
-        .firstOrNull()
+    ): PhpClass? {
+        val vendorDir = if (ignoreVendorClasses) findVendorDir(origin) else null
+        return PhpIndex.getInstance(origin.project)
+            .getClassesByName(name.text)
+            .filter { it.fqn != origin.fqn }
+            .filterNot { ignoreVendorClasses && isVendorClass(it, vendorDir) }
+            .firstOrNull()
+    }
 
-    private fun isVendorClass(phpClass: PhpClass): Boolean {
+    private fun findVendorDir(phpClass: PhpClass): VirtualFile? {
+        val basePath = phpClass.project.basePath
+            ?: return null
+        val projectDir = LocalFileSystem.getInstance().findFileByPath(basePath)
+            ?: return null
+        return projectDir.findChild("vendor")
+    }
+
+    private fun isVendorClass(phpClass: PhpClass, vendorDir: VirtualFile?): Boolean {
         val file = phpClass.containingFile.virtualFile
             ?: return false
-        val basePath = phpClass.project.basePath
-            ?: return false
-        val projectDir = LocalFileSystem.getInstance().findFileByPath(basePath)
-            ?: return false
-        val vendorDir = projectDir.findChild("vendor")
-            ?: return false
+        if (vendorDir == null) {
+            return false
+        }
 
         return VfsUtilCore.isAncestor(vendorDir, file, false)
     }
