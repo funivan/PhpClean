@@ -1,6 +1,12 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # PhpClean Changelog
+## [Unreleased]
+### Fixed
+- #212 ToStringCallInspection - Report casts wrapped in redundant parentheses, e.g. `(string)($object->method())`
+### Added
+- ToStringCallInspection - New "Ignore classes with __toString" option to skip values whose class provides `__toString()`
+
 ## [2023.12.17]
 ### Fixed
 - #186 RedundantDocCommentTagInspection - Skip checking array shapes 

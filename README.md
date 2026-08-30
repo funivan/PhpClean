@@ -134,6 +134,12 @@ class Hello {
 }
 echo (new Hello())->randomize(); // <-- Deprecated __toString call
 ```
+Redundant parentheses do not change what is cast, so both lines below report the same call:
+```php
+(string)$hello->randomize();
+(string)($hello->randomize());
+```
+Enable the "Ignore classes with __toString" option to skip values whose class provides a __toString() method.
 #### VirtualTypeCheck
 Use assert to check variable type instead of doc comment.
 ```php
