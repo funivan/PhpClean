@@ -1,7 +1,7 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # PhpClean Changelog
-## [Unreleased]
+## [2026.08.30]
 ### Fixed
 - #212 ToStringCallInspection - Report casts wrapped in redundant parentheses, e.g. `(string)($object->method())`
 ### Added
