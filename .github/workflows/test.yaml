@@ -2,6 +2,7 @@ name: Test
 
 on:
   push:
+  pull_request:
 jobs:
   test:
     name: Test
@@ -14,4 +15,4 @@ jobs:
 
       - uses: burrunan/gradle-cache-action@v1.5
         with:
-          arguments: check buildPlugin
+          arguments: check buildPlugin verifyPlugin
