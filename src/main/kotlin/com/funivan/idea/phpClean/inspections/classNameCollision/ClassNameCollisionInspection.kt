@@ -52,7 +52,7 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
             ?: return false
         val projectPath = phpClass.project.basePath
             ?.replace('\\', '/')
-            ?: return Regex("(^|/)vendor/").containsMatchIn(filePath)
+            ?: return false
 
         if (!filePath.startsWith("$projectPath/")) {
             return false
