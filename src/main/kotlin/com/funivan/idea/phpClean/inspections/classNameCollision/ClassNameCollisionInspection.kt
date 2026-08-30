@@ -54,9 +54,6 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
             ?.replace('\\', '/')
             ?: return false
 
-        if (!filePath.startsWith("$projectPath/")) {
-            return false
-        }
         return filePath.startsWith("$projectPath/vendor/")
     }
 }
