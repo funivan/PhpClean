@@ -34,4 +34,46 @@ class ClassNameCollisionInspectionTest : BaseInspectionTest() {
                 """
         )
     }
+
+    @Test
+    fun testVendorCollisionIgnoredWhenOptionEnabled() {
+        myFixture.addFileToProject(
+            "vendor/lib/User.php",
+            """<?php
+                namespace Vendor {
+                    class User {};
+                }
+            """
+        )
+        val inspection = ClassNameCollisionInspection()
+        inspection.ignoreVendorClasses = true
+        assert(
+            inspection,
+            """<?php
+                namespace App {
+                    class User {};
+                }
+            """
+        )
+    }
+
+    @Test
+    fun testVendorCollisionReportedWhenOptionDisabled() {
+        myFixture.addFileToProject(
+            "vendor/lib/User.php",
+            """<?php
+                namespace Vendor {
+                    class User {};
+                }
+            """
+        )
+        assert(
+            ClassNameCollisionInspection(),
+            """<?php
+                namespace App {
+                    class <warning descr="Class name collision with \Vendor\User">User</warning> {};
+                }
+            """
+        )
+    }
 }
