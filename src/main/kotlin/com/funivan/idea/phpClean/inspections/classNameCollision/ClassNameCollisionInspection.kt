@@ -53,10 +53,11 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
     private fun isVendorClass(phpClass: PhpClass): Boolean {
         val file = phpClass.containingFile.virtualFile
             ?: return false
-        val vendorPath = phpClass.project.basePath
-            ?.replace('\\', '/')
+        val basePath = phpClass.project.basePath
             ?: return false
-        val vendorDir = LocalFileSystem.getInstance().findFileByPath("$vendorPath/vendor")
+        val projectDir = LocalFileSystem.getInstance().findFileByPath(basePath)
+            ?: return false
+        val vendorDir = projectDir.findChild("vendor")
             ?: return false
 
         return VfsUtilCore.isAncestor(vendorDir, file, false)
