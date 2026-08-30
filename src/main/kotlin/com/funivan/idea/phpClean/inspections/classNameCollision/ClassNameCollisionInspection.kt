@@ -15,6 +15,10 @@ import com.jetbrains.php.lang.psi.visitors.PhpElementVisitor
 import javax.swing.JComponent
 
 class ClassNameCollisionInspection : PhpCleanInspection() {
+    companion object {
+        private const val VENDOR_DIR_NAME = "vendor"
+    }
+
     @JvmField
     var ignoreVendorClasses = false
 
@@ -65,7 +69,7 @@ class ClassNameCollisionInspection : PhpCleanInspection() {
             ?: return null
         val projectDir = LocalFileSystem.getInstance().findFileByPath(basePath)
             ?: return null
-        return projectDir.findChild("vendor")
+        return projectDir.findChild(VENDOR_DIR_NAME)
     }
 
     private fun isVendorClass(phpClass: PhpClass, vendorDir: VirtualFile): Boolean {
