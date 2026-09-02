@@ -61,7 +61,11 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
     intellijPlatform {
-        create(platformType, platformVersion)
+        when (platformType) {
+            "IU" -> intellijIdeaUltimate(platformVersion)
+            "IC" -> intellijIdeaCommunity(platformVersion)
+            else -> create(platformType, platformVersion)
+        }
         testFramework(TestFrameworkType.Platform)
         platformPlugins
             .split(',')
