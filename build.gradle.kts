@@ -1,54 +1,80 @@
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "2.1.10"
-    id("org.jetbrains.intellij") version "1.17.4"
+    id("org.jetbrains.intellij.platform") version "2.16.0"
     id("org.jetbrains.changelog") version "2.2.1"
     // ktlint linter - read more: https://github.com/JLLeitschuh/ktlint-gradle
     // id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
 }
 fun properties(key: String) = project.findProperty(key).toString()
 
-// Import variables from gradle.properties file
-val pluginGroup: String by project
-// `pluginName_` variable ends with `_` because of the collision with Kotlin magic getter in the `intellij` closure.
-// Read more about the issue: https://github.com/JetBrains/intellij-platform-plugin-template/issues/29
-val pluginName_: String by project
-val pluginVersion: String by project
-val pluginSinceBuild: String by project
-val pluginVerifierIdeVersions: String by project
-val intellijPublishChannel: String by project
-val intellijPublishToken: String by project
+val pluginGroup = properties("pluginGroup")
+val pluginName_ = properties("pluginName_")
+val pluginVersion = properties("pluginVersion")
+val pluginSinceBuild = properties("pluginSinceBuild")
+val pluginVerifierIdeVersions = properties("pluginVerifierIdeVersions")
+val intellijPublishChannel = properties("intellijPublishChannel")
+val intellijPublishToken = properties("intellijPublishToken")
 
-val platformType: String by project
-val platformVersion: String by project
-val platformPlugins: String by project
-val platformDownloadSources: String by project
+val platformType = properties("platformType")
+val platformVersion = properties("platformVersion")
+val platformPlugins = properties("platformPlugins")
 
 group = pluginGroup
 version = pluginVersion
 println("version: $version")
-// Configure project's dependencies
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
-// Configure gradle-intellij-plugin plugin.
-// Read more: https://github.com/JetBrains/gradle-intellij-plugin
-intellij {
-    pluginName.set(pluginName_)
-    version.set(platformVersion)
-    type.set(platformType)
-    downloadSources.set(platformDownloadSources.toBoolean())
-    updateSinceUntilBuild.set(true)
-    // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
-    plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
+intellijPlatform {
+    buildSearchableOptions = false
+    pluginConfiguration {
+        name = pluginName_
+        version = pluginVersion
+        ideaVersion {
+            sinceBuild = pluginSinceBuild
+        }
+    }
+    publishing {
+        token = intellijPublishToken
+        channels = listOf(intellijPublishChannel, "default").filter(String::isNotEmpty).take(1)
+    }
+    pluginVerification {
+        ides {
+            create(platformType, pluginVerifierIdeVersions) {
+                useInstaller = true
+            }
+        }
+    }
 }
+
 dependencies {
     testImplementation(gradleTestKit())
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
+    intellijPlatform {
+        create(platformType, platformVersion)
+        testFramework(TestFrameworkType.Platform)
+        platformPlugins
+            .split(',')
+            .map(String::trim)
+            .filter(String::isNotEmpty)
+            .forEach {
+                if (it.contains(':')) {
+                    plugin(it)
+                } else {
+                    bundledPlugin(it)
+                }
+            }
+    }
 }
 
 // Read more: https://github.com/JetBrains/gradle-changelog-plugin
@@ -63,27 +89,8 @@ tasks {
             targetCompatibility = it
         }
         withType<KotlinCompile> {
-            kotlinOptions.jvmTarget = it
+            compilerOptions.jvmTarget.set(JvmTarget.fromTarget(it))
         }
-    }
-
-    publishPlugin {
-        token.set(intellijPublishToken)
-        channels.set(listOf(intellijPublishChannel, "default").filter(String::isNotEmpty).take(1))
-    }
-    patchPluginXml {
-        version.set(pluginVersion)
-        sinceBuild.set(pluginSinceBuild)
-        changeNotes.set(
-            changelog.getLatest().toHTML()
-        )
-    }
-
-    runPluginVerifier {
-        ideVersions.set(
-            properties("pluginVerifierIdeVersions")
-                .split(',').map(String::trim).filter(String::isNotEmpty)
-        )
     }
 
     register("copyInspections") {
@@ -125,11 +132,10 @@ tasks {
     // Network-sensitive tasks: run ONLY when not in --offline mode
     // You'll probaly need to prime your caches during an online phase, using a command such as:
     // ./gradlew help --refresh-dependencies --no-daemon
-    matching { name in listOf("publishPlugin", "runPluginVerifier") }.configureEach {
+    matching { name in listOf("publishPlugin", "verifyPlugin") }.configureEach {
         onlyIf { !gradle.startParameter.isOffline }
     }
 }
-tasks.getByName("buildSearchableOptions").onlyIf { false }
 
 // Custom functions
 fun write(file: File, content: String): Boolean {
