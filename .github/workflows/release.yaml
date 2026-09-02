@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 25
       - name: Save plugin version and type to ENV
         run: |
           echo "PLUGIN_VERSION=$(echo ${GITHUB_REF:10})" >> $GITHUB_ENV
