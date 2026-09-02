@@ -11,10 +11,10 @@ class IsToStringContext : ConstrainInterface<PsiElement> {
         return (target is PhpEchoStatement)
                 || (target is PhpPrintExpression)
                 || (target is ConcatenationExpression)
-                || (target is UnaryExpression && target.operation?.node?.elementType == PhpTokenTypes.opSTRING_CAST)
+                || (target is UnaryExpression && target.operationType == PhpTokenTypes.opSTRING_CAST)
                 || (
                 target is BinaryExpression
-                        && target.operation?.node?.elementType == PhpTokenTypes.opEQUAL
+                        && target.operationType == PhpTokenTypes.opEQUAL
                         && (target.leftOperand is StringLiteralExpression || target.rightOperand is StringLiteralExpression)
                 )
     }
