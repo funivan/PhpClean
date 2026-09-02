@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v5
         with:
-          java-version: 11
+          distribution: temurin
+          java-version: 17
       - name: Save plugin version and type to ENV
         run: |
           echo "PLUGIN_VERSION=$(echo ${GITHUB_REF:10})" >> $GITHUB_ENV
